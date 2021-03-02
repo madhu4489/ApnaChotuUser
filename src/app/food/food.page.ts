@@ -7,7 +7,8 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./food.page.scss'],
 })
 export class FoodPage implements OnInit {
-
+  restaurants: any;
+  
   constructor(private navController:NavController) { }
 
   ngOnInit() {
@@ -19,5 +20,16 @@ export class FoodPage implements OnInit {
  
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
+  }
+
+
+  ionViewWillEnter() {
+    setTimeout(() => {
+      this.restaurants = {
+        'heading': 'Normal text',
+        'para1': 'Lorem ipsum dolor sit amet, consectetur',
+        'para2': 'adipiscing elit.'
+      };
+    }, 5000);
   }
 }
