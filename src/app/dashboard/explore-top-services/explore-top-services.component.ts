@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-explore-top-services',
@@ -15,8 +16,11 @@ export class ExploreTopServicesComponent implements OnInit {
     { name: 'Online Services', icon: '../../../assets/icon/online_small.svg' },
   ];
 
-  constructor() {}
+  constructor(private navController:NavController) {}
 
   ngOnInit() {}
-  
+
+  gotoFood(){
+    this.navController.navigateBack(['../food']);
+  }
 }

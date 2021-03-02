@@ -52,6 +52,9 @@ export class ProfilePage implements OnInit {
   goto(go) {
     if (go === this.userOptions[0].value) {
       this.saveAddress();
+    }else if(go === this.userOptions[1].value){
+      localStorage.clear();
+      this.backHandler();
     }
   }
 

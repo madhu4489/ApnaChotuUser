@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolbar-container">
+    <ion-button Fill="clear" slot="start" (click)="backHandler()">
+      <ion-icon name="arrow-back-outline" color="light"></ion-icon>
+    </ion-button>
+    <ion-title class="title-header">
+      <span>Choose Restarunts</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment (ionChange)="segmentChanged($event)" scrollable="true">
+    <ion-segment-button value="friends">
+      <ion-label>one</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="enemies">
+      <ion-label>two</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="enemies1">
+      <ion-label>Enemies</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="enemies2">
+      <ion-label>Enemies</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="enemies3">
+      <ion-label>Enemies</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  
+ 
+</ion-content>
