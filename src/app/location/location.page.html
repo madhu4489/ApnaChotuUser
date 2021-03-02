@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolbar-container">
+    <ion-button Fill="clear" slot="start" (click)="backHandler()">
+      <ion-icon name="arrow-back-outline" color="light"></ion-icon>
+    </ion-button>
+    <ion-title class="title-header">
+      <span
+        >{{this.isEditMode ? "Saved Address": 'Confirm your location'}}</span
+      >
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-fab
+    vertical="top"
+    horizontal="end"
+    slot="fixed"
+    (click)="openAddLocation()"
+    style="top: -32px"
+  >
+    <ion-fab-button color="secondary">
+      <ion-icon name="location"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-list *ngIf="savedLocations.length > 0">
+    <ion-list-header *ngif="!this.isEditMode"> Saved Adresses </ion-list-header>
+    <ion-item
+      *ngFor="let savedLocation of savedLocations"
+      class="ion-activatable"
+      (click)="selectLocation(savedLocation)"
+    >
+      <div class="address-icon">
+        <ion-icon
+          name="{{savedLocation.type === 'Office' ? 'briefcase' : savedLocation.type === 'Home' ? 'home' : 'business'}}"
+          size="large"
+          color="medium"
+        ></ion-icon>
+      </div>
+      <ion-label class="address">
+        <h3>{{savedLocation.type}} <ion-icon *ngIf="this.isEditMode" size="small" style="position: absolute;right: 4px;" name="pencil" slot="end" size="small"></ion-icon></h3>
+        <p class="ion-text-wrap">
+          {{savedLocation.flat}}, {{savedLocation.street}},
+          {{savedLocation.landmark}}
+        </p>
+        <p class="ion-text-wrap">{{savedLocation.phone}}</p>
+        <h5>{{savedLocation.locality}}</h5>
+      </ion-label>
+     
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-item>
+  </ion-list>
+
+  <div class="empty-locations" *ngIf="savedLocations.length == 0">
+    <ion-icon name="pin" class="no-loc-icon"></ion-icon>
+    <h3>No locations saved yet</h3>
+    <p>
+      Tap the top "<ion-icon name="location" color="secondary"></ion-icon>"
+      button to add a location.
+    </p>
+  </div>
+</ion-content>

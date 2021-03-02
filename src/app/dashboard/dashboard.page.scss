@@ -1,0 +1,77 @@
+.location-label {
+    display: flex;
+    align-items: center;
+    .location-icon {
+        font-size: 1.3rem;
+        padding-right: 4px;
+    }
+
+    .location-btn{
+        margin: 0;
+        padding: 0 !important;
+        text-transform: capitalize ;
+        font-weight: 600;
+        font-family: 'Nunito', sans-serif;
+        font-size: .9rem;
+    }
+
+    
+}
+
+
+
+  .card {
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
+    border-radius: .5rem;
+    border: 1px solid #e0e5e8;
+    background-color: #fff;
+    position: relative;
+    min-height: 100px;
+    width: 100%;
+    .card-body {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 0.5rem 0.5rem 0.5rem 1rem;
+        text-align: left;
+    }
+    .card-footer {
+        padding: 1rem 1.35rem;
+        background-color: rgba(33, 40, 50, 0.03);
+        border-top: 1px solid rgba(33, 40, 50, 0.125);
+    }
+    .card-footer:last-child {
+        border-radius: 0 0 0.35rem 0.35rem;
+    }
+  }
+
+
+  .bg-primary {
+    background-color: #3ebf31 !important;
+  }
+  .bg-warning {
+    background-color: #f4a100 !important;
+  }
+  
+  .bg-success {
+    background-color: #2f8dfb !important;
+  }
+
+  .bg-1 {
+    background-color: #a775f8 !important;
+  }
+
+
+  .text-white-75{
+      color: #fff;
+  }
+
+  .sliders{
+    margin-top: 20px;
+      padding: 0 10px;
+      ion-slides {
+        height: 100px;
+      }
+  }
+
+
+

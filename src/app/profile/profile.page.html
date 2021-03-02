@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolbar-container">
+    <ion-button Fill="clear" slot="start" (click)="backHandler()">
+      <ion-icon name="arrow-back-outline" color="light"></ion-icon>
+    </ion-button>
+    <ion-title class="title-header">
+      <span>Profile</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-item>
+      <ion-label>
+        <h2>Hi {{userDetails.first_name}}!</h2>
+        <h3>
+          <ion-icon name="call" slot="start"></ion-icon> {{userDetails.mobile}}
+        </h3>
+      </ion-label>
+      <ion-button color="secondary" slot="end" (click)="editProfile()"
+        >Change</ion-button
+      >
+    </ion-item>
+  </ion-card>
+
+  <ion-list>
+  
+  
+    <ion-item *ngFor="let userOption of userOptions"  button (click)="goto(userOption.value)" detail>
+      <ion-label>
+        <ion-icon name="{{userOption.icon}}" slot="start"></ion-icon>
+       {{userOption.name}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

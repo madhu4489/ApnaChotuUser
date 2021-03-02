@@ -1,0 +1,24 @@
+.note{
+    margin-right: 0;
+}
+.locality-label{
+    font-size: 0.8rem;
+}
+.save-as-btns{
+    ion-button{
+        border-width: 1px;
+        margin-right: 10px;
+    }
+}
+.close-button{
+    font-weight: 600;
+    color: #ff7900;
+}
+
+
+:host {
+    ion-item {
+        --highlight-color-invalid: red; // invalid underline color
+        --highlight-color-valid: #ff7900; // valid underline color
+    }
+}

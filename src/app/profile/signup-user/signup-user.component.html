@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolbar-container">
+    <ion-button Fill="clear" slot="start" (click)="backHandler()">
+      <ion-icon name="close" color="light"></ion-icon>
+    </ion-button>
+    <ion-title class="title-header">
+      <span>{{isEditMode ? 'Update details' : switchOTPScreen ? 'Verify mobile number':'Signup to proceed'}}</span>
+     
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form [formGroup]="loginGroup" *ngIf="isLoginScreen">
+    <ion-list>
+      
+      <ion-item>
+        
+        <ion-icon name="call" slot="start" size="small"></ion-icon>
+        <ion-label position="stacked">Phone number*</ion-label>
+        <ion-input inputmode="tel" formControlName="phone"></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+
+  <form [formGroup]="otpGroup" *ngIf="switchOTPScreen">
+    <ion-list>
+      
+         
+      <ion-item lines="none" class="ion-text-wrap">
+        <ion-title style="font-size: 0.9rem;text-align: left;padding: 0;">
+          Enter the OTP sent to<strong> {{userPhone}}</strong>
+        </ion-title>
+      </ion-item>
+  
+      <ion-item >
+        <ion-icon name="eye" slot="start" size="small"></ion-icon>
+        <ion-label position="stacked">OTP*</ion-label>
+        <ion-input inputmode="tel" formControlName="otp" (ngModelChange)="verifyOTP()"></ion-input>
+      </ion-item>
+      <div *ngIf="otpGroupErrors" class="error-text">
+        Please enter valid OTP.
+      </div>
+      <ion-item lines="none">
+        <!-- <ion-button slot="end" shape="round" color="warning" (click)="editScreen()">Edit</ion-button> -->
+        <ion-button slot="end" shape="round" color="success" (click)="resendOTP()" style="margin-left: 18px;">Resend OTP</ion-button>
+      </ion-item>
+
+
+    </ion-list>
+  </form>
+  
+  <form [formGroup]="signupGroup" *ngIf="isSignUpScreen">
+    <ion-list>
+      
+
+      <ion-item>
+        <ion-icon name="person" slot="start" size="small"></ion-icon>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input inputmode="text" formControlName="name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="call" slot="start" size="small"></ion-icon>
+        <ion-label position="stacked">Last name</ion-label>
+        <ion-input inputmode="tel" formControlName="lastName"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="mail" slot="start" size="small"></ion-icon>
+        <ion-label position="stacked">Emain ID</ion-label>
+        <ion-input inputmode="email" formControlName="email"></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
+
+<ion-footer class="fotter footer-nobc" *ngIf="!switchOTPScreen">
+  <ion-button
+    expand="block"
+    color="secondary"
+    class="custom-btn"
+    [disabled]="isDisabled()"
+
+    (click)="submitForm()"
+    >{{isEditMode ? 'Update details' : 'Proceed'}}</ion-button
+  >
+  
+</ion-footer>

@@ -24,3 +24,83 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+* {
+    font-family: 'Nunito', sans-serif;
+    
+   }
+   
+   :host(.button-outline) {
+    --border-width: 1px;
+  }
+
+
+  
+  ion-content{
+    --ion-background-color:#eff5f7;
+}
+
+
+.title-header{
+    padding: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+// .toolbar-container{
+//     // --min-height: 46px;
+// }
+.my-custom-modal .modal-wrapper {
+    height: 20%;
+    top: 80%;
+    position: absolute; 
+    display: block;  
+ }
+
+ .custom-btn{
+  --border-radius: 60px;
+    min-height: 46px;
+    font-size: 0.9rem;
+    font-weight: 600;
+ }
+ 
+ .myLoginPopup .modal-wrapper {
+    height: 320px;
+    bottom: 0px;
+    position: absolute;
+  }
+
+  .fotter{
+    padding: 10px 20px;
+    &::before{
+      background-image: none;
+    }
+}
+
+.footer-nobc{
+  background: #eff5f7;
+&::before{
+  background-image: none;
+}
+}
+
+ion-card{
+  --background-color: #eff5f7;
+}
+
+.invalid-feedback, .error-text{
+  color: #eb445a;
+  padding-left: 10px ;
+}
+
+ion-loading {
+  color: green;
+}
+
+.my-custom-class {
+  // --background: #fff;
+  // --spinner-color: #ff7900;
+  // color: #ff7900;
+}

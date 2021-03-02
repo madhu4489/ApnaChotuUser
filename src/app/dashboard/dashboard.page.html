@@ -1,0 +1,103 @@
+
+<ion-header class="ion-no-border">
+  <ion-toolbar class="toolbar-container">
+    <ion-text class="location-label">
+      <ion-button size="small" fill='clear' class="location-btn"  [routerLink]="['/location']">
+        <ion-icon class="location-icon" name="location" color="secondary"></ion-icon> 
+        {{chooseLocation}}
+        <ion-icon name="chevron-down-outline"></ion-icon>
+      </ion-button>
+    </ion-text>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <div class="sliders">
+    <ion-slides pager="false"  [options]="slideOpts">
+      <ion-slide>
+        <div class="card bg-warning">
+          <div class="card-body">
+            <div class="d-flex">
+              <div class="mr-3">
+                <div class="text-white-75">Food</div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+  
+      </ion-slide>
+      <ion-slide>
+        <div class="card bg-primary">
+          <div class="card-body">
+            <div class="d-flex">
+              <div class="mr-3">
+                <div class="text-white-75">Grocery</div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+  
+      </ion-slide>
+      <ion-slide>
+        <div class="card bg-success">
+          <div class="card-body">
+            <div class="d-flex">
+              <div class="mr-3">
+                <div class="text-white-75">Fruites</div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+  
+      </ion-slide>
+      <ion-slide>
+        <div class="card bg-1">
+          <div class="card-body">
+            <div class="d-flex">
+              <div class="mr-3">
+                <div class="text-white-75">Meat</div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+  
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+  <app-explore-top-services></app-explore-top-services>
+  
+</ion-content>
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button>
+        <ion-icon name="call"></ion-icon>
+        <ion-label>Call</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button>
+        <ion-icon name="cart"></ion-icon>
+        <ion-label>Orders</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button (click)="profileHandler()">
+        <ion-icon name="person-circle"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-tab-button>
+  
+    </ion-tab-bar>
+  
+  </ion-tabs> 
+
+</ion-toolbar>
+
+
+
+
+ 
+
