@@ -3,8 +3,11 @@
     <ion-button Fill="clear" slot="start" (click)="backHandler()">
       <ion-icon name="close" color="light"></ion-icon>
     </ion-button>
+    <ion-button *ngIf="details" Fill="clear" slot="end" (click)="delete()">
+      <ion-icon name="trash" color="light"></ion-icon>
+    </ion-button>
     <ion-title class="title-header">
-      <span>Add your address</span>
+      <span>{{!details ? "Add your address" : "Update your address"}}</span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -52,7 +55,7 @@
 
       <ion-select interface="popover" [(ngModel)]="locality">
         <ion-select-option
-          [value]="deliveryLocation.id"
+          [value]="deliveryLocation.name"
           *ngFor="let deliveryLocation of deliveryLocations"
           >{{ deliveryLocation.name }}</ion-select-option
         >
@@ -117,7 +120,7 @@
     color="secondary"
     class="custom-btn"
     [disabled]="disabledButton(flat, street, locality)"
-    (click)="addAddress()"
-    >Add Address</ion-button
+    (click)="!details ? addAddress() : updateAddress()"
+    >{{!details ? "Add" : "update"}} Address</ion-button
   >
 </ion-footer>

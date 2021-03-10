@@ -17,6 +17,7 @@ import { SharedService } from 'src/app/providers/shared.service';
 export class SignupUserComponent implements OnInit {
   @Input() isEditMode = null;
   @Input() storedUserDetails = null;
+  @Input() isFromPage = null;
 
   loginGroup: FormGroup;
 
@@ -102,38 +103,69 @@ export class SignupUserComponent implements OnInit {
   logForm() {
     let mobileNum = { mobile: Number(this.loginGroup.value.phone) };
     this.sharedService.presentLoading();
-    this.sharedService.getLogin(mobileNum).then((data) => {
-      console.log(data, 'login');
+    this.sharedService.getLogin(mobileNum).then((resp) => {
+      console.log(resp)
+      let serverData = resp.body;
       this.userPhone = this.loginGroup.value.phone;
 
-      let serverData = data.data;
-      let serverHeader = data.headers;
-      if (!this.sharedService.isBrowser) {
-        serverData = JSON.parse(serverData).data;
-        this.userResponceToken = 'Bearer ' + serverHeader.token;
-        console.log(this.userResponceToken, "this.userResponceToken");
+      if(resp['body'].status == 'error'){
+        let values = this.loginGroup.value;
+          let details = {
+            first_name: 'Guest',
+            last_name: 'Guest',
+            email: values.email,
+            user_role: 'USER',
+            mobile: values.phone,
+            password: null,
+            privilege: 'read',
+          };
+          this.signUp(details);
+          this.sharedService.presentToastWithOptions(
+            serverData.message,
+            'warning'
+          );
+
+      }else{
+        this.userResponceToken = 'Bearer ' + resp.headers.get('token');
+        this.userDetails = serverData.data;
+        this.calcOTP();
       }
 
-      if (serverData) {
-        this.userDetails = serverData;
-        this.calcOTP();
-      } else {
-        let values = this.loginGroup.value;
-        let details = {
-          first_name: 'Guest',
-          last_name: 'Guest',
-          email: values.email,
-          user_role: 'USER',
-          mobile: values.phone,
-          password: null,
-          privilege: 'read',
-        };
-        this.signUp(details);
-        this.sharedService.presentToastWithOptions(
-          serverData.message,
-          'warning'
-        );
-      }
+
+
+
+      // this.userPhone = this.loginGroup.value.phone;
+
+      // let serverData = data.data;
+      // let serverHeader = data.headers;
+      // if (!this.sharedService.isBrowser) {
+      //   serverData = JSON.parse(serverData).data;
+      //   this.userResponceToken = 'Bearer ' + serverHeader.token;
+      //   console.log(this.userResponceToken, "this.userResponceToken");
+      // }else{
+      //   console.log(data, "logggggggggggggggggggggg")
+      // }
+
+      // if (serverData) {
+      //   this.userDetails = serverData;
+      //   this.calcOTP();
+      // } else {
+      //   let values = this.loginGroup.value;
+      //   let details = {
+      //     first_name: 'Guest',
+      //     last_name: 'Guest',
+      //     email: values.email,
+      //     user_role: 'USER',
+      //     mobile: values.phone,
+      //     password: null,
+      //     privilege: 'read',
+      //   };
+      //   this.signUp(details);
+      //   this.sharedService.presentToastWithOptions(
+      //     serverData.message,
+      //     'warning'
+      //   );
+      // }
     });
   }
 
@@ -193,6 +225,9 @@ export class SignupUserComponent implements OnInit {
       // }
       localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
       this._modalCtrl.dismiss();
+      if(this.isFromPage){
+        this.navController.navigateBack(['/'+this.isFromPage]);
+      }
     } else {
       this.otpGroupErrors = true;
     }

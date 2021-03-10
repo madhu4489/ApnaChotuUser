@@ -5,3 +5,81 @@
 .custom-skeleton ion-skeleton-text:last-child {
   margin-bottom: 5px;
 }
+
+.restaurant{
+  margin:10px auto 0;
+  box-shadow: 0 1px 2.94px 0.06px rgb(4 26 55 / 16%);
+    border-radius: 5px;
+  h2{
+    font-weight: 600;
+  }
+  h3{
+    font-size: 12px;
+  }
+  .vendor-img{
+    height: 80px;
+    width: 80px;
+  }
+  .chip{
+    margin: 0;
+    padding: 2px 8px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  &.closed{
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
+.discount-chip{
+  position: absolute;
+    z-index: 10000;
+    top: 0;
+    left: 16px;
+    width: 80px;
+}
+.badge-per {
+  display: block;
+  padding: 0.25em 0.4em;
+  /* font-size: 75%; */
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  background-color: #ff9800 !important;
+  border-radius: 0;
+  /* border-top: 2px solid #333333; */
+  color: #fff;
+  font-weight: 600;
+  max-height: 22px;
+}
+
+.next-open{
+  font-weight: 600;
+    color: #333;
+}
+
+
+.top{
+  background: #5bb15b!important;
+}
+.free{
+  background: #ff8d03!important;
+}
+
+.free, .top{
+  border-radius: 0;
+  color: #fff;
+  border-color: rgba(0, 0, 0, 0.272) !important;
+  border-left: 3px solid;
+  font-size: 12px;
+  padding: 4px;
+  margin-right: 4px;
+}
+
+
+

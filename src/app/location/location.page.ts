@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
+import { SharedService } from '../providers/shared.service';
 import { ChooseLocationComponent } from './choose-location/choose-location.component';
 
 @Component({
@@ -11,13 +12,20 @@ import { ChooseLocationComponent } from './choose-location/choose-location.compo
 export class LocationPage implements OnInit {
   @Input() isEditMode = null;
   public savedLocations: any = [];
+  offset:number = 0;
+  isloading:boolean;
 
   constructor(
     private navController: NavController,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public sharedService: SharedService
   ) {}
 
   ngOnInit() {
+
+    this.getAllAddress()
+
+
     if (this.isEditMode) {
       this.savedLocations = [
         {
@@ -51,6 +59,9 @@ export class LocationPage implements OnInit {
     }
   }
 
+
+
+
   backHandler() {
     if (!this.isEditMode) {
       this.navController.navigateBack(['/dashboard']);
@@ -69,9 +80,12 @@ export class LocationPage implements OnInit {
     });
     await modalRef.present();
     modalRef.onDidDismiss().then((res: any) => {
-      if (res.data.address) {
+      console.log(res)
+      if (res.data) {
+        this.isloading = false;
+        this.getAllAddress();
         if(!this.isEditMode){
-          this.savedLocations.push(res.data.address);
+          this.isloading = false;
         }
       }
     });
@@ -86,4 +100,23 @@ export class LocationPage implements OnInit {
       this.backHandler();
     }
   }
+
+
+  getAllAddress() {
+
+    this.sharedService.getAllAddress().then((data) => {
+      this.isloading = true;
+      let serverData =  data['data'];
+      if(!this.sharedService.isBrowser){
+        serverData = JSON.parse(serverData).data;
+      }
+
+      if(serverData){
+          this.savedLocations = serverData;
+      }
+
+    });
+  }
+
+
 }

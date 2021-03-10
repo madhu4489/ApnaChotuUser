@@ -104,3 +104,33 @@ ion-loading {
   // --spinner-color: #ff7900;
   // color: #ff7900;
 }
+
+.badge {
+  font-size: .75em;
+  font-weight: 600;
+  padding: .25rem .5rem;
+  line-height: 1.175;
+  border-radius: .125rem;
+  position: relative;
+}
+.radius-r-0 {
+  border-bottom-right-radius: 0!important;
+  border-top-right-radius: 0!important;
+}
+.border-r-2, .border-x-2 {
+  border-right-width: 2px!important;
+  border-right-style: solid!important;
+  border-right-color: transparent;
+}
+.text-danger-d1 {
+  color: #ca2525!important;
+}
+.brc-danger-m2, .brc-h-danger-m2:hover {
+  border-color: #e4806e!important;
+}
+
+.item-styles{
+  margin:10px auto 0;
+  box-shadow: 0 1px 2.94px 0.06px rgb(4 26 55 / 16%);
+    border-radius: 5px;
+}

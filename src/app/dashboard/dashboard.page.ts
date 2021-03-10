@@ -30,7 +30,7 @@ export class DashboardPage implements OnInit {
     console.log('ionViewWillEnter');
     if (localStorage.getItem('selectedLocation')) {
       let address = JSON.parse(localStorage.getItem('selectedLocation'));
-      this.chooseLocation = address.type + ', ' + address.locality;
+      this.chooseLocation = address.address_type + ', ' + address.locality;
     }
   }
 
@@ -55,17 +55,28 @@ export class DashboardPage implements OnInit {
 
 
 
-  async openAddLocation() {
+  async openAddLocation(isFromPage?:any) {
     const modalRef = await this.modalController.create({
       component: SignupUserComponent,
       cssClass: 'myLoginPopup',
       backdropDismiss: false,
-      
+      componentProps: {isFromPage: isFromPage}
     });
     await modalRef.present();
   }
 
+  gotoLocation(){
+    if(localStorage.getItem('userDetails')){
+      this.navController.navigateBack(['/location']);
+    }else{
+      this.openAddLocation('location')
+    }
+  }
 
+
+
+
+  
   
 
 }

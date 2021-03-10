@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
 export class SharedService {
   apiUrl: string = environment.urls.BASE_URL;
   envUrl: any = environment.urls;
-  public loading :any;
+  public loading: any;
 
   constructor(
     public alertController: AlertController,
@@ -40,59 +40,41 @@ export class SharedService {
     this.loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Please wait...',
-      spinner: 'bubbles'
+      spinner: 'bubbles',
     });
     await this.loading.present();
   }
 
   async stopLoading() {
-    if(this.loading){
-      console.log(100)
+    if (this.loading) {
       await this.loading.dismiss();
     }
-    
   }
 
   get isBrowser() {
     return this._platform.is('mobileweb') || this._platform.is('desktop');
   }
 
-
   getHeaders() {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': localStorage.getItem("jwt")
+        Authorization: localStorage.getItem('jwt'),
       }),
     };
     return httpOptions;
-
   }
 
-  
+  getToken(){
+    return localStorage.getItem('jwt')
+  }
   getLocations() {
-
     let obj = this;
     if (obj.isBrowser) {
       return obj._http
         .get(environment.urls.function.getLocations())
         .toPromise();
     } else {
-
-      // this._mobileHttp.get( environment.urls.function.getLocations(), {}, {})
-      //   .then(data => {
-      //     console.log(data.status);
-      //     console.log(data.data); // data received by server
-      //     console.log(data.headers);
-      //   })
-      //   .catch(error => {
-      //     console.log(error.status);
-      //     console.log(error.error); // error message as string
-      //     console.log(error.headers);
-
-      //   });
-
-
       return this._mobileHttp.get(
         environment.urls.function.getLocations(),
         {},
@@ -102,17 +84,18 @@ export class SharedService {
   }
 
   getLogin(mobile): Promise<any> {
-    
     let obj = this;
     if (obj.isBrowser) {
       return obj._http
-        .post(environment.urls.function.getLogin(), mobile)
+        .post(environment.urls.function.getLogin(), mobile, {
+          observe: "response"
+        })
         .toPromise();
     } else {
       return this._mobileHttp.post(
         environment.urls.function.getLogin(),
         mobile,
-        {}
+        {},
       );
     }
   }
@@ -139,7 +122,6 @@ export class SharedService {
         .put(environment.urls.function.updateProfile(), userData)
         .toPromise();
     } else {
-      
       return this._mobileHttp.put(
         environment.urls.function.updateProfile(),
         userData,
@@ -163,5 +145,81 @@ export class SharedService {
     }
   }
 
+  getRestaurants(details): Promise<any> {
+    let obj = this;
+    if (obj.isBrowser) {
+      return obj._http
+        .post(environment.urls.function.getRestaurants(), details)
+        .toPromise();
+    } else {
+      return this._mobileHttp.post(
+        environment.urls.function.getRestaurants(),
+        details,
+        {}
+      );
+    }
+  }
+
+  getAllAddress(): Promise<any> {
+    console.log(this.getHeaders())
+    let obj = this;
+    if (obj.isBrowser) {
+      return obj._http
+        .get(environment.urls.function.getAllAddres(), this.getHeaders())
+        .toPromise();
+    } else {
+      return this._mobileHttp.get(
+        environment.urls.function.getAllAddres(),
+        this.getHeaders(),
+        {}
+      );
+    }
+  }
+
+
+  addAddress(userData): Promise<any> {
+    let obj = this;
+    if (obj.isBrowser) {
+      return obj._http
+        .post(environment.urls.function.addAddres(), userData, this.getHeaders())
+        .toPromise();
+    } else {
+      return this._mobileHttp.post(
+        environment.urls.function.addAddres(),
+        userData,
+        this.getHeaders()
+      );
+    }
+  }
+
+  updateAddress(userData): Promise<any> {
+    let obj = this;
+    if (obj.isBrowser) {
+      return obj._http
+        .put(environment.urls.function.updateAddres(), userData, this.getHeaders())
+        .toPromise();
+    } else {
+      return this._mobileHttp.put(
+        environment.urls.function.updateAddres(),
+        userData,
+        this.getHeaders()
+      );
+    }
+  }
+
+  deleteAddress(userData): Promise<any> {
+    let obj = this;
+    if (obj.isBrowser) {
+      return obj._http
+        .delete(environment.urls.function.deletetAddres()+'/'+userData, this.getHeaders())
+        .toPromise();
+    } else {
+      return this._mobileHttp.delete(
+        environment.urls.function.deletetAddres()+'/'+userData,
+        {},
+        this.getHeaders()
+      );
+    }
+  }
 
 }
