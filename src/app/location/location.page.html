@@ -24,8 +24,7 @@
     </ion-fab-button>
   </ion-fab>
 
-  <ion-list *ngIf="savedLocations.length > 0" >
-    <ion-list-header *ngIf="!this.isEditMode"> Saved Adresses </ion-list-header>
+  <ion-list *ngIf="savedLocations.length > 0">
     <ion-item
       *ngFor="let savedLocation of savedLocations"
       class="ion-activatable item-styles"
@@ -41,27 +40,46 @@
         ></ion-icon>
       </div>
       <ion-label class="address">
-        <h3>{{savedLocation.address_type}} <ion-icon *ngIf="this.isEditMode" size="small" style="position: absolute;right: 4px;" name="pencil" slot="end" size="small"></ion-icon></h3>
+        <h3>
+          {{savedLocation.address_name || savedLocation.address_type}}
+
+        
+          <ion-button color="secondary" slot="end" size="small" *ngIf="isEditMode" style="position: absolute; right: 4px">
+            <ion-label>Edit</ion-label>
+          </ion-button>
+<!-- 
+          <ion-button
+           
+            *ngIf="isEditMode"
+            Fill="outline"
+            color="secondary"
+            size="small"
+            slot="end"
+          >
+            <ion-icon
+              size="small"
+              name="pencil"
+              slot="end"
+              size="small"
+            ></ion-icon> 
+          </ion-button>-->
+        </h3>
         <p class="ion-text-wrap">
           {{savedLocation.h_no}}, {{savedLocation.street}}
         </p>
-        <p class="ion-text-wrap">
-          {{savedLocation.landmark}}
-        </p>
+        <p class="ion-text-wrap">{{savedLocation.landmark}}</p>
         <p class="ion-text-wrap">{{savedLocation.contact_no}}</p>
         <h5>{{savedLocation.locality}}</h5>
       </ion-label>
-     
+
       <ion-ripple-effect></ion-ripple-effect>
     </ion-item>
   </ion-list>
 
-  
-
   <div *ngIf="!isloading">
     <ion-list>
-      <ion-item *ngFor="let list of [1,1,1,1,1,1,1,1]">
-        <ion-thumbnail slot="start" style="height: 90px; width: 90px;">
+      <ion-item *ngFor="let list of [1,1,1,1,1]">
+        <ion-thumbnail slot="start" style="height: 90px; width: 90px">
           <ion-skeleton-text animated></ion-skeleton-text>
         </ion-thumbnail>
         <ion-label>
@@ -76,9 +94,8 @@
           </p>
         </ion-label>
       </ion-item>
-         </ion-list>
+    </ion-list>
   </div>
-
 
   <div class="empty-locations" *ngIf="isloading && savedLocations.length == 0">
     <ion-icon name="pin" class="no-loc-icon"></ion-icon>
@@ -88,9 +105,4 @@
       button to add a location.
     </p>
   </div>
-
-
-
-
-
 </ion-content>

@@ -11,13 +11,14 @@
 
 <ion-content>
   <div *ngIf="restaurants">
-    <ion-list>
+    <ion-list >
       <ion-item
         *ngFor="let restaurant of restaurants"
         class="restaurant"
         lines="none"
         color="light"
         [ngClass]="{'closed' : !restaurant.is_open}"
+        (click)="showVendor(restaurant.id)"
       >
         <ion-thumbnail slot="start" class="vendor-img">
           <div
@@ -43,10 +44,10 @@
           <p
             *ngIf="restaurant.is_open && restaurant.delivery_time; else elseBlock"
           >
-            {{restaurant.delivery_time}} min
+          <ion-icon name="time"></ion-icon> Within {{restaurant.delivery_time}} min
           </p>
           <p *ngIf="!restaurant.is_open" class="next-open">
-            Next Opens At {{restaurant.open_time}}
+            Next opens at {{restaurant.open_time}}
           </p>
 
           <p>
@@ -61,9 +62,9 @@
   </div>
 
   <!-- Skeleton screen -->
-  <div *ngIf="restaurants ===0">
+  <div *ngIf="restaurants.length ===0">
     <ion-list>
-      <ion-item *ngFor="let list of [1,1,1,1,1,1,1,1]">
+      <ion-item *ngFor="let list of [1,1,1,1,1,1]">
         <ion-thumbnail slot="start" style="height: 90px; width: 90px">
           <ion-skeleton-text animated></ion-skeleton-text>
         </ion-thumbnail>
@@ -82,8 +83,8 @@
     </ion-list>
   </div>
 
-  <ion-infinite-scroll threshold="50px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles">
+  <ion-infinite-scroll  (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more restaurants...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

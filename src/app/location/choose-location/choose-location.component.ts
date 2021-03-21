@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LoadingController, ModalController, NavController } from '@ionic/angular';
+import {
+  LoadingController,
+  ModalController,
+  NavController,
+} from '@ionic/angular';
 import { SharedService } from 'src/app/providers/shared.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-choose-location',
@@ -10,8 +15,8 @@ import { SharedService } from 'src/app/providers/shared.service';
 export class ChooseLocationComponent implements OnInit {
   @Input() details = null;
   isOtherName: boolean = false;
-  currentIndex:number=-1;
-  flat: string="5-1-92/5/15";
+  currentIndex: number = -1;
+  flat: string = '5-1-92/5/15';
   street: string;
   landmark: string;
   contact: string;
@@ -20,7 +25,7 @@ export class ChooseLocationComponent implements OnInit {
   typeText: string;
   public deliveryLocations: any = [];
   defaultOption = { charge: '0', id: 0, is_active: 1, name: 'Select' };
-  id:any;
+  id: any;
   typeOptions: any = [
     { name: 'Home', id: 0 },
     { name: 'Office', id: 1 },
@@ -32,6 +37,7 @@ export class ChooseLocationComponent implements OnInit {
     public loader: LoadingController,
     public sharedService: SharedService,
     private navController: NavController,
+    public alertController: AlertController
   ) {
     if (localStorage.getItem('deliveryLocations')) {
       this.deliveryLocations = JSON.parse(
@@ -54,16 +60,14 @@ export class ChooseLocationComponent implements OnInit {
       this.type = this.details.address_type;
       this.id = this.details.id;
 
-      if(this.details.address_type === "OTHERS"){
-          this.isOtherName = true;
-          this.typeText = this.details.address_type;
-          this.currentIndex = 2;
-      }else if(this.details.address_type === "HOME"){
+      if (this.details.address_type === 'OTHERS') {
+        this.isOtherName = true;
+        this.typeText = this.details.address_name;
+        this.currentIndex = 2;
+      } else if (this.details.address_type === 'HOME') {
         this.currentIndex = 0;
-
-      }else if(this.details.address_type === "OFFICE"){
+      } else if (this.details.address_type === 'OFFICE') {
         this.currentIndex = 1;
-
       }
     }
   }
@@ -90,15 +94,15 @@ export class ChooseLocationComponent implements OnInit {
     }
   }
 
-
   async addAddress() {
     let addAddress = {
       h_no: this.flat,
       street: this.street,
       landmark: this.landmark,
       contact_no: this.contact,
-      locality: this.deliveryLocations[this.locality].name,
+      locality: this.locality,
       address_type: this.type,
+      address_name: this.typeText
     };
 
     const loading = await this.loader.create({
@@ -107,28 +111,27 @@ export class ChooseLocationComponent implements OnInit {
     });
     await loading.present().then(() => {
       this.sharedService.addAddress(addAddress).then((resp) => {
-        console.log(resp)
+        console.log(resp);
         loading.dismiss();
         this.modalController.dismiss({
-        dismissed: true,
-        address:addAddress
+          dismissed: true,
+          address: addAddress,
+        });
       });
-    });
-
     });
   }
 
   async updateAddress() {
     let addAddress = {
-      id:this.id,
+      id: this.id,
       h_no: this.flat,
       street: this.street,
       landmark: this.landmark,
       contact_no: this.contact,
       locality: this.locality,
       address_type: this.type,
+      address_name: this.typeText
     };
-
 
     const loading = await this.loader.create({
       cssClass: 'my-custom-class',
@@ -138,17 +141,57 @@ export class ChooseLocationComponent implements OnInit {
       this.sharedService.updateAddress(addAddress).then((resp) => {
         loading.dismiss();
         this.modalController.dismiss({
-        dismissed: true,
-        address:addAddress
+          dismissed: true,
+          address: addAddress,
+        });
       });
     });
+  }
 
+  async deleteHandler() {
+    let selectedLocation = JSON.parse(localStorage.getItem('selectedLocation'));
+    if(selectedLocation && selectedLocation.id === this.id){
+      localStorage.setItem('selectedLocation', '');
+    }
+    const loading = await this.loader.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present().then(() => {
+      this.sharedService.deleteAddress(this.id).then((resp) => {
+        loading.dismiss();
+        this.modalController.dismiss({
+          dismissed: true
+        });
+      });
     });
   }
 
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      message: 'Are you sure want to delete?',
+      buttons: [
+        
+        {
+          text: 'Okay',
+          handler: () => {
+            this.deleteHandler();
+            console.log('Confirm Okay');
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          },
+        },
+      ],
+    });
 
-  delete(){
-    
+    await alert.present();
   }
-
 }

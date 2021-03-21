@@ -19,6 +19,7 @@
   .vendor-img{
     height: 80px;
     width: 80px;
+    background: #efefef;
   }
   .chip{
     margin: 0;
@@ -36,39 +37,33 @@
 .discount-chip{
   position: absolute;
     z-index: 10000;
-    top: 0;
-    left: 16px;
-    width: 80px;
+    bottom: 12px;
+    left: 17px;
+    width: 78px;
 }
 .badge-per {
   display: block;
   padding: 0.25em 0.4em;
-  /* font-size: 75%; */
   font-weight: 700;
   line-height: 1;
   text-align: center;
   white-space: nowrap;
   border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  background-color: #ff9800 !important;
-  border-radius: 0;
-  /* border-top: 2px solid #333333; */
+  background-color: #ff5722 !important;
+  max-height: 24px;
+  border-radius: 0 0 6px 6px;
+  border-top: 2px solid #fff;
   color: #fff;
-  font-weight: 600;
-  max-height: 22px;
 }
 
-.next-open{
-  font-weight: 600;
-    color: #333;
-}
+
 
 
 .top{
-  background: #5bb15b!important;
+  background: #5bb15b;
 }
 .free{
-  background: #ff8d03!important;
+  background: #ff8d03;
 }
 
 .free, .top{
@@ -81,5 +76,26 @@
   margin-right: 4px;
 }
 
+
+.closed{
+  p, h2, h3{
+    color: #afafaf;
+  }
+
+  .top, .free, .badge-per{
+    background: #afafaf !important;
+    opacity: 0.5;
+  }
+  .next-open{
+    font-weight: 600;
+    color: #333;
+  }
+  ion-img{
+    filter: grayscale(100%);
+  }
+  .badge-per{
+    opacity: 1;
+  }
+}
 
 

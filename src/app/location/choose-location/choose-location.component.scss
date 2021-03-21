@@ -8,6 +8,7 @@
     ion-button{
         border-width: 1px;
         margin-right: 10px;
+        min-width: 70px;
     }
 }
 .close-button{
@@ -20,5 +21,11 @@
     ion-item {
         --highlight-color-invalid: red; // invalid underline color
         --highlight-color-valid: #ff7900; // valid underline color
+    }
+}
+
+.addres-field{
+    ion-item{
+        margin-bottom: 12px;
     }
 }

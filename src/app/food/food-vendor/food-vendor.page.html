@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolbar-container">
+    <ion-button Fill="clear" slot="start" (click)="backHandler()">
+      <ion-icon name="arrow-back-outline" color="light"></ion-icon>
+    </ion-button>
+    <ion-title class="title-header">
+      <h3>{{details.name}}</h3>
+      <h6>{{details.address}}</h6>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--<ion-list>
+     <ion-item-divider sticky="true">
+     <ion-segment
+        scrollable
+        value="{{setDefault}}"
+        color="secondary"
+        swipe-gesture="true"
+        (ionChange)="menuChanged($event);"
+        mode="ios"
+        class="segment"
+      >
+        <ion-segment-button
+          color="secondary"
+          value="{{group.name}}"
+          *ngFor="let group of groups"
+        >
+          <ion-label>{{group.name}}</ion-label>
+        </ion-segment-button>
+      </ion-segment> 
+    </ion-item-divider>-->
+    
+
+    <!-- <ion-item
+      *ngFor="let menuItems of showMenuItems"
+      class="ion-activatable item-styles"
+      lines="none"
+      color="light"
+    >
+      <span class="veg" [ngClass]="{'non-veg' : menuItems.type==='nv'}"
+        ><span></span
+      ></span>
+      <h6 class="menu-item">
+        {{menuItems.name}}
+        <div>&#8377; {{menuItems.price}}</div>
+      </h6>
+      <h6></h6>
+    </ion-item>
+  </ion-list> -->
+
+  <ion-list >
+
+    <ion-item-divider class="vegornon">
+      <ion-label color="secondary">
+        <ion-input class="seach-input" color="primary" clearInput placeholder="search for item"></ion-input>
+      </ion-label>
+      <div style="flex: 1">
+        <ion-label color="success" atyle="font-size: 16px;">Veg only</ion-label>
+        <ion-toggle
+          color="success"
+          checked="{{isVeg}}"
+          mode="md"
+          (ionChange)="vegFilter()"
+        ></ion-toggle>
+      </div>
+    </ion-item-divider>
+
+    <ion-item-group *ngFor="let menu of menus" #scrollTo> 
+    <ion-item-divider sticky="true" class="item-header"> {{menu.group}} </ion-item-divider>
+    <ion-item
+      *ngFor="let menuItems of menu.items"
+      class="ion-activatable item-styles"
+      lines="none"
+      color="light"
+    >
+      <span class="veg" [ngClass]="{'non-veg' : menuItems.type==='nv'}"
+        ><span></span
+      ></span>
+      <h6 class="menu-item">
+        {{menuItems.name}}
+        <div>&#8377; {{menuItems.price}}</div>
+      </h6>
+      <h6></h6>
+    </ion-item>
+  </ion-item-group>
+  </ion-list>
+
+  <ion-button
+    color="secondary"
+    class="menu-button"
+    (click)="presentActionSheet()"
+    >Menu</ion-button
+  >
+
+  <div *ngIf="!isloading">
+    <ion-list>
+      <ion-item *ngFor="let list of [1,1,1,1,1]">
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>

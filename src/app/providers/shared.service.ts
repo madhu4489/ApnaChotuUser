@@ -1,4 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+
+
+
 import { Injectable } from '@angular/core';
 import {
   Platform,
@@ -117,17 +121,10 @@ export class SharedService {
 
   updateProfile(userData): Promise<any> {
     let obj = this;
-    if (obj.isBrowser) {
-      return obj._http
-        .put(environment.urls.function.updateProfile(), userData)
+
+    return obj._http
+        .put(environment.urls.function.updateProfile(), userData, this.getHeaders())
         .toPromise();
-    } else {
-      return this._mobileHttp.put(
-        environment.urls.function.updateProfile(),
-        userData,
-        this.getHeaders()
-      );
-    }
   }
 
   getOTP(mobile): Promise<any> {
@@ -147,79 +144,46 @@ export class SharedService {
 
   getRestaurants(details): Promise<any> {
     let obj = this;
-    if (obj.isBrowser) {
       return obj._http
-        .post(environment.urls.function.getRestaurants(), details)
+        .post(environment.urls.function.getRestaurants(), details, this.getHeaders())
         .toPromise();
-    } else {
-      return this._mobileHttp.post(
-        environment.urls.function.getRestaurants(),
-        details,
-        {}
-      );
-    }
+  }
+
+  getRestaurantVendor(id:any): Promise<any> {
+    let obj = this;
+    return obj._http
+    .get(environment.urls.function.getRestaurantVendor()+"/"+id, this.getHeaders())
+    .toPromise();
   }
 
   getAllAddress(): Promise<any> {
-    console.log(this.getHeaders())
     let obj = this;
-    if (obj.isBrowser) {
-      return obj._http
-        .get(environment.urls.function.getAllAddres(), this.getHeaders())
-        .toPromise();
-    } else {
-      return this._mobileHttp.get(
-        environment.urls.function.getAllAddres(),
-        this.getHeaders(),
-        {}
-      );
-    }
+    return obj._http
+    .get(environment.urls.function.getAllAddres(), this.getHeaders())
+    .toPromise();
   }
-
 
   addAddress(userData): Promise<any> {
     let obj = this;
-    if (obj.isBrowser) {
       return obj._http
         .post(environment.urls.function.addAddres(), userData, this.getHeaders())
         .toPromise();
-    } else {
-      return this._mobileHttp.post(
-        environment.urls.function.addAddres(),
-        userData,
-        this.getHeaders()
-      );
-    }
   }
 
   updateAddress(userData): Promise<any> {
     let obj = this;
-    if (obj.isBrowser) {
       return obj._http
         .put(environment.urls.function.updateAddres(), userData, this.getHeaders())
         .toPromise();
-    } else {
-      return this._mobileHttp.put(
-        environment.urls.function.updateAddres(),
-        userData,
-        this.getHeaders()
-      );
-    }
+   
   }
 
   deleteAddress(userData): Promise<any> {
     let obj = this;
-    if (obj.isBrowser) {
       return obj._http
         .delete(environment.urls.function.deletetAddres()+'/'+userData, this.getHeaders())
         .toPromise();
-    } else {
-      return this._mobileHttp.delete(
-        environment.urls.function.deletetAddres()+'/'+userData,
-        {},
-        this.getHeaders()
-      );
-    }
+   
   }
 
 }

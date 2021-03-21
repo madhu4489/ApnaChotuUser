@@ -3,8 +3,8 @@
     <ion-button Fill="clear" slot="start" (click)="backHandler()">
       <ion-icon name="close" color="light"></ion-icon>
     </ion-button>
-    <ion-button *ngIf="details" Fill="clear" slot="end" (click)="delete()">
-      <ion-icon name="trash" color="light"></ion-icon>
+    <ion-button *ngIf="details" Fill="outline" color="secondary" size="small" slot="end" (click)="presentAlertConfirm()">
+      <ion-icon name="trash" color="light" size="small"></ion-icon>
     </ion-button>
     <ion-title class="title-header">
       <span>{{!details ? "Add your address" : "Update your address"}}</span>
@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
+  <ion-list class="addres-field">
     <ion-item>
       <ion-icon name="home" slot="start" size="small"></ion-icon>
       <ion-label position="stacked">House / Flat number*</ion-label>
@@ -68,6 +68,7 @@
     </ion-item>
 
     <ion-item class="save-as-btns" lines="none" *ngIf="!isOtherName">
+      
       <ion-icon
         name="save"
         slot="start"

@@ -14,6 +14,7 @@ export const common = {
       getOTP: () => `${BASE_URL}user/mobile/verify`,
       updateProfile: () => `${BASE_URL}user/profileUpdate`,
       getRestaurants: () => `${BASE_URL}vendors/getall`,
+      getRestaurantVendor: () => `${BASE_URL}vendors/get`,
       getAllAddres: () => `${BASE_URL}user/address/get_all`,
       updateAddres: () => `${BASE_URL}user/address/update`,
       addAddres: () => `${BASE_URL}user/address/add`,

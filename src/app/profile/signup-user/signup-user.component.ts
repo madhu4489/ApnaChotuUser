@@ -6,7 +6,7 @@ import {
   AbstractControl,
   ValidatorFn,
 } from '@angular/forms';
-import { ModalController, NavController } from '@ionic/angular';
+import { LoadingController, ModalController, NavController } from '@ionic/angular';
 import { SharedService } from 'src/app/providers/shared.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class SignupUserComponent implements OnInit {
   otpGroup: FormGroup;
 
   signupGroup: FormGroup;
-  userResponceToken:any;
+  userResponceToken: any;
 
   switchOTPScreen: boolean;
   isSignUpScreen: boolean;
@@ -42,7 +42,8 @@ export class SignupUserComponent implements OnInit {
     public navController: NavController,
     private _modalCtrl: ModalController,
     private formBuilder: FormBuilder,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    public loader: LoadingController,
   ) {
     this.loginGroup = this.formBuilder.group({
       phone: [
@@ -104,68 +105,57 @@ export class SignupUserComponent implements OnInit {
     let mobileNum = { mobile: Number(this.loginGroup.value.phone) };
     this.sharedService.presentLoading();
     this.sharedService.getLogin(mobileNum).then((resp) => {
-      console.log(resp)
-      let serverData = resp.body;
-      this.userPhone = this.loginGroup.value.phone;
+      console.log(resp, "loginnnnnnnnnnnnnnnn");
 
-      if(resp['body'].status == 'error'){
-        let values = this.loginGroup.value;
-          let details = {
-            first_name: 'Guest',
-            last_name: 'Guest',
-            email: values.email,
-            user_role: 'USER',
-            mobile: values.phone,
-            password: null,
-            privilege: 'read',
-          };
+      this.userPhone = this.loginGroup.value.phone;
+      let values = this.loginGroup.value;
+      let details = {
+        first_name: 'Guest',
+        last_name: 'Guest',
+        email: values.email,
+        user_role: 'USER',
+        mobile: values.phone,
+        password: null,
+        privilege: 'read',
+        gender: "notchoose"
+      };
+
+      let serverData: any;
+      let serverHeader: any;
+
+      if (!this.sharedService.isBrowser) {
+        serverData = resp.data;
+        serverHeader = resp.headers;
+        serverData = JSON.parse(serverData).data;
+        this.userResponceToken = 'Bearer ' + serverHeader.token;
+        console.log(this.userResponceToken, 'this.userResponceToken');
+
+        if (serverData) {
+          this.userDetails = serverData;
+          this.calcOTP();
+        } else {
           this.signUp(details);
           this.sharedService.presentToastWithOptions(
             serverData.message,
             'warning'
           );
+        }
 
-      }else{
-        this.userResponceToken = 'Bearer ' + resp.headers.get('token');
-        this.userDetails = serverData.data;
-        this.calcOTP();
+      } else {
+        serverData = resp.body;
+        if (serverData.status == 'error') {
+          this.signUp(details);
+          this.sharedService.presentToastWithOptions(
+            serverData.message,
+            'warning'
+          );
+        } else {
+          this.userResponceToken = 'Bearer ' + resp.headers.get('token');
+          this.userDetails = serverData.data;
+          this.calcOTP();
+        }
       }
 
-
-
-
-      // this.userPhone = this.loginGroup.value.phone;
-
-      // let serverData = data.data;
-      // let serverHeader = data.headers;
-      // if (!this.sharedService.isBrowser) {
-      //   serverData = JSON.parse(serverData).data;
-      //   this.userResponceToken = 'Bearer ' + serverHeader.token;
-      //   console.log(this.userResponceToken, "this.userResponceToken");
-      // }else{
-      //   console.log(data, "logggggggggggggggggggggg")
-      // }
-
-      // if (serverData) {
-      //   this.userDetails = serverData;
-      //   this.calcOTP();
-      // } else {
-      //   let values = this.loginGroup.value;
-      //   let details = {
-      //     first_name: 'Guest',
-      //     last_name: 'Guest',
-      //     email: values.email,
-      //     user_role: 'USER',
-      //     mobile: values.phone,
-      //     password: null,
-      //     privilege: 'read',
-      //   };
-      //   this.signUp(details);
-      //   this.sharedService.presentToastWithOptions(
-      //     serverData.message,
-      //     'warning'
-      //   );
-      // }
     });
   }
 
@@ -187,7 +177,7 @@ export class SignupUserComponent implements OnInit {
     });
   }
 
-  signUp(details, isFrom?:any) {
+  signUp(details, isFrom?: any) {
     this.sharedService.signup(details).then((data) => {
       console.log(data, 'signUp');
       let serverData = data.data;
@@ -196,17 +186,16 @@ export class SignupUserComponent implements OnInit {
       }
       if (serverData) {
         this.userDetails = serverData;
-        if(!isFrom){
+        if (!isFrom) {
           this.calcOTP();
-        }else{
+        } else {
           this.sharedService.presentToastWithOptions(
             'Updated successfully.',
             'success'
           );
           localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
-         this._modalCtrl.dismiss();
+          this._modalCtrl.dismiss();
         }
-       
       }
     });
   }
@@ -225,8 +214,8 @@ export class SignupUserComponent implements OnInit {
       // }
       localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
       this._modalCtrl.dismiss();
-      if(this.isFromPage){
-        this.navController.navigateBack(['/'+this.isFromPage]);
+      if (this.isFromPage) {
+        this.navController.navigateBack(['/' + this.isFromPage]);
       }
     } else {
       this.otpGroupErrors = true;
@@ -238,9 +227,11 @@ export class SignupUserComponent implements OnInit {
       this.logForm();
     } else if (this.isSignUpScreen) {
       let details = {
-        first_name:this.f.name.value || 'Guest',
+        first_name: this.f.name.value || 'Guest',
         last_name: this.f.lastName.value || 'Guest',
         email: this.f.email.value || 'Guest',
+        gender: "notchoose"
+        
       };
       this.updateProfile(details);
     } else if (this.switchOTPScreen) {
@@ -272,27 +263,45 @@ export class SignupUserComponent implements OnInit {
     this.calcOTP();
   }
 
-  updateProfile(details){
-    this.sharedService.presentLoading();
-    this.sharedService.updateProfile(details).then((data) => {
-      let serverData = data.data;
-      if (!this.sharedService.isBrowser) {
-        serverData = JSON.parse(serverData).data;
-      }
-      if (serverData) {
-        this.sharedService.stopLoading();
-        this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
-        this.userDetails.first_name = details.first_name;
-        this.userDetails.last_name = details.last_name;
-        this.userDetails.email = details.email;
-        localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
-        this.sharedService.presentToastWithOptions(
-          'Updated successfully.',
-          'success'
-        );
-       this._modalCtrl.dismiss();
-      }
-    })
+  async updateProfile(details) {
+
+    const loading = await this.loader.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present().then(() => {
+      this.sharedService.updateProfile(details).then((data) => {
+        loading.dismiss();
+        console.log(data, "datadatadatadatadatadatadatadatadatadatadatadata signup update");
+        let serverData = data;
+        let msg = data.message;
+
+        // if (!this.sharedService.isBrowser) {
+        //   serverData = JSON.parse(serverData).data;
+        //   msg = serverData.message;
+        // }
+
+        if (serverData.status == 'success') {
+          this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
+          this.userDetails.first_name = details.first_name;
+          this.userDetails.last_name = details.last_name;
+          this.userDetails.email = details.email;
+          this.userDetails.gender = "notchoose";
+          localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
+          this.sharedService.presentToastWithOptions(
+            msg,
+            'success'
+          );
+          this._modalCtrl.dismiss();
+        }
+      });
+
+      
+
+    });
+
+
+
+    
   }
-  
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
+import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { LocationPage } from '../location/location.page';
 import { SignupUserComponent } from './signup-user/signup-user.component';
 
@@ -23,15 +23,19 @@ export class ProfilePage implements OnInit {
   ];
   constructor(
     private navController: NavController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    public alertController: AlertController
   ) {
+   
+  }
+
+  ngOnInit() {
     if (localStorage.getItem('userDetails')) {
       this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
     }
   }
 
-  ngOnInit() {}
-
+  
   backHandler() {
     this.navController.navigateBack(['/dashboard']);
   }
@@ -46,6 +50,13 @@ export class ProfilePage implements OnInit {
         storedUserDetails: this.userDetails,
       },
     });
+    modalRef.onDidDismiss().then((res: any) => {
+      if (localStorage.getItem('userDetails')) {
+        this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
+      }
+      
+    });
+
     await modalRef.present();
   }
 
@@ -53,10 +64,39 @@ export class ProfilePage implements OnInit {
     if (go === this.userOptions[0].value) {
       this.saveAddress();
     }else if(go === this.userOptions[1].value){
-      localStorage.clear();
-      this.backHandler();
+    
+      this.presentAlertConfirm();
     }
   }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      message: 'Are you sure want to logout?',
+      buttons: [
+        
+        {
+          text: 'Logout',
+          handler: () => {
+            localStorage.clear();
+            this.backHandler();
+            console.log('Confirm Okay');
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
 
   async saveAddress() {
     const modalRef = await this.modalController.create({

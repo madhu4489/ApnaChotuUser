@@ -22,45 +22,9 @@ export class LocationPage implements OnInit {
   ) {}
 
   ngOnInit() {
-
-    this.getAllAddress()
-
-
-    if (this.isEditMode) {
-      this.savedLocations = [
-        {
-          id: '0',
-          flat: '5-1-92/5/15',
-          street: 'Ganesh Nagar',
-          landmark: 'TTD Kalyanamandapam',
-          phone: '9963887640',
-          locality: 'Sangareddy',
-          type: 'Home',
-        },
-        {
-          id: '1',
-          flat: '5-1-92/5/15',
-          street: 'Ganesh Nagar',
-          landmark: 'TTD Kalyanamandapam',
-          phone: '9963887640',
-          locality: 'Sangareddy',
-          type: 'Office',
-        },
-        {
-          id: '2',
-          flat: '5-1-92/5/15',
-          street: 'Ganesh Nagar',
-          landmark: 'TTD Kalyanamandapam',
-          phone: '9963887640',
-          locality: 'Sangareddy',
-          type: 'New Home',
-        },
-      ];
-    }
+    this.isloading = false;
+    this.getAllAddress();
   }
-
-
-
 
   backHandler() {
     if (!this.isEditMode) {
@@ -82,11 +46,9 @@ export class LocationPage implements OnInit {
     modalRef.onDidDismiss().then((res: any) => {
       console.log(res)
       if (res.data) {
+        this.savedLocations = [];
         this.isloading = false;
         this.getAllAddress();
-        if(!this.isEditMode){
-          this.isloading = false;
-        }
       }
     });
   }
@@ -103,20 +65,13 @@ export class LocationPage implements OnInit {
 
 
   getAllAddress() {
-
     this.sharedService.getAllAddress().then((data) => {
       this.isloading = true;
       let serverData =  data['data'];
-      if(!this.sharedService.isBrowser){
-        serverData = JSON.parse(serverData).data;
-      }
-
+      console.log(serverData, "serverData")
       if(serverData){
           this.savedLocations = serverData;
       }
-
     });
   }
-
-
 }

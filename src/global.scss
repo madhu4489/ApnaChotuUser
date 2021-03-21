@@ -130,7 +130,25 @@ ion-loading {
 }
 
 .item-styles{
-  margin:10px auto 0;
+  margin: 0 auto 10px;
   box-shadow: 0 1px 2.94px 0.06px rgb(4 26 55 / 16%);
     border-radius: 5px;
+}
+
+.ion-item{
+  --background-color: #fff;
+}
+
+ion-segment-button {
+  min-width: auto;
+}
+
+.my-custom-menu-class .action-sheet-button {
+height: 38px;
+font-size: 14px;
+}
+
+.my-custom-menu-class .action-sheet-title{
+color: #ff7900;
+font-size: 16px;
 }

@@ -30,7 +30,7 @@ export class DashboardPage implements OnInit {
     console.log('ionViewWillEnter');
     if (localStorage.getItem('selectedLocation')) {
       let address = JSON.parse(localStorage.getItem('selectedLocation'));
-      this.chooseLocation = address.address_type + ', ' + address.locality;
+      this.chooseLocation = (address.address_name || address.address_type)  + ', ' + address.locality;
     }
   }
 
@@ -72,11 +72,5 @@ export class DashboardPage implements OnInit {
       this.openAddLocation('location')
     }
   }
-
-
-
-
-  
-  
 
 }
