@@ -5,6 +5,7 @@ import {
   LoadingController,
   NavController,
 } from '@ionic/angular';
+import { CartDataProvider } from 'src/app/providers/cart-data/cart-data';
 import { SharedService } from 'src/app/providers/shared.service';
 
 @Component({
@@ -24,12 +25,17 @@ export class FoodVendorPage implements OnInit {
   // @ViewChild(Content) content: Content;
   @ViewChildren('scrollTo') scrollComponent: any;
 
+
+  public storeOrderCount: number = 0;
+  public storeOrderPrice: number = 0;
+
   constructor(
     private navController: NavController,
     private route: ActivatedRoute,
     public sharedService: SharedService,
     public loader: LoadingController,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    private cartDataProvider: CartDataProvider,
   ) {}
 
   ngOnInit() {
@@ -38,19 +44,33 @@ export class FoodVendorPage implements OnInit {
     }
   }
 
+  ionViewWillEnter() {
+    console.log("Ion View Will Enter ");
+
+    this.cartDataProvider.setRestName(this.details);
+
+    this.storeOrderCount = 0;
+    this.storeOrderPrice = 0;
+    this.cartDataProvider.removeCartItems();
+    // this.menu = [];
+    // this.menuList = [];
+    // this.finalMenuList = [];
+    // this.courseType = [];
+    // this.imageUrl = "";
+    // this.storeOrder = [];
+    this.getRestaurantVendor(this.route.snapshot.params.id);
+
+    // console.log("Count: ", _count.length);
+    // console.log("Final Menu Count: ", this.finalMenuList.length);
+  }
+
   backHandler() {
+    this.cartDataProvider.setRestName(null);
+    this.cartDataProvider.clearCartData();
     this.navController.back();
   }
 
   async getRestaurantVendor(id?: any) {
-    // const loading = await this.loader.create({
-    //   cssClass: 'my-custom-class',
-    //   message: 'Please wait...',
-    // });
-    // await loading.present().then(() => {
-
-    // });
-
     this.sharedService.getRestaurantVendor(id).then((resp) => {
       this.isloading = true;
       const data = resp[0];
@@ -63,8 +83,36 @@ export class FoodVendorPage implements OnInit {
       }
       this.backUpMenus = data['menu'];
       this.menus = this.backUpMenus;
+      this.cartDataProvider.setRestName(data);
 
-      console.log(this.backUpMenus);
+      let _cartData = this.cartDataProvider.getCartData();
+
+        console.log(_cartData, "_cartItem::::");
+        console.log(' this.finalMenuList', this.details.menu);
+        if (_cartData.length != 0) {
+          this.storeOrderPrice = 0;
+          _cartData.forEach(_cartItem => {
+            this.storeOrderCount = this.storeOrderCount + _cartItem.count;
+            this.storeOrderPrice = this.storeOrderPrice + _cartItem.totalprice;
+            this.details.menu.forEach((element, i) => {
+              const isThere = (element) => element.id === _cartItem.id;
+              let Menuindex = this.details.menu.findIndex(isThere);
+              if (Menuindex > -1) {
+                element.items.forEach((items, i) => {
+                  const isThereItem = (element) => element.id === _cartItem.id;
+                  let itemsIndex = element.items.findIndex(isThereItem);
+                  if (itemsIndex > -1) {
+                    console.log(this.details.menu[Menuindex].items[itemsIndex])
+                    this.details.menu[Menuindex].items[itemsIndex].count = _cartItem.count;
+                    this.details.menu[Menuindex].items[itemsIndex].orderPrice = this.details.menu[Menuindex].items[itemsIndex].count *
+                      this.details.menu[Menuindex].items[itemsIndex].price;
+                  }
+                })
+              }
+
+            });
+          });
+        }
       // this.setDefault = this.groups[0].name;
       //  this.filterMenus();
       // loading.dismiss();
@@ -133,5 +181,28 @@ export class FoodVendorPage implements OnInit {
     //   this.scrollComponent["_results"][pos].nativeElement.offsetTop,
     //   800
     // );
+  }
+
+  recevieOrderFn(items: any){
+    this.cartDataProvider.addCartData(items);
+    this.cartDataProvider.removeCartItems();
+
+    let _tempCartData = this.cartDataProvider.getCartData();
+    this.storeOrderCount = 0;
+    this.storeOrderPrice = 0;
+    console.log("Temp Data: ", JSON.stringify(_tempCartData));
+    _tempCartData.forEach(currentItem => {
+      this.storeOrderCount = this.storeOrderCount + currentItem.count;
+    });
+    _tempCartData.forEach(currentItem => {
+      this.storeOrderPrice = this.storeOrderPrice + currentItem.orderPrice;
+    });
+
+    console.log("Store Order: ", JSON.stringify(_tempCartData));
+
+  }
+
+  viewCart() {
+    this.navController.navigateForward(["/cart-details"]);
   }
 }

@@ -23,10 +23,10 @@
         <ion-thumbnail slot="start" class="vendor-img">
           <div
             *ngFor="let vendorOffers of restaurant.offer"
-            class="discount-chip"
+            class="burst-12"
           >
             <span *ngIf="vendorOffers.offerPercentage" class="badge-per"
-              >{{vendorOffers.offerPercentage}}% OFF</span
+              >{{vendorOffers.offerPercentage}}% <span>OFF</span></span
             >
           </div>
           <ion-img [src]="restaurant.media" width="80" height="80"></ion-img>
@@ -42,7 +42,7 @@
 
           <p>{{restaurant.address}}</p>
           <p
-            *ngIf="restaurant.is_open && restaurant.delivery_time; else elseBlock"
+            *ngIf="restaurant.is_open && restaurant.delivery_time; else elseBlock" class="time-duration"
           >
           <ion-icon name="time"></ion-icon> Within {{restaurant.delivery_time}} min
           </p>
@@ -50,8 +50,8 @@
             Next opens at {{restaurant.open_time}}
           </p>
 
-          <p>
-            <span class="top"> Top store</span>
+          <p class="m-t2">
+            <span class="top" *ngIf="restaurant.rating > 4"> Top store</span>
             <span class="free" *ngIf="restaurant.is_free_delivery">
               Free Delivery</span
             >

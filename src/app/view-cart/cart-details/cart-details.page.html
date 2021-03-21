@@ -1,0 +1,159 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolbar-container">
+    <ion-button Fill="clear" slot="start" (click)="backHandler()">
+      <ion-icon name="arrow-back-outline" color="light"></ion-icon>
+    </ion-button>
+    <ion-title class="title-header">
+      <h3>Order details</h3>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list  *ngIf="isLoading">
+    <ion-item-group>
+      <ion-item
+        *ngFor="let menuItems of orderDetails"
+        class="ion-activatable item-styles"
+        lines="none"
+        color="light"
+      >
+        <span class="veg" [ngClass]="{'non-veg' : menuItems.type==='nv'}"
+          ><span></span
+        ></span>
+        <h6 class="menu-item">
+          {{menuItems.name}}
+          <div>&#8377; {{menuItems.price}}</div>
+        </h6>
+        <h6>
+          <custom-counter
+            [foodItem]="menuItems"
+            [groupID]="menuItems.id"
+            [vendorID]="menuItems.vendorID"
+            (recevieOrder)="recevieOrderFn($event)"
+          ></custom-counter>
+        </h6>
+      </ion-item>
+    </ion-item-group>
+    <ion-item  lines="full"  color="light" class="suggestion">
+      <ion-input placeholder="Any suggustions?"></ion-input>
+    </ion-item>
+
+    <ion-item  lines="none" color="light">
+      <table class="bill-table">
+        <tr class="head">
+          <td colspan="2">Payment details</td>
+        </tr>
+        <tr>
+          <td>Items total</td>
+          <td>&#8377; {{showCount&&showCount.totalPrice}}</td>
+        </tr>
+        <tr>
+          <td >Delivery charge</td>
+          <td >&#8377; {{serviceLocation && serviceLocation.charge}}</td>
+        </tr>
+        <tr class="secondary" *ngIf="discountPrice>0">
+          <td>Discount</td>
+          <td>- &#8377; {{discountPrice}}</td>
+        </tr>
+        <tr>
+          <td>To Pay</td>
+          <td>&#8377; {{showCount&&showCount.finalPrice}}</td>
+        </tr>
+      </table>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="!isLoading">
+    <ion-list>
+      <ion-item *ngFor="let list of [1,1,1]">
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <h2>
+            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          </h2>
+        </ion-label>
+      </ion-item>
+        <ion-item>
+     
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          </h3>
+          <h3>
+            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          </h3>
+          <h3>
+            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          </h3>
+          <h3>
+            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          </h3>
+          <h3>
+            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          </h3>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="isLoading">
+  <ion-list>
+    <ion-item lines="none" color="light" *ngIf="deliveryLocation.length === 0">
+      <ion-label class="view-cart-label"
+        >Please add a delivery address</ion-label
+      >
+      <ion-button
+        color="primary"
+        class="custom-btn-small"
+        (click)="addAddress()"
+        fill="clear"
+        size="small"
+        color="secondary"
+      >
+        Add</ion-button
+      >
+    </ion-item>
+    <ion-item color="light" *ngIf="deliveryLocation && deliveryLocation.length != 0">
+      <ion-label class="view-cart-label">
+        <h5 color="secondary">
+          Delivery to:
+          <strong
+            >{{deliveryLocation.address_name ||
+            deliveryLocation.address_type}}</strong
+          >
+        </h5>
+        <p class="ion-text-wrap">
+          {{deliveryLocation.h_no}}, {{deliveryLocation.street}}, {{deliveryLocation.landmark}},  {{deliveryLocation.locality}}, {{deliveryLocation.contact_no}}
+        </p>
+       
+      </ion-label>
+      <ion-button
+        fill="clear"
+        size="small"
+        color="secondary"
+        class="custom-btn-small"
+        (click)="addAddress()"
+        >Change</ion-button
+      >
+    </ion-item>
+
+    <ion-item *ngIf="deliveryLocation">
+      <ion-button expand="block" class="custom-btn" [disabled]="deliveryLocation && deliveryLocation.length == 0 || this.serviceLocation && this.serviceLocation.is_active != 1"
+        >Place your order</ion-button
+      >
+    </ion-item>
+  </ion-list>
+</ion-footer>

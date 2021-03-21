@@ -5,40 +5,9 @@
   }
 }
 
-.veg {
-  border: 2px solid #4caf50;
-  font-size: 480px;
-  line-height: 1em;
-  width: 14px;
-  height: 14px;
-  position: absolute;
-  top: 18px;
-  left: 0px;
 
-  span {
-    position: absolute;
-    top: 1px;
-    background: #4caf50;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    left: 1px;
-  }
-  &.non-veg{
-    border-color: #f44336; 
-    span {
-        background: #f44336;
-    }
-  }
-}
 
-.menu-item{
-    margin-left: 24px;
-    div{
-        font-size: 14px;
-        margin-top: 6px;
-    }
-}
+
 .segment{
     margin: 10px 0;
 }
@@ -54,18 +23,28 @@
 
 .menu-button{
   position: fixed;
-    bottom: 40px;
+    bottom: 50px;
     left: calc(50% - 30px);
 }
 .item-header{
   min-height: 38px;
   background: #eff5f7;
   font-weight: 600;
-    color: #333;
+  color: #ff7900;
+  font-weight: 700;
+  font-size: 16px;
 }
 
 .seach-input{
   text-align: left;
   border: 1px solid #ccc;
   border-radius: 8px;
+}
+.price{
+  color: #ff7900;
+    font-weight: 600;
+    display: block;
+}
+.view-cart-label{
+  margin: 2px;
 }

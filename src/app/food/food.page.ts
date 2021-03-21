@@ -28,7 +28,7 @@ export class FoodPage implements OnInit {
   }
 
   backHandler() {
-    this.navController.navigateBack(['/dashboard']);
+    this.navController.back();
   }
 
   segmentChanged(ev: any) {
@@ -69,7 +69,8 @@ export class FoodPage implements OnInit {
   }
 
   showVendor(id) {
-    console.log(id)
     this.navController.navigateForward(["vendor", id]);
   }
+
+  
 }

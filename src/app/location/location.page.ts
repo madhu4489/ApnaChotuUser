@@ -28,7 +28,7 @@ export class LocationPage implements OnInit {
 
   backHandler() {
     if (!this.isEditMode) {
-      this.navController.navigateBack(['/dashboard']);
+      this.navController.back();
     } else {
       this.modalController.dismiss();
     }

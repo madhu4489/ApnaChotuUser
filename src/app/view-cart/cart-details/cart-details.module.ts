@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FoodVendorPageRoutingModule } from './food-vendor-routing.module';
+import { CartDetailsPageRoutingModule } from './cart-details-routing.module';
 
-import { FoodVendorPage } from './food-vendor.page';
+import { CartDetailsPage } from './cart-details.page';
 import { CustomCounterComponent } from 'src/app/components/custom-counter/custom-counter';
 
 @NgModule({
@@ -14,8 +14,8 @@ import { CustomCounterComponent } from 'src/app/components/custom-counter/custom
     CommonModule,
     FormsModule,
     IonicModule,
-    FoodVendorPageRoutingModule
+    CartDetailsPageRoutingModule
   ],
-  declarations: [FoodVendorPage, CustomCounterComponent]
+  declarations: [CartDetailsPage, CustomCounterComponent]
 })
-export class FoodVendorPageModule {}
+export class CartDetailsPageModule {}
