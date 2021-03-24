@@ -24,14 +24,20 @@ export class CartDetailsPage implements OnInit {
   serviceLocation: any;
   serviceLocationId: any;
 
-  isOrderPlaced: boolean;
+  isOrderPlaced: boolean = false;
   private vendorOffer: any = [];
   private discountPrice: number = 0;
-  private request: any;
+  private extra_items: any;
   alternate: any;
   deliveryLocation: any = [];
 
   isLoading: boolean;
+
+  tipTabel: any = [
+    [5, 10, 15],
+    [20, 40, 60],
+  ];
+  tipAmount: number = 0;
 
   constructor(
     private navController: NavController,
@@ -91,7 +97,6 @@ export class CartDetailsPage implements OnInit {
     this.cartDataProvider.setCartData(this.orderDetails);
     this.cartDataProvider.removeCartItems();
     this.orderDetails = this.cartDataProvider.getCartData();
-    console.log(this.orderDetails, 'this.orderDetails::::');
     this.buildWhatsappMessage();
     if (this.orderDetails.length == 0) {
       this.navController.back();
@@ -120,13 +125,6 @@ export class CartDetailsPage implements OnInit {
 
   async getlocationsFn() {
     this.isLoading = false;
-    const loading = await this.loader.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-    });
-    //   await loading.present().then(() => {
-
-    // });
 
     this.sharedService.getLocations().then((data) => {
       let serverData = data['data'];
@@ -169,8 +167,12 @@ export class CartDetailsPage implements OnInit {
           this.serviceLocation.charge = this.restaurantDetails.is_free_delivery
             ? 0
             : this.serviceLocation.charge;
+
+          this.serviceLocationId = this.serviceLocation.id;
           this.buildWhatsappMessage();
         }
+      } else {
+        this.buildWhatsappMessage();
       }
       // loading.dismiss();
       localStorage.setItem('deliveryLocations', JSON.stringify(serverData));
@@ -198,11 +200,9 @@ export class CartDetailsPage implements OnInit {
 
   buildWhatsappMessage() {
     this.orderMessage = '';
-    // this.orderMessage = this.restaurantName + "\n";
     let totao: number = 0;
     let pric: number = 0;
 
-    console.log(this.orderDetails, ' this.orderDetails');
     this.orderDetails.forEach((order) => {
       totao = totao + order.count;
       pric = pric + order.totalprice;
@@ -221,12 +221,9 @@ export class CartDetailsPage implements OnInit {
       this.orderMessage += '...................' + '\n';
     });
 
-    console.log(totao, 'thispricpricpric', pric);
-
     this.showCount.totalItems = totao;
     this.showCount.totalPrice = pric;
 
-    console.log(this.showCount, 'this.showCountthis.showCount');
     this.discountPrice =
       pric >= this.vendorOffer.minOrder
         ? (pric / 100) * parseInt(this.vendorOffer.offerPercentage)
@@ -237,11 +234,106 @@ export class CartDetailsPage implements OnInit {
         ? this.vendorOffer.maxOfferAmount
         : this.discountPrice;
     this.discountPrice = Math.round(this.discountPrice);
+
     this.showCount.finalPrice = (
       this.showCount.totalPrice -
-      this.discountPrice +
-      Number(this.serviceLocation.charge)
+      this.discountPrice + this.tipAmount+
+      (this.serviceLocation ? Number(this.serviceLocation.charge) : 0)
     ).toFixed(0);
     this.encodedOrderMessage = encodeURI(this.orderMessage);
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      message: 'Are you sure want to proceed?',
+      buttons: [
+        
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          },
+        },
+        {
+          text: 'Proceed',
+          handler: () => {
+            this.placeOrder();
+          },
+        }
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async placeOrder() {
+    let vendorId: any;
+    let Items: any = [];
+
+    this.orderDetails.forEach((element) => {
+      vendorId = element.vendorID;
+      Items.push({
+        itemId: element.id,
+        quantity: element.count,
+        price: element.price,
+      });
+    });
+
+    let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+
+    let address = `${userDetails.first_name}, ${this.deliveryLocation.h_no}, ${this.deliveryLocation.street}, landmark: ${this.deliveryLocation.landmark}, ${this.deliveryLocation.locality}, ${this.deliveryLocation.contact_no}, ${userDetails.mobile}`;
+    let orderData = {
+      vendorId: vendorId,
+      price: this.showCount.totalPrice,
+      paymentMode: 'cashoronline',
+      address: address,
+      lat: null,
+      lng: null,
+      items: Items,
+      finalPrice: this.showCount.finalPrice,
+      itemsPrice: this.showCount.totalPrice,
+      deliveryFee: this.serviceLocation
+        ? Number(this.serviceLocation.charge)
+        : 0,
+      locationId: this.serviceLocationId,
+      discountPrice: this.discountPrice ? this.discountPrice : 0,
+      extra_items: this.extra_items,
+      alt_mobile: this.alternate ? this.alternate : '',
+    };
+
+    const loading = await this.loader.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present().then(() => {
+      this.sharedService.createOrder(orderData).then((data) => {
+        console.log(data, 'dataaaaaaaa');
+        this.isOrderPlaced = true;
+        loading.dismiss();
+      });
+    });
+  }
+
+  gotoDashboard() {
+    this.navController.navigateBack(['/dashboard']);
+  }
+
+  addTip(t) {
+    if(this.tipAmount === t){
+      this.tipAmount =  0;
+      this.showCount.finalPrice = (Number(this.showCount.finalPrice) - t ).toFixed(0);
+    }else{
+      this.showCount.finalPrice = (Number(this.showCount.finalPrice) - this.tipAmount + t  ).toFixed(0);
+      this.tipAmount = t;
+
+    }
+   
+
+   
+   
   }
 }

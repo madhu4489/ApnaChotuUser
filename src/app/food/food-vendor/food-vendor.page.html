@@ -66,6 +66,7 @@
     color="secondary"
     class="menu-button"
     (click)="presentActionSheet()"
+    [ngClass]="{'bottom-60' : storeOrderCount > 0}"
     >Menu</ion-button
   >
 
@@ -85,8 +86,8 @@
   </div>
 </ion-content>
 
-<ion-footer class="item-footer" *ngIf="storeOrderCount > 0">
-  <ion-list class="item-footer">
+<ion-footer  *ngIf="storeOrderCount > 0">
+  <ion-list >
     <ion-item lines="none" color="light">
       <ion-label class="view-cart-label">
         <span>{{storeOrderCount}} item</span
@@ -94,7 +95,7 @@
         <span class="price">&#8377; {{storeOrderPrice}}</span></ion-label
       >
 
-      <ion-button color="primary" class="custom-btn-small" (click)="viewCart()"> View cart</ion-button>
+      <ion-button color="secondary" class="custom-btn-small" (click)="viewCart()"> View cart</ion-button>
     </ion-item>
   </ion-list>
 </ion-footer>

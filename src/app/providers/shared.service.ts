@@ -186,4 +186,12 @@ export class SharedService {
    
   }
 
+
+  createOrder(details): Promise<any> {
+    let obj = this;
+      return obj._http
+        .post(environment.urls.function.createOrder(), details, this.getHeaders())
+        .toPromise();
+  }
+
 }

@@ -19,6 +19,8 @@ export const common = {
       updateAddres: () => `${BASE_URL}user/address/update`,
       addAddres: () => `${BASE_URL}user/address/add`,
       deletetAddres: () => `${BASE_URL}user/address/delete`,
+      createOrder: () => `${BASE_URL}order/create`,
+      
     },
   },
 };

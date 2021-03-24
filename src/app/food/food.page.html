@@ -11,10 +11,11 @@
 
 <ion-content>
   <div *ngIf="restaurants">
+    <!-- (click)="restaurant.is_open && showVendor(restaurant.id)" -->
     <ion-list >
       <ion-item
         *ngFor="let restaurant of restaurants"
-        class="restaurant"
+        class="restaurant ion-activatable ripple-parent item-styles"
         lines="none"
         color="light"
         [ngClass]="{'closed' : !restaurant.is_open}"
@@ -57,6 +58,7 @@
             >
           </p>
         </ion-label>
+        <ion-ripple-effect></ion-ripple-effect>
       </ion-item>
     </ion-list>
   </div>

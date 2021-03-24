@@ -23,7 +23,7 @@
 
 .menu-button{
   position: fixed;
-    bottom: 50px;
+    bottom: 20px;
     left: calc(50% - 30px);
 }
 .item-header{
@@ -47,4 +47,8 @@
 }
 .view-cart-label{
   margin: 2px;
+}
+
+.bottom-60{
+  bottom: 70px;
 }
