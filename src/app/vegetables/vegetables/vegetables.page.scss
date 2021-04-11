@@ -1,0 +1,155 @@
+.custom-skeleton ion-skeleton-text {
+  line-height: 13px;
+}
+
+.custom-skeleton ion-skeleton-text:last-child {
+  margin-bottom: 5px;
+}
+
+.restaurant {
+  margin: 10px auto 0;
+  box-shadow: 0 1px 2.94px 0.06px rgb(4 26 55 / 16%);
+  border-radius: 5px;
+  h2 {
+    font-weight: 600;
+  }
+  h3 {
+    font-size: 12px;
+  }
+  .vendor-img {
+    height: 80px;
+    width: 80px;
+    background: #efefef;
+  }
+  .chip {
+    margin: 0;
+    padding: 2px 8px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  &.closed {
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
+.discount-chip {
+  position: absolute;
+  z-index: 10000;
+  bottom: 12px;
+  left: 17px;
+  width: 78px;
+}
+.badge-per {
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 6px;
+  font-size: 14px;
+  color: #fff;
+  font-weight: 600;
+  line-height: 12px;
+  span {
+    font-size: 11px;
+  }
+}
+
+.top {
+  background: #5bb15b;
+}
+.free {
+  background: #ff8d03;
+}
+
+.free,
+.top {
+  border-radius: 0;
+  color: #fff;
+  border-color: rgba(0, 0, 0, 0.272) !important;
+  border-left: 3px solid;
+  font-size: 12px;
+  padding: 4px;
+  margin-right: 4px;
+}
+
+.time-duration {
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  background: #eee;
+  border-radius: 6px;
+  padding: 0 4px;
+  display: inline-flex;
+  ion-icon {
+    padding-right: 4px;
+  }
+}
+
+.burst-12 {
+  background: red;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  text-align: center;
+  left: 70px;
+  top: 10px;
+}
+.burst-12:before,
+.burst-12:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 30px;
+  width: 30px;
+  background: red;
+}
+.burst-12:before {
+  transform: rotate(30deg);
+}
+.burst-12:after {
+  transform: rotate(60deg);
+}
+
+.m-t2 {
+  margin-top: 2px;
+}
+
+.closed {
+  p,
+  h2,
+  h3 {
+    color: #afafaf;
+  }
+
+  .top,
+  .free {
+    background: #afafaf !important;
+    opacity: 0.5;
+  }
+  .next-open {
+    font-weight: 600;
+    color: #333;
+  }
+  ion-img {
+    filter: grayscale(100%);
+  }
+  .badge-per {
+    opacity: 1;
+  }
+  .burst-12 {
+    background: #607d8b;
+  }
+  .burst-12:before,
+  .burst-12:after {
+    background: #607d8b;
+  }
+}
+
+.item-header {
+  padding: 0;
+  ion-item {
+    width: 100%;
+  }
+}

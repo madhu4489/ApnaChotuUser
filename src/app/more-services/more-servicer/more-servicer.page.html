@@ -1,0 +1,31 @@
+<ion-header *ngIf="!isOrderPlaced">
+  <ion-toolbar color="primary" class="toolbar-container">
+    <ion-button Fill="clear" slot="start" (click)="backHandler()">
+      <ion-icon name="arrow-back-outline" color="light"></ion-icon>
+    </ion-button>
+    <ion-title class="title-header">
+      <span>{{this.route.snapshot.params.name}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item
+      lines="full"
+      color="light"
+      class="item-styles"
+      *ngFor="let cate of categories"
+      button
+      (click)="buttonClick()"
+    >
+      <ion-label class="ion-text-wrap">
+        <ion-text color="primary">
+          <h2 style="font-weight: 600">{{cate.name}}</h2>
+        </ion-text>
+        <p>Please call us for this service</p>
+      </ion-label>
+      <ion-icon slot="icon-only" color="secondary" name="call" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

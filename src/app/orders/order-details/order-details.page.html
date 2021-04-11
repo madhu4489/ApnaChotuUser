@@ -1,0 +1,169 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolbar-container">
+    <ion-button Fill="clear" slot="start" (click)="backHandler()">
+      <ion-icon name="arrow-back-outline" color="light"></ion-icon>
+    </ion-button>
+    <ion-title class="title-header">
+      <span style="display: flex;">Order: #{{details.id}}</span>
+      <small>Placed on: {{details.createdOn | date:'medium' }}</small>  
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card color="light">
+    <div
+    class="order-status details-dg"
+    [ngClass]="{'onthe-way' : status.id === 10 || status.id === 1, 'cancel' : status.id === 3 || status.id === 11 }"
+  >
+    {{status.name == 'Order Placed Waiting for Final Price' ? 'Order
+    Placed' : status.name}}
+    <span class="badge-dot"> </span>
+  </div>
+
+    <ul class="list-unstyled activity-wid">
+      <li class="activity-list">
+        <div class="activity-icon avatar-xs">
+          <span
+            class="avatar-title bg-soft-primary text-primary rounded-circle"
+          >
+            <ion-icon name="fast-food" class="primary"></ion-icon
+          ></span>
+        </div>
+        <div>
+          <div>
+            <h5 class="font-size-13">Pickup Location</h5>
+          </div>
+          <div>
+            <p class="text-muted mb-0">
+              {{vendor ? vendor.name : 'Apna Chotu'}}
+            </p>
+            <small> {{vendor ? vendor.address : 'Apna Chotu'}}</small>
+          </div>
+        </div>
+      </li>
+      <li class="activity-list">
+        <div class="activity-icon avatar-xs">
+          <span class="avatar-title bg-soft-primary text-primary rounded-circle"
+            ><ion-icon name="home" class="primary"></ion-icon
+          ></span>
+        </div>
+        <div>
+          <div>
+            <h5 class="font-size-13">Delivery Address</h5>
+          </div>
+          <div>
+            <p class="text-muted mb-0">{{details.address}}</p>
+          </div>
+        </div>
+      </li>
+      <li class="activity-list">
+        <div class="activity-icon avatar-xs">
+          <span class="avatar-title bg-soft-primary text-primary rounded-circle"
+            ><ion-icon name="bag" class="primary"></ion-icon
+          ></span>
+        </div>
+        <div>
+          <div>
+            <h5 class="font-size-13">Order details</h5>
+          </div>
+          <div>
+            <p class="text-muted mb-0">{{details.items_data}}</p>
+            <div class="col-sm-10" *ngIf="details.items">
+              <ul class="list-group">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                  *ngFor="let i of details.items"
+                >
+                  <div>{{i.item.name}} x{{i.quantity}}</div>
+                  &#8377;{{i.quantity*i.price}}
+                </li>
+              </ul>
+
+              <hr />
+
+              <ul class="list-group">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Order amount
+                  <div class="">
+                    <span *ngIf="details.itemsPrice">&#8377;</span
+                    >{{details.itemsPrice ? details.itemsPrice : 'Pending'}}
+                  </div>
+                </li>
+
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Delivery Charges
+                  <span class=""> &#8377;{{details.deliveryFee}}</span>
+                </li>
+
+                <li
+                  *ngIf="details.finalPrice && (details.itemsPrice+details.deliveryFee) != details.finalPrice "
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Discount(-)
+                  <span class="" style="color: #ff5722">
+                    - &#8377;{{(details.itemsPrice +
+                    Number(details.deliveryFee)) - details.finalPrice}}</span
+                  >
+                </li>
+              </ul>
+
+              <hr />
+
+              <ul class="list-group">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                  style="font-weight: 600; color: #ff7900"
+                >
+                  Total Order amount
+                  <span
+                    ><span *ngIf="details.finalPrice">&#8377;</span>
+                    {{details.finalPrice ? details.finalPrice :
+                    'Pending'}}</span
+                  >
+                </li>
+              </ul>
+              <!-- <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Mode of Payment</label>
+                <div class="col-sm-10 text-right">{{details.paymentMode}}</div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </ion-card>
+
+  <div *ngIf="!isFirstTime">
+    <ion-list>
+      <ion-item *ngFor="let list of [1,1,1,1,1,1]">
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

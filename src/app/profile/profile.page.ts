@@ -18,9 +18,10 @@ export class ProfilePage implements OnInit {
       icon: 'business',
       active: true,
     },
-    // { name: 'About us', value: 'about', icon: '', active:true },
+    { name: 'Past Ordes', value: 'ordes', icon: 'bag-handle', active:true },
     { name: 'Logout', value: 'logout', icon: 'log-out', active: true },
   ];
+
   constructor(
     private navController: NavController,
     private modalController: ModalController,
@@ -63,9 +64,12 @@ export class ProfilePage implements OnInit {
   goto(go) {
     if (go === this.userOptions[0].value) {
       this.saveAddress();
-    }else if(go === this.userOptions[1].value){
+    }else if(go === this.userOptions[2].value){
     
       this.presentAlertConfirm();
+    }
+    else if(go === this.userOptions[1].value){
+      this.navController.navigateForward(['/orders', 'past']);
     }
   }
 
@@ -76,20 +80,21 @@ export class ProfilePage implements OnInit {
       message: 'Are you sure want to logout?',
       buttons: [
         
-        {
-          text: 'Logout',
-          handler: () => {
-            localStorage.clear();
-            this.backHandler();
-            console.log('Confirm Okay');
-          },
-        },
+       
         {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
+          },
+        },
+        {
+          text: 'Logout',
+          handler: () => {
+            localStorage.clear();
+            this.backHandler();
+            console.log('Confirm Okay');
           },
         },
       ],

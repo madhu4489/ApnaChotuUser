@@ -3,18 +3,25 @@
     <ion-button Fill="clear" slot="start" (click)="backHandler()">
       <ion-icon name="close" color="light"></ion-icon>
     </ion-button>
-    <ion-button *ngIf="details" Fill="outline" color="secondary" size="small" slot="end" (click)="presentAlertConfirm()">
+    <ion-button
+      *ngIf="details"
+      Fill="outline"
+      color="secondary"
+      size="small"
+      slot="end"
+      (click)="presentAlertConfirm()"
+    >
       <ion-icon name="trash" color="light" size="small"></ion-icon>
     </ion-button>
     <ion-title class="title-header">
-      <span>{{!details ? "Add your address" : "Update your address"}}</span>
+      <span>{{ !details ? "Add your address" : "Update your address" }}</span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list class="addres-field">
-    <ion-item>
+    <ion-item class="ion-activatable item-styles"  color="light">
       <ion-icon name="home" slot="start" size="small"></ion-icon>
       <ion-label position="stacked">House / Flat number*</ion-label>
       <ion-input
@@ -24,20 +31,20 @@
       ></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="ion-activatable item-styles"  color="light">
       <ion-icon name="trail-sign" slot="start" size="small"></ion-icon>
       <ion-label position="stacked">Street Name / Area*</ion-label>
       <ion-input inputmode="text" [(ngModel)]="street"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="ion-activatable item-styles"  color="light">
       <ion-icon name="body" slot="start" size="small"></ion-icon>
 
       <ion-label position="stacked">Landmark</ion-label>
       <ion-input inputmode="text" [(ngModel)]="landmark"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="ion-activatable item-styles"  color="light">
       <ion-icon name="call" slot="start" size="small"></ion-icon>
 
       <ion-label position="stacked">Contact Number(optional)</ion-label>
@@ -49,7 +56,12 @@
       ></ion-input>
     </ion-item>
 
-    <ion-item style="margin-bottom: 10px">
+    <ion-item
+      style="margin-bottom: 10px"
+      class="ion-activatable item-styles"
+     
+      color="light"
+    >
       <ion-icon name="location" slot="start" size="small"></ion-icon>
       <ion-label class="locality-label">Locality* </ion-label>
 
@@ -62,13 +74,25 @@
       </ion-select>
     </ion-item>
 
-    <ion-item lines="none" style="max-height: 34px">
+    <ion-item
+   
+      style="max-height: 34px;margin: 0;"
+      class="ion-activatable item-styles"
+      lines="none"
+      color="light"
+    >
       <ion-icon name="save" slot="start" size="small"></ion-icon>
       <ion-label class="locality-label">Address Type*</ion-label>
     </ion-item>
 
-    <ion-item class="save-as-btns" lines="none" *ngIf="!isOtherName">
-      
+    <ion-item
+      class="save-as-btns"
+      lines="none"
+      *ngIf="!isOtherName"
+    
+      lines="none"
+      color="light"
+    >
       <ion-icon
         name="save"
         slot="start"
@@ -76,18 +100,21 @@
         style="opacity: 0"
       ></ion-icon>
 
-      <ion-button
+      <ion-chip
         *ngFor="let typeOption of typeOptions; let index = index"
-        size="small"
-        shape="round"
-        fill="{{ index === currentIndex ? 'solid' : 'outline' }}"
+        color="dark"
+        outline="true"
+        [ngClass]="{ 'active-tip': index === currentIndex }"
         (click)="onSelectTypeHandler(typeOption.name); currentIndex = index"
       >
         {{ typeOption.name }}
-      </ion-button>
+      </ion-chip>
     </ion-item>
 
-    <ion-item *ngIf="isOtherName">
+    <ion-item
+      *ngIf="isOtherName"
+      color="light"
+    >
       <ion-icon
         name="save"
         slot="start"
@@ -122,6 +149,6 @@
     class="custom-btn"
     [disabled]="disabledButton(flat, street, locality)"
     (click)="!details ? addAddress() : updateAddress()"
-    >{{!details ? "Add" : "update"}} Address</ion-button
+    >{{ !details ? "Add" : "update" }} Address</ion-button
   >
 </ion-footer>

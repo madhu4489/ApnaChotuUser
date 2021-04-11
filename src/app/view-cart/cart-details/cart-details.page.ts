@@ -253,13 +253,14 @@ export class CartDetailsPage implements OnInit {
         {
           text: 'Cancel',
           role: 'cancel',
-          cssClass: 'secondary',
+         
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           },
         },
         {
           text: 'Proceed',
+          cssClass: 'secondary',
           handler: () => {
             this.placeOrder();
           },
@@ -320,6 +321,9 @@ export class CartDetailsPage implements OnInit {
 
   gotoDashboard() {
     this.navController.navigateBack(['/dashboard']);
+  }
+  gotoOrders() {
+    this.navController.navigateBack(['/orders', '']);
   }
 
   addTip(t) {

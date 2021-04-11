@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolbar-container">
+    <ion-button Fill="clear" slot="start" (click)="backHandler()">
+      <ion-icon name="arrow-back-outline" color="light"></ion-icon>
+    </ion-button>
+    <ion-title class="title-header">
+      <span>Order Vegetables / Fruits</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="vegVendors">
+    <ion-item-divider sticky="true" class="item-header">
+      <ion-item lines="full" color="light">
+        <ion-input
+          class="seach-input"
+          color="primary"
+          clearInput
+          placeholder="Search for store"
+          [(ngModel)]="terms"
+        ></ion-input>
+      </ion-item>
+    </ion-item-divider>
+
+    <ion-list style="padding-top: 0">
+      <ion-item
+        *ngFor="let restaurant of (vegVendors | search : terms : name)"
+        class="restaurant ion-activatable ripple-parent item-styles"
+        lines="none"
+        color="light"
+        [ngClass]="{'closed' : !restaurant.is_open}"
+        (click)="showVendor(restaurant.id)"
+      >
+        <ion-thumbnail slot="start" class="vendor-img">
+          <div *ngFor="let vendorOffers of restaurant.offer" class="burst-12">
+            <span *ngIf="vendorOffers.offerPercentage" class="badge-per"
+              >{{vendorOffers.offerPercentage}}% <span>OFF</span></span
+            >
+          </div>
+          <ion-img [src]="restaurant.media" width="80" height="80"></ion-img>
+        </ion-thumbnail>
+
+        <ion-label>
+          <h2>{{restaurant.name}}</h2>
+          <h3 *ngIf="restaurant.tags">
+            <span *ngFor="let tags of restaurant.tags; let last = last"
+              >{{tags.name}}<span *ngIf="!last">, </span></span
+            >
+          </h3>
+
+          <p>{{restaurant.address}}</p>
+          <p
+            *ngIf="restaurant.is_open && restaurant.delivery_time; else elseBlock"
+            class="time-duration"
+          >
+            <ion-icon name="time"></ion-icon> Within
+            {{restaurant.delivery_time}} min
+          </p>
+          <p *ngIf="!restaurant.is_open" class="next-open">
+            Next opens at {{restaurant.open_time}}
+          </p>
+
+          <p class="m-t2">
+            <span class="top" *ngIf="restaurant.rating > 4"> Top store</span>
+            <span class="free" *ngIf="restaurant.is_free_delivery">
+              Free Delivery</span
+            >
+          </p>
+        </ion-label>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- Skeleton screen -->
+  <div *ngIf="vegVendors.length ===0">
+    <ion-list>
+      <ion-item *ngFor="let list of [1,1,1,1,1,1]">
+        <ion-thumbnail slot="start" style="height: 90px; width: 90px">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <ion-infinite-scroll (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

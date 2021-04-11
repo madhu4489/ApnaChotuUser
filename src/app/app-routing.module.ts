@@ -29,6 +29,30 @@ const routes: Routes = [
   {
     path: 'cart-details',
     loadChildren: () => import('./view-cart/cart-details/cart-details.module').then( m => m.CartDetailsPageModule)
+  },
+  {
+    path: 'misc-order/:name',
+    loadChildren: () => import('./misc-orders/misc-order/misc-order.module').then( m => m.MiscOrderPageModule)
+  },
+  {
+    path: 'more-servicer/:id/:name',
+    loadChildren: () => import('./more-services/more-servicer/more-servicer.module').then( m => m.MoreServicerPageModule)
+  },
+  {
+    path: 'orders/:id',
+    loadChildren: () => import('./orders/orders/orders.module').then( m => m.OrdersPageModule)
+  },
+  {
+    path: 'order-details/:id/:past',
+    loadChildren: () => import('./orders/order-details/order-details.module').then( m => m.OrderDetailsPageModule)
+  },
+  {
+    path: 'vegetables',
+    loadChildren: () => import('./vegetables/vegetables/vegetables.module').then( m => m.VegetablesPageModule)
+  },
+  {
+    path: 'vendor-details/:id',
+    loadChildren: () => import('./vegetables/vendor/vendor.module').then( m => m.VendorPageModule)
   }
 ];
 @NgModule({

@@ -65,6 +65,7 @@
 
 .font-weight-bold {
   font-weight: 600 !important;
+  text-shadow: 1px 1px 2px #353535;
 }
 
 .large-icon{
@@ -139,3 +140,70 @@
   padding: 2px;
 }
 
+.food-bg{
+  background-image: url("../../../assets/food.jpeg");
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: block;
+  background-size: cover;
+  opacity: 0.5;
+  background-position: unset;
+}
+
+.font-style{
+  color: white;
+    font-size: 18px;
+    font-weight: 600;
+    /* background: white; */
+    text-shadow: 1px 1px 2px #353535;
+    position: absolute;
+    left: 0px;
+    background: #2196f3;
+    /* width: 60%; */
+    padding: 1px 14px 2px 12px;
+    border-radius: 0 6px 6px 0;
+}
+
+.meat{
+  .food-bg{
+    background-image: url("../../../assets/meat.png");
+  }
+  .font-style{
+    right: -1px;
+    text-align: right;
+    padding-right: 4px;
+    border-radius: 6px 0 0 6px;
+    padding: 1px 9px 2px 10px;
+    left: auto;
+    background: #cd695b;
+  }
+}
+
+.bg-gradient-custom-teal1 {
+  background: linear-gradient(to left, #2196f3, #2196f3) !important;
+}
+
+.bg-gradient-custom-indigo1 {
+  background: linear-gradient(to left, #8bc34a, #4caf50) !important;
+}
+
+.bg-gradient-custom-pink1 {
+  background: linear-gradient(to left, #ff7900, #f66537) !important;
+}
+
+.vegtables{
+  .food-bg{
+    background-image: url("../../../assets/veg.png");
+  }
+  .font-style{
+    right: auto;
+    text-align: left;
+    padding: 1px 4px 2px 10px;
+    left: -1px;
+    background: #8bc34a;
+    width: 88%;
+  }
+}

@@ -1,3 +1,4 @@
+import {IonContent} from '@ionic/angular';
 import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -22,7 +23,9 @@ export class FoodVendorPage implements OnInit {
   isVeg: boolean = false;
   isloading: boolean;
   backUpMenus: any = [];
-  // @ViewChild(Content) content: Content;
+  terms: string;
+
+ @ViewChild(IonContent, {read: IonContent}) myContent: IonContent;
   @ViewChildren('scrollTo') scrollComponent: any;
 
 
@@ -53,7 +56,7 @@ export class FoodVendorPage implements OnInit {
     this.storeOrderPrice = 0;
     this.cartDataProvider.removeCartItems();
     // this.menu = [];
-    // this.menuList = [];
+    this.groups = [];
     // this.finalMenuList = [];
     // this.courseType = [];
     // this.imageUrl = "";
@@ -75,12 +78,18 @@ export class FoodVendorPage implements OnInit {
       this.isloading = true;
       const data = resp[0];
       this.details = data;
-      for (let value of Object.values(data['menu'])) {
-        this.groups.push({
-          name: value['group'],
-          is_active: value['is_active'],
-        });
-      }
+
+      console.log(data['menu']);
+      data['menu'].forEach((element, index) => {
+        console.log(element, "element", index)
+        this.groups[index] ={
+              name: element.group,
+              is_active: element.is_active,
+            };
+      });
+
+      console.log(this.groups);
+  
       this.backUpMenus = data['menu'];
       this.menus = this.backUpMenus;
       this.cartDataProvider.setRestName(data);
@@ -153,34 +162,46 @@ export class FoodVendorPage implements OnInit {
 
   async presentActionSheet() {
     let buttons = [];
-    for (let group of this.groups) {
+
+    console.log(this.groups, "this.groups")
+    this.groups.forEach((group, index) => {
       let button = {
         cssClass: 'action-button',
         text: group.name,
         handler: () => {
           this.setDefault = group.name;
-          console.log('Delete clicked', group.name);
+          this.gotoMenu(index)
+          console.log('Delete clicked', group);
         },
       };
       buttons.push(button);
-    }
+    });
+    // for (let group of this.groups) {
+     
+    // }
 
     const actionSheet = await this.actionSheetController.create({
       header: 'Choose Menu',
-      cssClass: 'my-custom-menu-class',
+      cssClass: 'action-sheet-controller',
       buttons: buttons,
     });
     await actionSheet.present();
   }
 
-  gotoMenu(value) {
+
+  async myMethod() {
+    await this.myContent.scrollToBottom();
+}
+
+
+async gotoMenu(value) {
     console.log(value);
-    let pos = value - 1;
-    // this.content.scrollTo(
-    //   0,
-    //   this.scrollComponent["_results"][pos].nativeElement.offsetTop,
-    //   800
-    // );
+    let pos = value;
+    await this.myContent.scrollToPoint(
+      0,
+      this.scrollComponent["_results"][pos].el.offsetTop,
+      800
+    );
   }
 
   recevieOrderFn(items: any){

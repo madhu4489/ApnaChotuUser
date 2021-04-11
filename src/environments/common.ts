@@ -20,7 +20,10 @@ export const common = {
       addAddres: () => `${BASE_URL}user/address/add`,
       deletetAddres: () => `${BASE_URL}user/address/delete`,
       createOrder: () => `${BASE_URL}order/create`,
-      
+      createMiscOrder: () => `${BASE_URL}order/mis-create`,
+      getSubCategories: () => `${BASE_URL}meta/sub_categories`,
+      getOrdersAll:() => `${BASE_URL}order/getall`,
+      getSingleOrderDetails:() => `${BASE_URL}order/get/`
     },
   },
-};
+}

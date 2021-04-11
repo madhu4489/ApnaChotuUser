@@ -16,6 +16,7 @@ export class FoodPage implements OnInit {
   restaurants: any = [];
   offset: number = 0;
   isClear: boolean;
+  terms: string;
 
   constructor(
     private navController: NavController,
@@ -41,6 +42,7 @@ export class FoodPage implements OnInit {
       offset: this.offset,
       limit: 10,
       category: 1,
+      is_active:1
     };
     this.sharedService.getRestaurants(vendorData).then((data) => {
       console.log(data, 'getRestaurants');

@@ -145,7 +145,7 @@ export class SharedService {
   getRestaurants(details): Promise<any> {
     let obj = this;
       return obj._http
-        .post(environment.urls.function.getRestaurants(), details, this.getHeaders())
+        .post(environment.urls.function.getRestaurants(), details)
         .toPromise();
   }
 
@@ -191,6 +191,35 @@ export class SharedService {
     let obj = this;
       return obj._http
         .post(environment.urls.function.createOrder(), details, this.getHeaders())
+        .toPromise();
+  }
+
+  createMiscOrder(details): Promise<any> {
+    let obj = this;
+      return obj._http
+        .post(environment.urls.function.createMiscOrder(), details, this.getHeaders())
+        .toPromise();
+  }
+
+  getSubCategories(id): Promise<any> {
+    let obj = this;
+    return obj._http
+    .get(environment.urls.function.getSubCategories()+'/'+id)
+    .toPromise();
+  }
+
+  
+  getOrdersAll(details): Promise<any> {
+    let obj = this;
+      return obj._http
+        .post(environment.urls.function.getOrdersAll(), details, this.getHeaders())
+        .toPromise();
+  }
+  
+  getSingleOrderDetails(id): Promise<any> {
+    let obj = this;
+      return obj._http
+        .get(environment.urls.function.getSingleOrderDetails()+id, this.getHeaders())
         .toPromise();
   }
 

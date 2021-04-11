@@ -12,6 +12,9 @@
 </ion-header>
 
 <ion-content >
+  
+
+  <app-explore-top-services></app-explore-top-services>
   <div class="sliders">
     <ion-slides pager="false"  [options]="slideOpts">
       <ion-slide>
@@ -68,19 +71,31 @@
       </ion-slide>
     </ion-slides>
   </div>
-
-  <app-explore-top-services></app-explore-top-services>
-  
 </ion-content>
+<!-- <ion-toolbar *ngIf="allOrders">
+  <ion-item lines="none">
+    <div class="order-status" [ngClass]="{'onthe-way' : allOrders.id === 10 || allOrders.id === 1, 'cancel' : allOrders.id === 3 || allOrders.id === 11 }">
+      {{allOrders.name == 'Order Placed Waiting for Final Price' ? 'Order
+      Placed' : allOrders.name}}
+      <span class="badge-dot"> </span>
+    </div>
+    <ion-progress-bar type="indeterminate" color="warning"></ion-progress-bar>
+  </ion-item>
+</ion-toolbar> -->
 <ion-toolbar>
+  
+
+
   <ion-tabs>
     <ion-tab-bar slot="bottom">
-      <ion-tab-button >
+      <ion-tab-button (click)="call()">
         <ion-icon name="call"></ion-icon>
         <ion-label>Call</ion-label>
       </ion-tab-button>
   
-      <ion-tab-button>
+      <ion-tab-button (click)="orders()">
+        <ion-badge *ngIf="allOrders" color="danger">{{allOrders.length}}</ion-badge>
+        
         <ion-icon name="cart"></ion-icon>
         <ion-label>Orders</ion-label>
       </ion-tab-button>
