@@ -23,7 +23,10 @@ export const common = {
       createMiscOrder: () => `${BASE_URL}order/mis-create`,
       getSubCategories: () => `${BASE_URL}meta/sub_categories`,
       getOrdersAll:() => `${BASE_URL}order/getall`,
-      getSingleOrderDetails:() => `${BASE_URL}order/get/`
+      getSingleOrderDetails:() => `${BASE_URL}order/get/`,
+      getDashboardOffers:() => `${BASE_URL}meta/offers`,
+      
+
     },
   },
 }

@@ -11,18 +11,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
   
-
-  <app-explore-top-services></app-explore-top-services>
-  <div class="sliders">
-    <ion-slides pager="false"  [options]="slideOpts">
-      <ion-slide>
+  
+  <!-- <div class="sliders" *ngIf="offers.length>0">
+    <ion-slides pager="true" [options]="slideOpts">
+     <ion-slide *ngFor="let slide of offers">
         <div class="card bg-warning">
           <div class="card-body">
             <div class="d-flex">
               <div class="mr-3">
-                <div class="text-white-75">Food</div>
+                <div class="text-white-75">{{slide.group}}</div>
               </div>
             </div>
           </div>
@@ -30,7 +29,7 @@
         </div>
   
       </ion-slide>
-      <ion-slide>
+       <ion-slide>
         <div class="card bg-primary">
           <div class="card-body">
             <div class="d-flex">
@@ -69,7 +68,49 @@
         </div>
   
       </ion-slide>
-    </ion-slides>
+    </ion-slides> 
+  </div> -->
+
+  <app-explore-top-services></app-explore-top-services>
+  
+  <div class="sliders" *ngIf="offers.length>0">
+
+    <ion-row *ngFor="let service of offers">
+      <ion-list-header class="header-dashboard">
+        <ion-label class="header-title"> Top Deals on&nbsp; <label [innerHTML]="service.group" class="label"></label></ion-label>
+      </ion-list-header>
+
+      <ion-slides pager={getPager(service.items)} [options]="slideOptions(service.items)">
+        <ion-slide *ngFor="let slide of service.items">
+          <div class="card bg-primary new-card" [ngClass]="{'bg-warning' : service.group == 'Food', 'bg-success' : service.group == 'Groceries '}">
+            <div class="card-body">
+              <div class="d-flex">
+                <div class="mr-3">
+                  <div class="text-white-75">{{slide.title}}</div>
+                  <p class="conten" [innerHTML]="slide.description"></p>
+                </div>
+              </div>
+            </div>
+    
+          </div>
+    
+        </ion-slide>
+      </ion-slides>
+
+    </ion-row>
+
+
+    
+  <!-- <ion-item-group *ngFor="let service of offers" class="group-item">
+
+    <ion-item-divider class="divider-sub">
+      Top Deals on&nbsp; <label [innerHTML]="service.group"></label>
+    </ion-item-divider>
+
+    
+
+  </ion-item-group> -->
+
   </div>
 </ion-content>
 <!-- <ion-toolbar *ngIf="allOrders">

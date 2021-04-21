@@ -12,18 +12,21 @@ import { SignupUserComponent } from '../profile/signup-user/signup-user.componen
 export class DashboardPage implements OnInit {
   chooseLocation: string = 'Unnamed Road, Sangareddy';
   slideOpts = {
-    initialSlide: 1,
     speed: 400,
-    autoplay: 3000,
     loop: 'true',
   };
 
+  // autoplay: {
+  //   delay: 5000,
+  // },
+
+  offers: any = [];
   order: any = [];
   allOrders: any = [];
 
-  orderStatusText:string;
+  orderStatusText: string;
 
-  isEnabled:boolean;
+  isEnabled: boolean;
 
   constructor(
     public sharedService: SharedService,
@@ -33,17 +36,8 @@ export class DashboardPage implements OnInit {
   ) {}
 
   ngOnInit() {
-
-    // this.network.onDisconnect().subscribe(() => {
-    //   this.navController.navigateRoot(['../no-connection']);
-    
-    // });
-
-  
-
-
-
     this.getlocationsFn();
+    this.getOffers();
   }
 
   ionViewWillEnter() {
@@ -57,12 +51,10 @@ export class DashboardPage implements OnInit {
         address.locality;
     }
 
-    if(localStorage.getItem('jwt')){
-this.isEnabled = true;
+    if (localStorage.getItem('jwt')) {
+      this.isEnabled = true;
       this.getOrders();
-
     }
-
   }
 
   getlocationsFn() {
@@ -101,11 +93,6 @@ this.isEnabled = true;
     }
   }
 
-  
-
-
-
-
   orders() {
     this.navController.navigateForward(['/orders', '']);
   }
@@ -129,4 +116,48 @@ this.isEnabled = true;
       }
     });
   }
+
+  getOffers() {
+    this.sharedService.getDashboardOffers().then((data) => {
+      console.log(data['data'], "data['data']");
+      this.offers = data['data'];
+    }),
+      (error) => {
+        alert(error.message);
+      };
+  }
+
+  slideOptions(slides) {
+    let slideOpts = {
+        speed: 400,
+        loop: 'true',
+      };
+
+      let slideOpts1 = {
+        speed: 400,
+        loop: 'false',
+      };
+
+      console.log(slides.length, "slides.length")
+    // if(slides.length > 2){
+    //   return slideOpts;
+    // }
+    return slideOpts
+  }
+
+
+  getPager(slides){
+    return false
+  }
 }
+
+
+
+// slideOpts = {
+//   speed: 400,
+//   loop: 'true',
+// };
+
+// autoplay: {
+//   delay: 5000,
+// },

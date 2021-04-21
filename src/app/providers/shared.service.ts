@@ -223,4 +223,14 @@ export class SharedService {
         .toPromise();
   }
 
+  
+
+  getDashboardOffers(): Promise<any> {
+    let obj = this;
+      return obj._http
+        .get(environment.urls.function.getDashboardOffers())
+        .toPromise();
+  }
+
+
 }

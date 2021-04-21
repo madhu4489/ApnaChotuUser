@@ -101,62 +101,72 @@ export class SignupUserComponent implements OnInit {
     // this.navController.navigateBack(['../dashboard']);
   }
 
-  logForm() {
+  async logForm() {
     let mobileNum = { mobile: Number(this.loginGroup.value.phone) };
-    this.sharedService.presentLoading();
-    this.sharedService.getLogin(mobileNum).then((resp) => {
-      console.log(resp, "loginnnnnnnnnnnnnnnn");
+    // this.sharedService.presentLoading();
 
-      this.userPhone = this.loginGroup.value.phone;
-      let values = this.loginGroup.value;
-      let details = {
-        first_name: 'Guest',
-        last_name: 'Guest',
-        email: values.email,
-        user_role: 'USER',
-        mobile: values.phone,
-        password: null,
-        privilege: 'read',
-        gender: "notchoose"
-      };
-
-      let serverData: any;
-      let serverHeader: any;
-
-      if (!this.sharedService.isBrowser) {
-        serverData = resp.data;
-        serverHeader = resp.headers;
-        serverData = JSON.parse(serverData).data;
-        this.userResponceToken = 'Bearer ' + serverHeader.token;
-        console.log(this.userResponceToken, 'this.userResponceToken');
-
-        if (serverData) {
-          this.userDetails = serverData;
-          this.calcOTP();
-        } else {
-          this.signUp(details);
-          this.sharedService.presentToastWithOptions(
-            serverData.message,
-            'warning'
-          );
-        }
-
-      } else {
-        serverData = resp.body;
-        if (serverData.status == 'error') {
-          this.signUp(details);
-          this.sharedService.presentToastWithOptions(
-            serverData.message,
-            'warning'
-          );
-        } else {
-          this.userResponceToken = 'Bearer ' + resp.headers.get('token');
-          this.userDetails = serverData.data;
-          this.calcOTP();
-        }
-      }
-
+    const loading = await this.loader.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
     });
+    await loading.present().then(() => {
+      this.sharedService.getLogin(mobileNum).then((resp) => {
+        console.log(resp, "loginnnnnnnnnnnnnnnn");
+        loading.dismiss();
+        this.userPhone = this.loginGroup.value.phone;
+        let values = this.loginGroup.value;
+        let details = {
+          first_name: 'Guest',
+          last_name: 'Guest',
+          email: values.email,
+          user_role: 'USER',
+          mobile: values.phone,
+          password: null,
+          privilege: 'read',
+          gender: "notchoose"
+        };
+  
+        let serverData: any;
+        let serverHeader: any;
+  
+        if (!this.sharedService.isBrowser) {
+          serverData = resp.data;
+          serverHeader = resp.headers;
+          serverData = JSON.parse(serverData).data;
+          this.userResponceToken = 'Bearer ' + serverHeader.token;
+          console.log(this.userResponceToken, 'this.userResponceToken');
+  
+          if (serverData) {
+            this.userDetails = serverData;
+            this.calcOTP();
+          } else {
+            this.signUp(details);
+            this.sharedService.presentToastWithOptions(
+              serverData.message,
+              'warning'
+            );
+          }
+  
+        } else {
+          serverData = resp.body;
+          if (serverData.status == 'error') {
+            this.signUp(details);
+            this.sharedService.presentToastWithOptions(
+              serverData.message,
+              'warning'
+            );
+          } else {
+            this.userResponceToken = 'Bearer ' + resp.headers.get('token');
+            this.userDetails = serverData.data;
+            this.calcOTP();
+          }
+        }
+  
+      });
+    });
+    
+
+
   }
 
   calcOTP() {
@@ -172,6 +182,7 @@ export class SignupUserComponent implements OnInit {
         this.isLoginScreen = false;
         this.switchOTPScreen = true;
         this.saveOTP = serverData.otp;
+        // this.otpGroup.value.otp = serverData.otp;
         console.log(this.saveOTP, 'this.saveOTP');
       }
     });

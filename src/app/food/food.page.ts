@@ -4,6 +4,7 @@ import { SharedService } from '../providers/shared.service';
 
 import { IonInfiniteScroll } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { CartDataProvider } from '../providers/cart-data/cart-data';
 
 @Component({
   selector: 'app-food',
@@ -18,14 +19,18 @@ export class FoodPage implements OnInit {
   isClear: boolean;
   terms: string;
 
+  isActicveFirst = true;
+
   constructor(
     private navController: NavController,
     public sharedService: SharedService,
-    private router: Router
+    private router: Router,
+    private cartDataProvider: CartDataProvider
   ) {}
 
   ngOnInit() {
     this.getRestaurants();
+    this.cartDataProvider.clearCartData();
   }
 
   backHandler() {
@@ -42,7 +47,7 @@ export class FoodPage implements OnInit {
       offset: this.offset,
       limit: 10,
       category: 1,
-      is_active:1
+      is_active:this.isActicveFirst
     };
     this.sharedService.getRestaurants(vendorData).then((data) => {
       console.log(data, 'getRestaurants');
@@ -55,6 +60,7 @@ export class FoodPage implements OnInit {
           this.isClear = true;
         }
       } else {
+        this.isActicveFirst = false;
         event.target.disabled = true;
 
         this.sharedService.presentToastWithOptions(
