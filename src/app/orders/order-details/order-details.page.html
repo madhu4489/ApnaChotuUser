@@ -4,8 +4,8 @@
       <ion-icon name="arrow-back-outline" color="light"></ion-icon>
     </ion-button>
     <ion-title class="title-header">
-      <span style="display: flex;">Order: #{{details.id}}</span>
-      <small>Placed on: {{details.createdOn | date:'medium' }}</small>  
+      <span style="display: flex">Order: #{{details.id}}</span>
+      <small>Placed on: {{details.createdOn | date:'medium' }}</small>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -22,13 +22,13 @@
 
   <ion-card color="light">
     <div
-    class="order-status details-dg"
-    [ngClass]="{'onthe-way' : status.id === 10 || status.id === 1, 'cancel' : status.id === 3 || status.id === 11 }"
-  >
-    {{status.name == 'Order Placed Waiting for Final Price' ? 'Order
-    Placed' : status.name}}
-    <span class="badge-dot"> </span>
-  </div>
+      class="order-status details-dg"
+      [ngClass]="{'onthe-way' : status.id === 10 || status.id === 1, 'cancel' : status.id === 3 || status.id === 11 }"
+    >
+      {{status.name == 'Order Placed waiting for final price' ? 'Order Placed' :
+      status.name}}
+      <span class="badge-dot"> </span>
+    </div>
 
     <ul class="list-unstyled activity-wid">
       <li class="activity-list">
@@ -105,18 +105,25 @@
                 <li
                   class="list-group-item d-flex justify-content-between align-items-center"
                 >
-                  Delivery Charges
-                  <span class=""> &#8377;{{details.deliveryFee}}</span>
+                  Delivery charges
+                  <span class=""> &#8377;{{details.deliveryFee || 0}}</span>
                 </li>
 
                 <li
-                  *ngIf="details.finalPrice && (details.itemsPrice+details.deliveryFee) != details.finalPrice "
+                  *ngIf="details.tip > 0"
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  Tip
+                  <span class=""> &#8377;{{details.tip}}</span>
+                </li>
+
+                <li
+                  *ngIf="details.discountPrice"
                   class="list-group-item d-flex justify-content-between align-items-center"
                 >
                   Discount(-)
-                  <span class="" style="color: #ff5722">
-                    - &#8377;{{(details.itemsPrice +
-                    Number(details.deliveryFee)) - details.finalPrice}}</span
+                  <span class="" style="color: #278a00">
+                    - &#8377;{{details.discountPrice}}</span
                   >
                 </li>
               </ul>
@@ -128,7 +135,7 @@
                   class="list-group-item d-flex justify-content-between align-items-center"
                   style="font-weight: 600; color: #ff7900"
                 >
-                  Total Order amount
+                  Total order amount
                   <span
                     ><span *ngIf="details.finalPrice">&#8377;</span>
                     {{details.finalPrice ? details.finalPrice :
@@ -136,10 +143,6 @@
                   >
                 </li>
               </ul>
-              <!-- <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Mode of Payment</label>
-                <div class="col-sm-10 text-right">{{details.paymentMode}}</div>
-              </div> -->
             </div>
           </div>
         </div>

@@ -31,6 +31,8 @@ export class CartDetailsPage implements OnInit {
   alternate: any;
   deliveryLocation: any = [];
 
+  vendorDetails:any =[];
+
   isLoading: boolean;
 
   tipTabel: any = [
@@ -50,6 +52,7 @@ export class CartDetailsPage implements OnInit {
 
   ngOnInit() {
     this.getlocationsFn();
+    this.vendorDetails = this.cartDataProvider.getRestName();
   }
 
   backHandler() {
@@ -58,6 +61,7 @@ export class CartDetailsPage implements OnInit {
 
   getOrderDetails() {
     this.orderDetails = this.cartDataProvider.getCartData();
+    console.log(this.orderDetails, ' orderDetails');
   }
 
   recevieOrderFn(items: any) {
@@ -238,8 +242,10 @@ export class CartDetailsPage implements OnInit {
     this.showCount.finalPrice = (
       this.showCount.totalPrice -
       this.discountPrice + this.tipAmount+
-      (this.serviceLocation ? Number(this.serviceLocation.charge) : 0)
+      (this.serviceLocation && !this.vendorDetails.is_free_delivery ? Number(this.serviceLocation.charge) : 0)
     ).toFixed(0);
+
+
     this.encodedOrderMessage = encodeURI(this.orderMessage);
   }
 
@@ -276,9 +282,9 @@ export class CartDetailsPage implements OnInit {
     let Items: any = [];
 
     this.orderDetails.forEach((element) => {
-      vendorId = element.vendorID;
+      vendorId = element.vendorId;
       Items.push({
-        itemId: element.id,
+        itemId: element.itemId,
         quantity: element.count,
         price: element.price,
       });

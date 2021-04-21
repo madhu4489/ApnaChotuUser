@@ -8,26 +8,31 @@
   background-clip: border-box;
   border: 1px solid rgba(33, 40, 50, 0.125);
   border-radius: 0.35rem;
-  min-height: 120px;
+  min-height: 160px;
+
   .card-body {
       flex: 1 1 auto;
       min-height: 1px;
       padding: 0.5rem 0.5rem 0.5rem 1rem;
       text-align: right;
   }
+
   .card-footer {
       padding: 1rem 1.35rem;
       background-color: rgba(33, 40, 50, 0.03);
       border-top: 1px solid rgba(33, 40, 50, 0.125);
   }
+
   .card-footer:last-child {
       border-radius: 0 0 0.35rem 0.35rem;
   }
+
   .icon{
     position: absolute;
     bottom: 4px;
     right: 4px;
   }
+  
 }
 
 .small {

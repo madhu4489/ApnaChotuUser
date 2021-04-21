@@ -13,23 +13,23 @@
   <ion-list *ngIf="isLoading">
     <ion-item-group>
       <ion-item
-        *ngFor="let menuItems of orderDetails"
+        *ngFor="let menuItem of orderDetails"
         class="ion-activatable item-styles"
         lines="none"
         color="light"
       >
-        <span class="veg" [ngClass]="{'non-veg' : menuItems.type==='nv'}"
+        <span class="veg" [ngClass]="{'non-veg' : menuItem.type==='nv'}"
           ><span></span
         ></span>
         <h6 class="menu-item">
-          {{menuItems.name}}
-          <div>&#8377; {{menuItems.price}}</div>
+          {{menuItem.name}}
+          <div>&#8377; {{menuItem.price}}</div>
         </h6>
         <h6>
           <custom-counter
-            [foodItem]="menuItems"
-            [groupID]="menuItems.id"
-            [vendorID]="menuItems.vendorID"
+            [foodItem]="menuItem"
+            [groupId]="menuItem.groupId"
+            [vendorId]="menuItem.vendorId"
             (recevieOrder)="recevieOrderFn($event)"
           ></custom-counter>
         </h6>

@@ -24,20 +24,24 @@
     <ion-item lines="full" color="light" class="suggestion item-styles">
       <ion-label position="stacked">Pickup Store/Address</ion-label>
       <ion-input
-        placeholder="Enter you fav store / Apna chotu store"
+        placeholder="Enter your fav store / Apna chotu choice"
         [(ngModel)]="pickup"
         clearInput
       ></ion-input>
     </ion-item>
 
-    <ion-item lines="none" color="light" *ngIf="deliveryLocation.length === 0"   (click)="addAddress()">
+    <ion-item
+      lines="none"
+      color="light"
+      *ngIf="deliveryLocation.length === 0"
+      (click)="addAddress()"
+    >
       <ion-label class="view-cart-label"
         >*Please add a delivery address</ion-label
       >
       <ion-button
         color="primary"
         class="custom-btn-small"
-      
         fill="clear"
         size="small"
         color="secondary"

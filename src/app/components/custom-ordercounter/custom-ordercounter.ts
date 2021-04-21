@@ -40,7 +40,7 @@ export class CustomOrdercounterComponent implements OnInit {
     }
 
     this.selectedOrder = {
-      vendorID:this.foodItem.vendorID,
+      vendorId:this.foodItem.vendorID,
       id:this.foodItem.id,
       group:this.foodItem.group,
       count: this.foodItem.count,

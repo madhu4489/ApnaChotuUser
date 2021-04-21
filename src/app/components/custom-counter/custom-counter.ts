@@ -6,8 +6,8 @@ import { Component, Input, EventEmitter, Output, OnInit } from "@angular/core";
 })
 export class CustomCounterComponent implements OnInit{
   @Input() foodItem: any;
-  @Input() groupID: any;
-  @Input() vendorID:any;
+  @Input() groupId: any;
+  @Input() vendorId:any;
   @Output() recevieOrder = new EventEmitter();
   public menuOrder: string;
   public selectedOrder: any = [];
@@ -29,9 +29,9 @@ export class CustomCounterComponent implements OnInit{
     }
 
     this.selectedOrder = {
-      vendorID:this.vendorID,
-      id:this.foodItem.id,
-      group:this.groupID,
+      vendorId:this.vendorId,
+      itemId:this.foodItem.id || this.foodItem.itemId,
+      groupId:this.groupId,
       count: this.foodItem.count,
       name: this.foodItem.name,
       price: this.foodItem.price,

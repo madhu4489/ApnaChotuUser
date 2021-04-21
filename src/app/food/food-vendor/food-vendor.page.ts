@@ -1,4 +1,4 @@
-import {IonContent} from '@ionic/angular';
+import { IonContent } from '@ionic/angular';
 import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -25,9 +25,8 @@ export class FoodVendorPage implements OnInit {
   backUpMenus: any = [];
   terms: string;
 
- @ViewChild(IonContent, {read: IonContent}) myContent: IonContent;
+  @ViewChild(IonContent, { read: IonContent }) myContent: IonContent;
   @ViewChildren('scrollTo') scrollComponent: any;
-
 
   public storeOrderCount: number = 0;
   public storeOrderPrice: number = 0;
@@ -38,7 +37,7 @@ export class FoodVendorPage implements OnInit {
     public sharedService: SharedService,
     public loader: LoadingController,
     public actionSheetController: ActionSheetController,
-    private cartDataProvider: CartDataProvider,
+    private cartDataProvider: CartDataProvider
   ) {}
 
   ngOnInit() {
@@ -48,23 +47,15 @@ export class FoodVendorPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log("Ion View Will Enter ");
+    console.log('Ion View Will Enter ');
 
     this.cartDataProvider.setRestName(this.details);
 
     this.storeOrderCount = 0;
     this.storeOrderPrice = 0;
     this.cartDataProvider.removeCartItems();
-    // this.menu = [];
     this.groups = [];
-    // this.finalMenuList = [];
-    // this.courseType = [];
-    // this.imageUrl = "";
-    // this.storeOrder = [];
     this.getRestaurantVendor(this.route.snapshot.params.id);
-
-    // console.log("Count: ", _count.length);
-    // console.log("Final Menu Count: ", this.finalMenuList.length);
   }
 
   backHandler() {
@@ -74,88 +65,80 @@ export class FoodVendorPage implements OnInit {
   }
 
   async getRestaurantVendor(id?: any) {
-    this.sharedService.getRestaurantVendor(id).then((resp) => {
-      this.isloading = true;
-      const data = resp[0];
-      this.details = data;
+    const loading = await this.loader.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present().then(() => {
+      this.sharedService.getRestaurantVendor(id).then((resp) => {
+        this.isloading = true;
+        const data = resp[0];
+        this.details = data;
 
-      console.log(data['menu']);
-      data['menu'].forEach((element, index) => {
-        console.log(element, "element", index)
-        this.groups[index] ={
-              name: element.group,
-              is_active: element.is_active,
-            };
-      });
+        data['menu'].forEach((element, index) => {
+          this.groups[index] = {
+            name: element.group,
+            is_active: element.is_active,
+          };
+        });
 
-      console.log(this.groups);
-  
-      this.backUpMenus = data['menu'];
-      this.menus = this.backUpMenus;
-      this.cartDataProvider.setRestName(data);
+        this.backUpMenus = data['menu'];
+        this.menus = this.backUpMenus;
+        this.cartDataProvider.setRestName(data);
 
-      let _cartData = this.cartDataProvider.getCartData();
-
-        console.log(_cartData, "_cartItem::::");
-        console.log(' this.finalMenuList', this.details.menu);
-        if (_cartData.length != 0) {
+        let _cartData = this.cartDataProvider.getCartData();
+        if (_cartData && _cartData.length != 0) {
           this.storeOrderPrice = 0;
-          _cartData.forEach(_cartItem => {
+          _cartData.forEach((_cartItem) => {
             this.storeOrderCount = this.storeOrderCount + _cartItem.count;
             this.storeOrderPrice = this.storeOrderPrice + _cartItem.totalprice;
-            this.details.menu.forEach((element, i) => {
-              const isThere = (element) => element.id === _cartItem.id;
-              let Menuindex = this.details.menu.findIndex(isThere);
-              if (Menuindex > -1) {
-                element.items.forEach((items, i) => {
-                  const isThereItem = (element) => element.id === _cartItem.id;
-                  let itemsIndex = element.items.findIndex(isThereItem);
-                  if (itemsIndex > -1) {
-                    console.log(this.details.menu[Menuindex].items[itemsIndex])
-                    this.details.menu[Menuindex].items[itemsIndex].count = _cartItem.count;
-                    this.details.menu[Menuindex].items[itemsIndex].orderPrice = this.details.menu[Menuindex].items[itemsIndex].count *
-                      this.details.menu[Menuindex].items[itemsIndex].price;
+            this.details.menu.forEach((element, index) => {
+              if (element.id === _cartItem.groupId) {
+                element.items.forEach((items, itemIndex) => {
+                  if (items.id === _cartItem.itemId) {
+                    console.log(_cartItem, '_cartItem');
+                    console.log(items);
+                    this.details.menu[index].items[itemIndex].count =
+                      _cartItem.count;
+                    this.details.menu[index].items[itemIndex].orderPrice =
+                      _cartItem.count * _cartItem.price;
                   }
-                })
+                });
               }
-
             });
           });
         }
-      // this.setDefault = this.groups[0].name;
-      //  this.filterMenus();
-      // loading.dismiss();
+        loading.dismiss();
+      });
     });
   }
 
   menuChanged(event) {
     this.setDefault = event.detail.value;
-    console.log(this.setDefault);
-    // this.isVeg = false;
     this.filterMenus();
   }
 
   filterMenus() {
-    //  let menu = this.menus.filter(item => item.group === this.setDefault);
     this.showMenuItems = this.menus.items;
   }
 
   vegFilter() {
-    console.log(this.isVeg);
     this.isVeg = !this.isVeg;
-    this.menus =  this.isVeg ? this.backUpMenus.map((item) => {
-      return {
-        group: item.group,
-        id: item.id,
-        is_active: item.is_active,
-        items: item.items.filter((item) => {
-          if (item.type == 'v') {
-            console.log(item)
-            return item;
-          }
-        }),
-      };
-    }) : this.backUpMenus;
+    this.menus = this.isVeg
+      ? this.backUpMenus.map((item) => {
+          return {
+            group: item.group,
+            id: item.id,
+            is_active: item.is_active,
+            items: item.items.filter((item) => {
+              if (item.type == 'v') {
+                console.log(item);
+                return item;
+              }
+            }),
+          };
+        })
+      : this.backUpMenus;
 
     console.log(this.menus);
   }
@@ -163,22 +146,18 @@ export class FoodVendorPage implements OnInit {
   async presentActionSheet() {
     let buttons = [];
 
-    console.log(this.groups, "this.groups")
     this.groups.forEach((group, index) => {
       let button = {
         cssClass: 'action-button',
         text: group.name,
         handler: () => {
           this.setDefault = group.name;
-          this.gotoMenu(index)
+          this.gotoMenu(index);
           console.log('Delete clicked', group);
         },
       };
       buttons.push(button);
     });
-    // for (let group of this.groups) {
-     
-    // }
 
     const actionSheet = await this.actionSheetController.create({
       header: 'Choose Menu',
@@ -188,42 +167,35 @@ export class FoodVendorPage implements OnInit {
     await actionSheet.present();
   }
 
-
   async myMethod() {
     await this.myContent.scrollToBottom();
-}
+  }
 
-
-async gotoMenu(value) {
+  async gotoMenu(value) {
     console.log(value);
     let pos = value;
     await this.myContent.scrollToPoint(
       0,
-      this.scrollComponent["_results"][pos].el.offsetTop,
+      this.scrollComponent['_results'][pos].el.offsetTop,
       800
     );
   }
 
-  recevieOrderFn(items: any){
+  recevieOrderFn(items: any) {
     this.cartDataProvider.addCartData(items);
     this.cartDataProvider.removeCartItems();
-
     let _tempCartData = this.cartDataProvider.getCartData();
     this.storeOrderCount = 0;
     this.storeOrderPrice = 0;
-    console.log("Temp Data: ", JSON.stringify(_tempCartData));
-    _tempCartData.forEach(currentItem => {
+    _tempCartData.forEach((currentItem) => {
       this.storeOrderCount = this.storeOrderCount + currentItem.count;
     });
-    _tempCartData.forEach(currentItem => {
+    _tempCartData.forEach((currentItem) => {
       this.storeOrderPrice = this.storeOrderPrice + currentItem.orderPrice;
     });
-
-    console.log("Store Order: ", JSON.stringify(_tempCartData));
-
   }
 
   viewCart() {
-    this.navController.navigateForward(["/cart-details"]);
+    this.navController.navigateForward(['/cart-details']);
   }
 }

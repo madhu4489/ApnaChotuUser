@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Network } from '@ionic-native/network/ngx';
 import { ModalController, NavController } from '@ionic/angular';
 import { SharedService } from 'src/app/providers/shared.service';
 import { SignupUserComponent } from '../profile/signup-user/signup-user.component';
@@ -22,13 +23,26 @@ export class DashboardPage implements OnInit {
 
   orderStatusText:string;
 
+  isEnabled:boolean;
+
   constructor(
     public sharedService: SharedService,
     public modalController: ModalController,
-    private navController: NavController
+    private navController: NavController,
+    private network: Network
   ) {}
 
   ngOnInit() {
+
+    // this.network.onDisconnect().subscribe(() => {
+    //   this.navController.navigateRoot(['../no-connection']);
+    
+    // });
+
+  
+
+
+
     this.getlocationsFn();
   }
 
@@ -43,7 +57,12 @@ export class DashboardPage implements OnInit {
         address.locality;
     }
 
-    this.getOrders();
+    if(localStorage.getItem('jwt')){
+this.isEnabled = true;
+      this.getOrders();
+
+    }
+
   }
 
   getlocationsFn() {

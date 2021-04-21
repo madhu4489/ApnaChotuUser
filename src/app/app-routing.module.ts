@@ -11,10 +11,6 @@ const routes: Routes = [
     loadChildren: () => import('./location/location.module').then( m => m.LocationPageModule)
   },
   {
-    path: '',
-    loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardPageModule)
-  },
-  {
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
   },
@@ -53,7 +49,14 @@ const routes: Routes = [
   {
     path: 'vendor-details/:id',
     loadChildren: () => import('./vegetables/vendor/vendor.module').then( m => m.VendorPageModule)
-  }
+  },
+  {
+    path: 'no-connection',
+    loadChildren: () => import('./no-connection/no-connection.module').then( m => m.NoConnectionPageModule)
+  },{
+    path: '',
+    loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardPageModule)
+  },
 ];
 @NgModule({
   imports: [

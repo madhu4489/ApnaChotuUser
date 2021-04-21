@@ -6,7 +6,7 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 import { DashboardPage } from './dashboard.page';
 import { ExploreTopServicesComponentModule } from './explore-top-services/explore-top-services.module';
 import { SignupUserComponent } from '../profile/signup-user/signup-user.component';
-
+import { Network } from '@ionic-native/network/ngx';
 
 @NgModule({
   imports: [
@@ -15,9 +15,11 @@ import { SignupUserComponent } from '../profile/signup-user/signup-user.componen
     ReactiveFormsModule,
     IonicModule,
     DashboardPageRoutingModule,
-    ExploreTopServicesComponentModule
+    ExploreTopServicesComponentModule,
+    
   ],
   declarations: [DashboardPage, SignupUserComponent],
+  providers:[Network]
 
 
 })

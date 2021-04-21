@@ -53,8 +53,8 @@
         <h6>
           <custom-counter
             [foodItem]="menuItems"
-            [groupID]="menuItems.id"
-            [vendorID]="route.snapshot.params.id"
+            [groupId]="menu.id"
+            [vendorId]="route.snapshot.params.id"
             (recevieOrder)="recevieOrderFn($event)"
           ></custom-counter>
         </h6>

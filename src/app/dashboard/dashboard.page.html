@@ -93,7 +93,7 @@
         <ion-label>Call</ion-label>
       </ion-tab-button>
   
-      <ion-tab-button (click)="orders()">
+      <ion-tab-button (click)="isEnabled&&orders()"  *ngIf="isEnabled">
         <ion-badge *ngIf="allOrders" color="danger">{{allOrders.length}}</ion-badge>
         
         <ion-icon name="cart"></ion-icon>

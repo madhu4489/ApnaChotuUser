@@ -152,7 +152,7 @@ export class SharedService {
   getRestaurantVendor(id:any): Promise<any> {
     let obj = this;
     return obj._http
-    .get(environment.urls.function.getRestaurantVendor()+"/"+id, this.getHeaders())
+    .get(environment.urls.function.getRestaurantVendor()+"/"+id)
     .toPromise();
   }
 

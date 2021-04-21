@@ -154,9 +154,7 @@ export class MiscOrderPage implements OnInit {
       address: address,
       lat: null,
       lng: null,
-      items_data: `<Order TYPE>: ${
-        this.route.snapshot.params.name
-      }!! <PICKUP ITEMS>: ${this.items}!! <PICKUP STORE>: ${
+      items_data: `ITEMS: ${this.items}!! <PICKUP STORE>: ${
         this.pickup ? this.pickup : 'Apna chotu'
       }`,
       alt_mobile: this.deliveryLocation.contact_no
@@ -164,7 +162,6 @@ export class MiscOrderPage implements OnInit {
         : userDetails.mobile,
     };
 
-    console.log(orderData, '::::::orderData');
 
     const loading = await this.loader.create({
       cssClass: 'my-custom-class',
