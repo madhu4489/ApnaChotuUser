@@ -1,0 +1,80 @@
+.view-cart-label {
+  margin-top: 0;
+  p {
+    font-size: 13px;
+    margin: 0;
+    line-height: 16px;
+  }
+}
+.bill-table {
+  width: 100%;
+  background: #fff;
+  td {
+    padding: 6px;
+    border-bottom: 1px dashed #d0d5d7;
+    &:last-child {
+      text-align: right;
+    }
+  }
+  tr {
+    &:last-child {
+      td {
+        border-bottom: 0px dashed #d0d5d7;
+        font-weight: 600;
+      }
+    }
+  }
+  .head {
+    td {
+      text-align: left;
+      border-bottom: 1px solid #d0d5d7;
+
+    }
+  }
+}
+
+.tip-tabel{
+  td {
+    text-align: left;
+    border-bottom: 0px dashed #d0d5d7;
+    &:last-child {
+      text-align: left;
+    }
+  }
+  tr {
+    &:last-child {
+      td {
+        font-weight: 500;
+      }
+    }
+  }
+}
+ion-chip{
+  margin: 0;
+  background: #eff5f7;
+    border-color: #d0d5d7;
+    color: #1d1d1d;
+}
+
+.secondary{
+  color: #2dd36f;
+}
+.suggestion{
+  margin: 12px 0;
+}
+
+.active-tip{
+  background-color: #2dd36f;
+  color: #fff;
+  border-color: #2dd36f;
+}
+
+
+.sub-item{
+  display: flex;
+}
+
+.current-veg{
+  position: relative !important;
+  top: 14px !important;
+}

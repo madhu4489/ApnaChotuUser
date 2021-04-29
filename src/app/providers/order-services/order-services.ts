@@ -50,4 +50,8 @@ export class OrderServicesProvider {
     return {'count': this.orderItemsCount, 'price' :this.orderItemsPrice}
   }
 
+  removeCartItems(){
+    
+  }
+
 }

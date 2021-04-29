@@ -46,18 +46,14 @@
           </div>
         </h6>
         <h6>
-
-          <stepper [count]="menuItems.count" [someText]="menuItems.selectedVariants > 1 ? menuItems.selectedVariants + ' variants':''" (countHandler)="recevieOrderFn($event, menuItems)"> 
+          <stepper
+            [count]="menuItems.count" 
+            [someText]="menuItems.selectedVariants > 1 ? menuItems.selectedVariants + ' variants':''" 
+            (countHandler)="recevieOrderFn($event, menuItems, menu.id)"> 
             </stepper>
-          <!-- <custom-ordercounter
-              [foodItem]="menuItems"
-              [groupId]="menu.id"
-              [variantDetails]="menuItems.defaultVariantDetails"
-              [vendorId]="route.snapshot.params.id"
-              (recevieOrder)="recevieOrderFn($event, menuItems)"
-              (removeOrder)="removeOrderFn($event, menuItems)"
-            ></custom-ordercounter>
-             -->
+
+         
+            
         </h6>
       </ion-item>
     </ion-item-group>

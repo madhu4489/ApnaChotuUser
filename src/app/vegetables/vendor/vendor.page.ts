@@ -61,6 +61,7 @@ export class VendorPage implements OnInit {
   }
 
   backHandler() {
+    this.orderServicesProvider.clearCartData()
     this.navController.navigateForward(['vegetables', this.categoryId]);
   }
 
@@ -79,6 +80,8 @@ export class VendorPage implements OnInit {
           this.groups[index] = {
             name: element.group,
             is_active: element.is_active,
+            count: element.items.length,
+            
           };
         });
 
@@ -93,6 +96,56 @@ export class VendorPage implements OnInit {
         });
         this.backUpMenus = data['menu'];
         this.menus = this.backUpMenus;
+
+
+console.log(data['menu'])
+
+        let _cartData = this.orderServicesProvider.getCartData();
+
+        if(_cartData && _cartData.length != 0){
+          this.orderCountDetails = this.orderServicesProvider.getOrderDeatils();
+
+
+
+          
+            _cartData.forEach((_cartItem) => {
+              this.details.menu.forEach((element, index) => {
+
+                if (element.id === _cartItem.groupId) {
+
+                  element.items.forEach((item, itemIndex) => {
+
+
+                    if(item.id == _cartItem.id){
+                        item.count =  (_cartItem.items.map(item => {
+                          return item.quantity > 0 && item.quantity
+                        })).reduce(function(acc, val) { return acc + val; }, 0);
+                        item.items = _cartItem.items
+                    }
+                   
+
+                    console.log(item, " item.items");
+                    console.log(_cartItem, " _cartItem.items");
+                          // item.items = _cartItem.items
+                   
+
+
+                    // if (items.id === _cartItem.itemId) {
+                    //   console.log(_cartItem, '_cartItem');
+                    //   console.log(items);
+                    //   this.details.menu[index].items[itemIndex].count =
+                    //     _cartItem.count;
+                    //   this.details.menu[index].items[itemIndex].orderPrice =
+                    //     _cartItem.count * _cartItem.price;
+                    // }
+                  });
+                }
+              });
+            });
+
+          
+        }
+
         // this.cartDataProvider.setRestName(data);
 
         // let _cartData = this.cartDataProvider.getCartData();
@@ -128,7 +181,7 @@ export class VendorPage implements OnInit {
     this.groups.forEach((group, index) => {
       let button = {
         cssClass: 'action-button',
-        text: group.name,
+        text: `${group.name} (${group.count})`,
         handler: () => {
           this.setDefault = group.name;
           this.gotoMenu(index);
@@ -161,45 +214,34 @@ export class VendorPage implements OnInit {
   }
 
   orderDeatils: any = [];
-  recevieOrderFn(event, menuItem) {
-    console.log(menuItem.price_quantity.length);
+  groupId:any;
+  recevieOrderFn(event, menuItem, groupId) {
+
+    this.groupId = groupId;
     if(menuItem.price_quantity.length > 1){
       this.openQuantites(menuItem);
     }else{
-      // if (this.orderDeatils.indexOf(menuItem) == -1) {
-      //   event.quantity = 1;
-      //   menuItem.items.push(event);
-      //   menuItem.count = 1;
-       
-      //   menuItem.price = event.price;
-      //   menuItem.selectedVariants = 1;
-      //   this.orderDeatils.push(menuItem);
-      // } else {
-       
-      //   let findIndex = this.orderDeatils[
-      //     this.orderDeatils.indexOf(menuItem)
-      //   ].items.findIndex((item) => item.type == event.type);
-  
-      //   if (findIndex != -1) {
-      //     let quantity = this.orderDeatils[this.orderDeatils.indexOf(menuItem)].items[
-      //       findIndex
-      //     ].quantity + 1;
-  
-      //     this.orderDeatils[this.orderDeatils.indexOf(menuItem)].items[
-      //       findIndex
-      //     ] = event;
-          
-      //     this.orderDeatils[this.orderDeatils.indexOf(menuItem)].items[
-      //       findIndex
-      //     ].quantity = quantity;
-      //   } else {
-      //     this.orderDeatils[this.orderDeatils.indexOf(menuItem)].items.push(event);
-      //   }
-      //   this.orderDeatils[this.orderDeatils.indexOf(menuItem)].selectedVariants = this.orderDeatils[this.orderDeatils.indexOf(menuItem)].items.length;
-      // }
-    }
-   
+      if(this.orderDeatils.indexOf(menuItem) == -1){
+        menuItem.count = event+1; 
+        menuItem.groupId = this.groupId;
+        menuItem.vendorId =  this.route.snapshot.params.id;
+        menuItem.items[0].quantity = event+1; 
+        menuItem.orderPrice =  menuItem.items[0].quantity *  menuItem.items[0].price;
+        this.orderDeatils.push(menuItem);
+      }else{
+        this.orderDeatils[this.orderDeatils.indexOf(menuItem)].vendorId = this.route.snapshot.params.id;
+        this.orderDeatils[this.orderDeatils.indexOf(menuItem)].groupId = this.groupId;
+        this.orderDeatils[this.orderDeatils.indexOf(menuItem)].count = event+1;
+        this.orderDeatils[this.orderDeatils.indexOf(menuItem)].items[0].quantity = event+1
+        this.orderDeatils[this.orderDeatils.indexOf(menuItem)].orderPrice =  this.orderDeatils[this.orderDeatils.indexOf(menuItem)].items[0].quantity * this.orderDeatils[this.orderDeatils.indexOf(menuItem)].items[0].price;
 
+      }
+
+      this.orderServicesProvider.addCartData(this.orderDeatils);
+      this.orderCountDetails = this.orderServicesProvider.getOrderDeatils();
+      this.groupId = null;
+    }
+  
     console.log(this.orderDeatils);
   }
 
@@ -256,11 +298,9 @@ export class VendorPage implements OnInit {
 
 
   addOrder(menuItem){
-
-
+    menuItem.groupId = this.groupId;
+    menuItem.vendorId =  this.route.snapshot.params.id;
     menuItem.selectedVariants =  menuItem.items.filter(item =>item.quantity > 0).length;
-
-
     if (this.orderDeatils.indexOf(menuItem) == -1) {
         this.orderDeatils.push(menuItem);
       } else {
@@ -269,12 +309,14 @@ export class VendorPage implements OnInit {
 
     this.orderServicesProvider.addCartData(this.orderDeatils);
     this.orderCountDetails = this.orderServicesProvider.getOrderDeatils();
-
-    console.log(this.orderCountDetails, "orderCountDetails:::::")
+    this.groupId = null;
+    console.log(this.orderCountDetails, "orderCountDetails:::::");
   }
 
   viewCart(){
     console.log(this.orderDeatils, "this.orderDeatils")
+    this.navController.navigateForward(['/view-kart']);
+    
   }
 
 }

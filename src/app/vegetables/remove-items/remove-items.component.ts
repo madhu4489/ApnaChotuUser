@@ -32,16 +32,16 @@ export class RemoveItemsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.selectedItems.items.filter((item) => {
-      console.log(item, this.selectedItems.defaultVariantDetails);
+    // this.selectedItems.items.filter((item) => {
+    //   console.log(item, this.selectedItems.defaultVariantDetails);
 
-      if (
-        this.selectedItems.defaultVariantDetails.quantity == item.type &&
-        item.quantity == 0
-      ) {
-        item.quantity = 1;
-      }
-    });
+    //   if (
+    //     this.selectedItems.defaultVariantDetails.quantity == item.type &&
+    //     item.quantity == 0
+    //   ) {
+    //     item.quantity = 1;
+    //   }
+    // });
   }
 
   backHandler() {
@@ -77,24 +77,16 @@ export class RemoveItemsComponent implements OnInit {
 
   submitForm() {
     console.log(this.selectedItems);
-    
     this.selectedItems.count =  (this.selectedItems.items.map(item => {
       return item.quantity > 0 && item.quantity
     })).reduce(function(acc, val) { return acc + val; }, 0);
-
-     
 
     let orderPrice = this.selectedItems.items.map(element => {
       return element.quantity > 0 && (element.quantity*element.price)
     });
 
-
-
     this.selectedItems.orderPrice = orderPrice.reduce(function(acc, val) { return acc + val; }, 0);
-
-
-
-
+    
     this._modalCtrl.dismiss(this.selectedItems);
   }
 

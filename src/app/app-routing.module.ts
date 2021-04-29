@@ -53,7 +53,12 @@ const routes: Routes = [
   {
     path: 'no-connection',
     loadChildren: () => import('./no-connection/no-connection.module').then( m => m.NoConnectionPageModule)
-  },{
+  },
+  {
+    path: 'view-kart',
+    loadChildren: () => import('./vegetables/view-kart/view-kart.module').then( m => m.ViewKartPageModule)
+  },
+  {
     path: '',
     loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardPageModule)
   },

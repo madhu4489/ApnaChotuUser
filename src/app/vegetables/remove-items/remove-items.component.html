@@ -4,8 +4,8 @@
       <ion-icon name="close" color="light"></ion-icon>
     </ion-button>
     <ion-title class="title-header">
-      <div style="line-height: 14px;">{{ selectedItems.name }}</div>
-      <small>Available quantites</small>
+      <div style="line-height: 14px;">Available quantites</div>
+      <!-- <small></small> -->
       
     </ion-title>
   </ion-toolbar>
@@ -20,8 +20,9 @@
     color="light"
   >
     <div class="menu-item-sub">
-      <div class="title">{{ menuItem.type }}</div>
-      <div class="price">&#8377; {{ menuItem.price }}</div>
+      <div class="title">{{ selectedItems.name }} </div>
+      <div class="price">{{ menuItem.type }}</div>
+      <div class="quantity">&#8377; {{ menuItem.price }}</div>
     </div>
     <h6>
       <custom-ordercounter
