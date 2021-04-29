@@ -98,46 +98,22 @@ export class VendorPage implements OnInit {
         this.menus = this.backUpMenus;
 
 
-console.log(data['menu'])
-
         let _cartData = this.orderServicesProvider.getCartData();
 
         if(_cartData && _cartData.length != 0){
           this.orderCountDetails = this.orderServicesProvider.getOrderDeatils();
 
-
-
-          
             _cartData.forEach((_cartItem) => {
-              this.details.menu.forEach((element, index) => {
+              this.details.menu.forEach((element) => {
 
                 if (element.id === _cartItem.groupId) {
-
-                  element.items.forEach((item, itemIndex) => {
-
-
+                  element.items.forEach((item) => {
                     if(item.id == _cartItem.id){
                         item.count =  (_cartItem.items.map(item => {
                           return item.quantity > 0 && item.quantity
                         })).reduce(function(acc, val) { return acc + val; }, 0);
                         item.items = _cartItem.items
                     }
-                   
-
-                    console.log(item, " item.items");
-                    console.log(_cartItem, " _cartItem.items");
-                          // item.items = _cartItem.items
-                   
-
-
-                    // if (items.id === _cartItem.itemId) {
-                    //   console.log(_cartItem, '_cartItem');
-                    //   console.log(items);
-                    //   this.details.menu[index].items[itemIndex].count =
-                    //     _cartItem.count;
-                    //   this.details.menu[index].items[itemIndex].orderPrice =
-                    //     _cartItem.count * _cartItem.price;
-                    // }
                   });
                 }
               });
@@ -146,30 +122,6 @@ console.log(data['menu'])
           
         }
 
-        // this.cartDataProvider.setRestName(data);
-
-        // let _cartData = this.cartDataProvider.getCartData();
-        // if (_cartData && _cartData.length != 0) {
-        //   this.storeOrderPrice = 0;
-        //   _cartData.forEach((_cartItem) => {
-        //     this.storeOrderCount = this.storeOrderCount + _cartItem.count;
-        //     this.storeOrderPrice = this.storeOrderPrice + _cartItem.totalprice;
-        //     this.details.menu.forEach((element, index) => {
-        //       if (element.id === _cartItem.groupId) {
-        //         element.items.forEach((items, itemIndex) => {
-        //           if (items.id === _cartItem.itemId) {
-        //             console.log(_cartItem, '_cartItem');
-        //             console.log(items);
-        //             this.details.menu[index].items[itemIndex].count =
-        //               _cartItem.count;
-        //             this.details.menu[index].items[itemIndex].orderPrice =
-        //               _cartItem.count * _cartItem.price;
-        //           }
-        //         });
-        //       }
-        //     });
-        //   });
-        // }
         loading.dismiss();
       });
     });
@@ -221,7 +173,12 @@ console.log(data['menu'])
     if(menuItem.price_quantity.length > 1){
       this.openQuantites(menuItem);
     }else{
-      if(this.orderDeatils.indexOf(menuItem) == -1){
+
+      const findItemIndex = this.orderDeatils.findIndex(
+        (item) => item.id == menuItem.id
+      );
+
+      if(findItemIndex == -1){
         menuItem.count = event+1; 
         menuItem.groupId = this.groupId;
         menuItem.vendorId =  this.route.snapshot.params.id;
@@ -229,12 +186,17 @@ console.log(data['menu'])
         menuItem.orderPrice =  menuItem.items[0].quantity *  menuItem.items[0].price;
         this.orderDeatils.push(menuItem);
       }else{
-        this.orderDeatils[this.orderDeatils.indexOf(menuItem)].vendorId = this.route.snapshot.params.id;
-        this.orderDeatils[this.orderDeatils.indexOf(menuItem)].groupId = this.groupId;
-        this.orderDeatils[this.orderDeatils.indexOf(menuItem)].count = event+1;
-        this.orderDeatils[this.orderDeatils.indexOf(menuItem)].items[0].quantity = event+1
-        this.orderDeatils[this.orderDeatils.indexOf(menuItem)].orderPrice =  this.orderDeatils[this.orderDeatils.indexOf(menuItem)].items[0].quantity * this.orderDeatils[this.orderDeatils.indexOf(menuItem)].items[0].price;
+        
+menuItem.count = event+1; 
 
+        this.orderDeatils[findItemIndex].vendorId = this.route.snapshot.params.id;
+        this.orderDeatils[findItemIndex].groupId = this.groupId;
+        
+        this.orderDeatils[findItemIndex].items[0].quantity =event+1;
+       this.orderDeatils[findItemIndex].count =  menuItem.count;
+        this.orderDeatils[findItemIndex].orderPrice =  this.orderDeatils[findItemIndex].items[0].quantity * this.orderDeatils[findItemIndex].items[0].price;
+
+        console.log(this.orderDeatils[findItemIndex].count, "countttt");
       }
 
       this.orderServicesProvider.addCartData(this.orderDeatils);
@@ -242,7 +204,7 @@ console.log(data['menu'])
       this.groupId = null;
     }
   
-    console.log(this.orderDeatils);
+   
   }
 
 
@@ -301,10 +263,16 @@ console.log(data['menu'])
     menuItem.groupId = this.groupId;
     menuItem.vendorId =  this.route.snapshot.params.id;
     menuItem.selectedVariants =  menuItem.items.filter(item =>item.quantity > 0).length;
-    if (this.orderDeatils.indexOf(menuItem) == -1) {
+
+    const findItemIndex = this.orderDeatils.findIndex(
+      (item) => item.id == menuItem.id
+    );
+
+
+    if (findItemIndex == -1) {
         this.orderDeatils.push(menuItem);
       } else {
-        this.orderDeatils[this.orderDeatils.indexOf(menuItem)] = menuItem;
+        this.orderDeatils[findItemIndex] = menuItem;
     }
 
     this.orderServicesProvider.addCartData(this.orderDeatils);

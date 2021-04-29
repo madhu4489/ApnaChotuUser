@@ -33,16 +33,14 @@ export class OrderServicesProvider {
       this.orderItemsPrice = price.reduce(function(acc, val) { return acc + val; }, 0);
 
 
-    console.log(_data, "_data_data services", this.orderItemsCount)
+    // console.log(_data, "_data_data services", this.orderItemsCount)
   }
 
   clearCartData() {
     this.cartData = [];
-    console.log("Clear Cart Data");
   }
 
   getCartData() {
-    console.log("Get Cart Data");
     return this.cartData;
   }
 

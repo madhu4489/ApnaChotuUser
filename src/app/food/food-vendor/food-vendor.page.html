@@ -46,11 +46,18 @@
         <span class="veg" [ngClass]="{'non-veg' : menuItems.type==='nv'}"
           ><span></span
         ></span>
-        <h6 class="menu-item">
-          {{menuItems.name}}
-          <div>&#8377; {{menuItems.price}}</div>
+
+        <h6 class="menu-item" style="padding-right: 82px;">
+          <div class="title" >{{menuItems.name}}</div>
+
+          <div class="price">
+            &#8377; {{menuItems.price}}
+          </div>
         </h6>
-        <h6>
+
+
+       
+        <h6 class="step">
           <custom-counter
             [foodItem]="menuItems"
             [groupId]="menu.id"
@@ -95,9 +102,9 @@
       <ion-icon size="small" class="icon" name="location"></ion-icon>
       <p>{{details.address}}</p>
     </div>
-    <div>
+    <div *ngIf="details.license_no">
       <img src="../../../assets/fassi.png" />
-      <span>License No. 13619011000657</span>
+      <span>License No. {{details.license_no}}</span>
     </div>
   </div>
 

@@ -263,7 +263,7 @@ export class ViewKartPage implements OnInit {
       order.items.forEach(element => {
         Items.push({
           itemId: element.itemId,
-          quantity: `${order.name}(${element.type}) X ${element.quantity}`,
+          quantity: `(${element.type}) X ${element.quantity}`,
           price: element.price*element.quantity,
         });
       });
@@ -273,7 +273,7 @@ export class ViewKartPage implements OnInit {
 
     let userDetails = JSON.parse(localStorage.getItem('userDetails'));
 
-    let address = `${userDetails.first_name}, ${this.deliveryLocation.h_no}, ${this.deliveryLocation.street}, landmark: ${this.deliveryLocation?.landmark}, ${this.deliveryLocation?.locality}, ${this.deliveryLocation?.contact_no}, ${userDetails?.mobile}`;
+    let address = `${userDetails.first_name}, ${this.deliveryLocation.h_no}, ${this.deliveryLocation.street},  ${this.deliveryLocation?.landmark && 'landmark: ' + this.deliveryLocation?.landmark }, ${this.deliveryLocation?.locality}, ${this.deliveryLocation?.contact_no}, ${userDetails?.mobile}`;
     let orderData = {
       vendorId: vendorId,
       price:  this.orderCountDetails.price,
@@ -291,6 +291,7 @@ export class ViewKartPage implements OnInit {
       discountPrice: this.discountPrice ? this.discountPrice : 0,
       extra_items: this.extra_items,
       alt_mobile: this.alternate ? this.alternate : '',
+      tip: this.tipAmount
     };
 
     const loading = await this.loader.create({

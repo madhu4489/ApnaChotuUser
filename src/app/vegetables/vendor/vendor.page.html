@@ -34,7 +34,7 @@
         <span class="veg" [ngClass]="{'non-veg' : menuItems.type==='nv'}"
           ><span></span
         ></span>
-        <h6 class="menu-item">
+        <h6 class="menu-item" style="padding-right: 82px;">
           <div class="title" >{{menuItems.name}}</div>
           <div class="price" (click)="menuItems.price_quantity.length > 1 && opengQuantityHandler(menuItems)">
             {{menuItems.defaultVariantDetails.quantity}}
@@ -42,14 +42,14 @@
           </div>
           <div class="quantity">
             &#8377; {{menuItems.defaultVariantDetails.price}}
-          
           </div>
         </h6>
-        <h6>
+        <h6 class="step">
+
           <stepper
-            [count]="menuItems.count" 
-            [someText]="menuItems.selectedVariants > 1 ? menuItems.selectedVariants + ' variants':''" 
-            (countHandler)="recevieOrderFn($event, menuItems, menu.id)"> 
+              [count]="menuItems.count" 
+              [someText]="menuItems.selectedVariants > 1 ? menuItems.selectedVariants + ' variants':''" 
+              (countHandler)="recevieOrderFn($event, menuItems, menu.id)"> 
             </stepper>
 
          
@@ -92,9 +92,9 @@
       <ion-icon size="small" class="icon" name="location"></ion-icon>
       <p>{{details.address}}</p>
     </div>
-    <div>
+    <div *ngIf="details.license_no">
       <img src="../../../assets/fassi.png" />
-      <span>License No. 13619011000657</span>
+      <span>License No. {{details.license_no}}</span>
     </div>
   </div>
 </ion-content>

@@ -29,8 +29,9 @@
       class="ion-activatable ripple-parent item-styles"
       lines="none"
       color="light"
-      (click)="showOrder(order.id)"
-      detail
+
+      (click)="!isCancelShow(order) && showOrder(order.id)"
+      
     >
       <div
         class="order-status"
@@ -106,23 +107,27 @@
           <p>{{order.cancel_reason}} zsfzfd zsdfsdf </p>
         </ion-text>
 
-        <ion-text
-          *ngIf="isCancelShow(order) || order.status.id == 4 || order.status.id == 1"
-        >
+        <ion-text>
           <hr />
           <div class="fotter-order">
-            <ion-button color="secondary" *ngIf="order.status.id == 4"
-              >Reorder</ion-button
-            >
+           
             <ion-button
               color="secondary"
               *ngIf="order.status.id == 1 && isCancelShow(order)"
               (click)="presentAlertConfirm(order)"
-              >Cancel</ion-button
-            >
+              >Cancel</ion-button>
+
+
+              <ion-button
+              *ngIf="order.status.id == 1 && isCancelShow(order)"
+              color="primary"
+              (click)="showOrder(order.id)"
+              >Order Details</ion-button>
           </div>
         </ion-text>
       </ion-label>
+
+     
     </ion-item>
   </ion-list>
 
