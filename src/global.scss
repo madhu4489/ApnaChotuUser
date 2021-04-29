@@ -31,7 +31,7 @@
   font-family: "Nunito", sans-serif;
 }
 body {
-background: #eff5f7;
+  background: #eff5f7;
 }
 
 :host(.button-outline) {
@@ -362,22 +362,20 @@ ion-segment-button {
   font-weight: 600;
 }
 
-.active-tip{
+.active-tip {
   background-color: #2dd36f;
   color: #fff;
   border-color: #2dd36f;
 }
 
-.color-secoundry{
+.color-secoundry {
   color: #ff7900;
 }
-.refresher-active{
+.refresher-active {
   background: #eff5f7;
 }
 
-
 .order-status {
-    
   position: absolute;
   display: inline-block;
   font-weight: 600;
@@ -391,43 +389,40 @@ ion-segment-button {
   padding: 2px 12px 2px 8px;
   font-size: 0.8rem;
   border-radius: 0.25rem;
-  transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s,
+    box-shadow 0.15s;
   color: #212529;
   background-color: #8bc34a;
   border-color: #4caf50;
   top: 4px;
   right: 4px;
 
-  &.onthe-way{
-      background-color: #f7b924;
-      border-color: #f7b924;
- 
+  &.onthe-way {
+    background-color: #f7b924;
+    border-color: #f7b924;
   }
 
   .badge-dot {
-      width: 14px;
-      height: 14px;
-      position: absolute;
-      border: #fff solid 2px;
-      top: -5px;
-      right: -5px;
-      margin-left: 8px;
-      border-radius: 30px;
-      min-width: 2px;
-      text-indent: -999em;
-  padding: 0;
-  background-color: #212529;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    border: #fff solid 2px;
+    top: -5px;
+    right: -5px;
+    margin-left: 8px;
+    border-radius: 30px;
+    min-width: 2px;
+    text-indent: -999em;
+    padding: 0;
+    background-color: #212529;
   }
-
-  
-
 }
 
 // ion-button{
 //   --box-shadow: none;
 // }
 
-.vegornon{
+.vegornon {
   padding: 0;
   text-align: right;
   background: #fff;
@@ -436,20 +431,121 @@ ion-segment-button {
   align-items: center;
 }
 
-
-.header-title{
+.header-title {
   font-weight: 600;
 }
 
-.header-dashboard{
+.header-dashboard {
   padding-left: 16px;
-    max-height: 20px;
-    background: #e4e4e5 !important;
-    margin: 6px 0 14px;
-    border-bottom: 1px solid #607d8b17;
+  max-height: 20px;
+  background: #e4e4e5 !important;
+  margin: 6px 0 14px;
+  border-bottom: 1px solid #607d8b17;
 }
-
 
 .swiper-pagination-bullet {
   background: #ff7900;
+}
+
+.address-bar {
+  background: #fff;
+  padding: 12px;
+  margin-top: 10px;
+  border-top: 1px solid #dfdfdf;
+
+  .icon {
+    color: rgb(141, 146, 165);
+  }
+  div {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    align-content: center;
+    // justify-content: center;
+
+    p {
+      font-size: 14px;
+      color: rgb(141, 146, 165);
+      flex: 1 1 0%;
+      margin: 0;
+      margin-left: 6px;
+    }
+
+    span{
+      margin-left: 6px;
+      margin-top: 6px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+  }
+}
+
+
+.price{
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: rgb(111, 117, 136);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.color-orange{
+  color: #ff7900;
+}
+.quantity{
+  // margin: 8px 0px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: rgb(23, 30, 48);
+}
+
+.item-header {
+  min-height: 38px;
+  background: #eff5f7;
+  font-weight: 600;
+  color: #ff7900;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.menu-button{
+  position: fixed;
+    bottom: 40px;
+    left: calc(50% - 30px);
+}
+
+.closed-res{
+  color: #ff8d03;
+    border-bottom: 2px solid;
+    pointer-events: none;
+    div{
+      color: #ff8d03;
+      font-weight: 600;
+    }
+}
+
+.total-price{
+  margin: 0;
+  font-weight: 600;
+  color: #ff5722;
+  position: absolute;
+    right: 18px;
+    width: auto;
+    top: 40px;
+    font-size: 14PX;
+}
+
+
+.title{
+    margin-top: 0px;
+    color: rgb(23, 30, 48);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.display-none{
+  display: none;
 }

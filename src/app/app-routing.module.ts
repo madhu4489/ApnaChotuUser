@@ -43,11 +43,11 @@ const routes: Routes = [
     loadChildren: () => import('./orders/order-details/order-details.module').then( m => m.OrderDetailsPageModule)
   },
   {
-    path: 'vegetables',
+    path: 'vegetables/:id',
     loadChildren: () => import('./vegetables/vegetables/vegetables.module').then( m => m.VegetablesPageModule)
   },
   {
-    path: 'vendor-details/:id',
+    path: 'vendor-details/:id/:categoryId',
     loadChildren: () => import('./vegetables/vendor/vendor.module').then( m => m.VendorPageModule)
   },
   {

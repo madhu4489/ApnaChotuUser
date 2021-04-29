@@ -20,6 +20,10 @@ export class FoodPage implements OnInit {
   terms: string;
 
   isActicveFirst = true;
+  dontDo = false;
+
+  noActiveRestarents:boolean;
+  closedVendorCount:boolean;
 
   constructor(
     private navController: NavController,
@@ -42,38 +46,71 @@ export class FoodPage implements OnInit {
   }
 
   getRestaurants(event?: any) {
-    console.log(this.offset, 'this.offset');
     let vendorData: any = {
       offset: this.offset,
       limit: 10,
       category: 1,
-      is_active:this.isActicveFirst
+      is_open:this.isActicveFirst
     };
     this.sharedService.getRestaurants(vendorData).then((data) => {
-      console.log(data, 'getRestaurants');
       let serverData = data.data;
-      if (serverData) {
+      console.log(serverData, 'getRestaurants');
+      if (serverData.length == 10) {
         this.restaurants.push(...serverData);
-
         event && event.target.complete();
         if (!serverData) {
           this.isClear = true;
         }
       } else {
+        this.noActiveRestarents = true;
         this.isActicveFirst = false;
-        event.target.disabled = true;
+        event && event.target.complete();
+        this.offset = 0;
+        this.restaurants.push({id:'closed', name:'Restaurants Closed Today ', address:'null'});
+        this.inActiveGetRestaurants();
+        console.log(serverData, 'no rest');
+      }
+    });
+  }
 
-        this.sharedService.presentToastWithOptions(
-          serverData.message,
-          'warning'
-        );
+  inActiveGetRestaurants(event?: any) {
+    let vendorData: any = {
+      offset: this.offset,
+      limit: 10,
+      category: 1,
+      is_open:'false'
+    };
+    this.sharedService.getRestaurants(vendorData).then((data) => {
+      let serverData = data.data;
+      if (serverData.length > 0) {
+        this.closedVendorCount = true;
+        this.offset =  this.offset + serverData.length;
+        this.restaurants.push(...serverData);
+        event && event.target.complete();
+        if (!serverData) {
+          this.isClear = true;
+        }
+      } else {
+        event && event.target.complete();
+        console.log(serverData, 'no rest');
+        this.dontDo = true;
       }
     });
   }
 
   loadData(event) {
-    this.offset = this.restaurants.length;
-    this.getRestaurants(event);
+    if(!this.dontDo){
+      if(!this.noActiveRestarents){
+        this.offset = this.restaurants.length;
+        this.getRestaurants(event);
+      }else{
+      
+        this.inActiveGetRestaurants(event)
+      }
+    }else{
+      event && event.target.complete();
+    }
+    
   }
 
   showVendor(id) {

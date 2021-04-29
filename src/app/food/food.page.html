@@ -11,28 +11,34 @@
 
 <ion-content>
   <div *ngIf="restaurants">
-    <ion-item-divider  sticky="true" class="item-header">
-      <ion-item lines="full" color="light" >
+    <ion-item-divider sticky="true" class="item-header">
+      <ion-item lines="full" color="light">
         <ion-input
-            class="seach-input"
-            color="primary"
-            clearInput
-            placeholder="Search for restarunts"
-            [(ngModel)]="terms"
-          ></ion-input>
+          class="seach-input"
+          color="primary"
+          clearInput
+          placeholder="Search for restarunts"
+          [(ngModel)]="terms"
+        ></ion-input>
       </ion-item>
     </ion-item-divider>
-    
-    <ion-list style="    padding-top: 0;">
+
+    <ion-list style="padding-top: 0">
       <ion-item
-        *ngFor="let restaurant of   (restaurants | search : terms : name)"
+        *ngFor="let restaurant of (restaurants | search : terms : name)"
         class="restaurant ion-activatable ripple-parent item-styles"
         lines="none"
         color="light"
-        [ngClass]="{'closed' : !restaurant.is_open}"
-        (click)="showVendor(restaurant.id)"
+        [ngClass]="{'closed' : !restaurant.is_open, 'closed-res' : restaurant.id =='closed', 'display-none': !closedVendorCount && restaurant.id =='closed' }"
+        (click)="restaurant.id !='closed' && showVendor(restaurant.id)"
       >
-        <ion-thumbnail slot="start" class="vendor-img">
+        <div *ngIf="restaurant.id =='closed'">{{restaurant.name}}</div>
+
+        <ion-thumbnail
+          slot="start"
+          class="vendor-img"
+          *ngIf="restaurant.id !='closed'"
+        >
           <div *ngFor="let vendorOffers of restaurant.offer" class="burst-12">
             <span *ngIf="vendorOffers.offerPercentage" class="badge-per"
               >{{vendorOffers.offerPercentage}}% <span>OFF</span></span
@@ -41,7 +47,7 @@
           <ion-img [src]="restaurant.media" width="80" height="80"></ion-img>
         </ion-thumbnail>
 
-        <ion-label>
+        <ion-label *ngIf="restaurant.id !='closed'">
           <h2>{{restaurant.name}}</h2>
           <h3 *ngIf="restaurant.tags">
             <span *ngFor="let tags of restaurant.tags; let last = last"

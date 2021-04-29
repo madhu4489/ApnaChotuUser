@@ -141,20 +141,20 @@ export class SignupUserComponent implements OnInit {
             this.calcOTP();
           } else {
             this.signUp(details);
-            this.sharedService.presentToastWithOptions(
-              serverData.message,
-              'warning'
-            );
+            // this.sharedService.presentToastWithOptions(
+            //   serverData.message,
+            //   'warning'
+            // );
           }
   
         } else {
           serverData = resp.body;
           if (serverData.status == 'error') {
             this.signUp(details);
-            this.sharedService.presentToastWithOptions(
-              serverData.message,
-              'warning'
-            );
+            // this.sharedService.presentToastWithOptions(
+            //   serverData.message,
+            //   'warning'
+            // );
           } else {
             this.userResponceToken = 'Bearer ' + resp.headers.get('token');
             this.userDetails = serverData.data;
@@ -198,7 +198,7 @@ export class SignupUserComponent implements OnInit {
       if (serverData) {
         this.userDetails = serverData;
         if (!isFrom) {
-          this.calcOTP();
+        this.extraLogin()
         } else {
           this.sharedService.presentToastWithOptions(
             'Updated successfully.',
@@ -240,7 +240,7 @@ export class SignupUserComponent implements OnInit {
       let details = {
         first_name: this.f.name.value || 'Guest',
         last_name: this.f.lastName.value || 'Guest',
-        email: this.f.email.value || 'Guest',
+        email: this.f.email.value || '',
         gender: "notchoose"
         
       };
@@ -314,5 +314,40 @@ export class SignupUserComponent implements OnInit {
 
 
     
+  }
+
+
+  extraLogin(){
+    let mobileNum = { mobile: Number(this.userPhone) };
+    this.sharedService.getLogin(mobileNum).then((resp) => {
+
+
+      let serverData: any;
+      let serverHeader: any;
+
+      if (!this.sharedService.isBrowser) {
+        serverData = resp.data;
+        serverHeader = resp.headers;
+        serverData = JSON.parse(serverData).data;
+        this.userResponceToken = 'Bearer ' + serverHeader.token;
+        console.log(this.userResponceToken, 'this.userResponceToken');
+
+        if (serverData) {
+          this.userDetails = serverData;
+          this.calcOTP();
+        } 
+
+      } else {
+        serverData = resp.body;
+        if (serverData.status == 'error') {
+        } else {
+          this.userResponceToken = 'Bearer ' + resp.headers.get('token');
+          this.userDetails = serverData.data;
+          this.calcOTP();
+        }
+      }
+
+
+    });
   }
 }

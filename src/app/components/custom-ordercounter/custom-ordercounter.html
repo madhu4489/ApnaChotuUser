@@ -1,8 +1,9 @@
 <div class="numberadd">
-  <span *ngIf="foodItem.count == 0" (click)="clickFn(1)" class="add">Add</span>
-  <span class="minus" (click)="foodItem.count != 0 && clickFn(0)">-</span>
-  <input type="text" class="inputText" [(ngModel)]="foodItem.count" readonly />
+  <span *ngIf="count == 0" (click)="clickFn(1)" class="add">Add</span>
+  <span class="minus" (click)="count != 0 && removeOrderFn()">-</span>
+  <input type="text" class="inputText" [(ngModel)]="count" readonly />
   <span class="plus" (click)="clickFn(1)">+</span>
-
+ 
 </div>
-<div class="totalPrice" *ngIf="foodItem.orderPrice>0">&#8377; {{this.foodItem.orderPrice}}</div>
+
+<div class="total-price" *ngIf="foodItem.selectedVariants>1 && showVariant">{{foodItem.selectedVariants}} variants</div>

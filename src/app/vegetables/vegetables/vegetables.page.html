@@ -7,21 +7,18 @@
       <span>Order Vegetables / Fruits</span>
     </ion-title>
   </ion-toolbar>
+  <ion-item lines="full" color="light" *ngIf="vegVendors">
+    <ion-input
+      color="primary"
+      clearInput
+      placeholder="Search any store"
+      [(ngModel)]="terms"
+    ></ion-input>
+  </ion-item>
 </ion-header>
 
 <ion-content>
-  <div *ngIf="vegVendors">
-    <ion-item-divider sticky="true" class="item-header">
-      <ion-item lines="full" color="light">
-        <ion-input
-          class="seach-input"
-          color="primary"
-          clearInput
-          placeholder="Search for store"
-          [(ngModel)]="terms"
-        ></ion-input>
-      </ion-item>
-    </ion-item-divider>
+      
 
     <ion-list style="padding-top: 0">
       <ion-item
@@ -29,10 +26,12 @@
         class="restaurant ion-activatable ripple-parent item-styles"
         lines="none"
         color="light"
-        [ngClass]="{'closed' : !restaurant.is_open}"
-        (click)="showVendor(restaurant.id)"
+        [ngClass]="{'closed' : !restaurant.is_open, 'closed-res' : restaurant.id =='closed', 'display-none': !closedVendorCount && restaurant.id =='closed'}"
+        (click)="restaurant.id !='closed' && showVendor(restaurant.id)"
       >
-        <ion-thumbnail slot="start" class="vendor-img">
+      <div *ngIf="restaurant.id =='closed'">{{restaurant.name}}</div>
+      
+        <ion-thumbnail slot="start" class="vendor-img"  *ngIf="restaurant.id !='closed'">
           <div *ngFor="let vendorOffers of restaurant.offer" class="burst-12">
             <span *ngIf="vendorOffers.offerPercentage" class="badge-per"
               >{{vendorOffers.offerPercentage}}% <span>OFF</span></span
@@ -41,7 +40,7 @@
           <ion-img [src]="restaurant.media" width="80" height="80"></ion-img>
         </ion-thumbnail>
 
-        <ion-label>
+        <ion-label *ngIf="restaurant.id !='closed'">
           <h2>{{restaurant.name}}</h2>
           <h3 *ngIf="restaurant.tags">
             <span *ngFor="let tags of restaurant.tags; let last = last"
@@ -68,10 +67,12 @@
             >
           </p>
         </ion-label>
+
+      
         <ion-ripple-effect></ion-ripple-effect>
       </ion-item>
     </ion-list>
-  </div>
+
 
   <!-- Skeleton screen -->
   <div *ngIf="vegVendors.length ===0">

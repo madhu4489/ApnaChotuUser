@@ -7,8 +7,112 @@
       <span>Order Vegetables / Fruits</span>
     </ion-title>
   </ion-toolbar>
+    <ion-item >
+      <ion-input
+        class="seach-input"
+        color="primary"
+        clearInput
+        placeholder="search for item"
+        [(ngModel)]="terms"
+      ></ion-input>
+    </ion-item>
+
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item-group *ngFor="let menu of menus" #scrollTo>
+      <ion-item-divider sticky="true" class="item-header">
+        {{menu.group}}
+      </ion-item-divider>
+      <ion-item
+        *ngFor="let menuItems of  (menu.items | search : terms : name)"
+        class="ion-activatable item-styles"
+        lines="none"
+        color="light"
+      >
+        <span class="veg" [ngClass]="{'non-veg' : menuItems.type==='nv'}"
+          ><span></span
+        ></span>
+        <h6 class="menu-item">
+          <div class="title" >{{menuItems.name}}</div>
+          <div class="price" (click)="menuItems.price_quantity.length > 1 && opengQuantityHandler(menuItems)">
+            {{menuItems.defaultVariantDetails.quantity}}
+            <ion-icon *ngIf="menuItems.price_quantity.length > 1" class="color-orange size" name="chevron-down"></ion-icon>
+          </div>
+          <div class="quantity">
+            &#8377; {{menuItems.defaultVariantDetails.price}}
+          
+          </div>
+        </h6>
+        <h6>
 
+          <stepper [count]="menuItems.count" [someText]="menuItems.selectedVariants > 1 ? menuItems.selectedVariants + ' variants':''" (countHandler)="recevieOrderFn($event, menuItems)"> 
+            </stepper>
+          <!-- <custom-ordercounter
+              [foodItem]="menuItems"
+              [groupId]="menu.id"
+              [variantDetails]="menuItems.defaultVariantDetails"
+              [vendorId]="route.snapshot.params.id"
+              (recevieOrder)="recevieOrderFn($event, menuItems)"
+              (removeOrder)="removeOrderFn($event, menuItems)"
+            ></custom-ordercounter>
+             -->
+        </h6>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+
+  <ion-button
+    *ngIf="isloading"
+    color="secondary"
+    class="menu-button"
+    (click)="presentActionSheet()"
+    [ngClass]="{'bottom-60' : orderCountDetails?.count > 0}"
+    >Menu</ion-button
+  >
+
+  <div *ngIf="!isloading">
+    <ion-list>
+      <ion-item *ngFor="let list of [1,1,1,1,1,1,1,1]">
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div class="address-bar">
+    <div>
+      <ion-icon name="business" class="icon"></ion-icon>
+      <p>{{details.name}}</p>
+    </div>
+    <div>
+      <ion-icon size="small" class="icon" name="location"></ion-icon>
+      <p>{{details.address}}</p>
+    </div>
+    <div>
+      <img src="../../../assets/fassi.png" />
+      <span>License No. 13619011000657</span>
+    </div>
+  </div>
 </ion-content>
+
+<ion-footer  *ngIf="orderCountDetails?.count > 0">
+  <ion-list >
+    <ion-item lines="none" color="light">
+      <ion-label class="view-cart-label">
+        <span>{{orderCountDetails?.count}} item</span
+        ><span *ngIf="orderCountDetails?.count > 1">s</span>
+        <span class="price2">&#8377; {{orderCountDetails?.price}}</span></ion-label
+      >
+
+      <ion-button color="secondary" class="custom-btn-small" (click)="viewCart()"> View cart</ion-button>
+    </ion-item>
+  </ion-list>
+</ion-footer>

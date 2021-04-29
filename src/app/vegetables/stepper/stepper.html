@@ -1,0 +1,8 @@
+<div class="numberadd">
+  <span *ngIf="count == 0" (click)="clickFn(1)" class="add">Add</span>
+  <span class="minus" *ngIf="count != 0" (click)="count != 0 && clickFn(0)">-</span>
+  <ion-input type="text" *ngIf="count != 0" class="inputText" [(ngModel)]="count" readonly ></ion-input>
+  <span class="plus" *ngIf="count != 0"  (click)="clickFn(1)">+</span>
+
+</div>
+<div class="total-price" *ngIf="someText">{{someText}}</div>

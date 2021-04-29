@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
 
 import { IonInfiniteScroll } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/providers/shared.service';
 @Component({
   selector: 'app-vegetables',
@@ -17,18 +17,33 @@ export class VegetablesPage implements OnInit {
   isClear: boolean;
   terms: string;
 
+  catagorieId:any;
+
+
+  isActicveFirst = true;
+  dontDo = false;
+
+  closedVendorCount = false;
+
+  noActiveRestarents:boolean;
+
   constructor(
     private navController: NavController,
     public sharedService: SharedService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
-    this.getvegVendors();
+    if (this.route.snapshot.params.id) {
+      this.catagorieId = this.route.snapshot.params.id;
+      this.getvegVendors();
+    }
+
   }
 
   backHandler() {
-    this.navController.back();
+    this.navController.navigateRoot(['dashboard']);
   }
 
   segmentChanged(ev: any) {
@@ -40,13 +55,13 @@ export class VegetablesPage implements OnInit {
     let vendorData: any = {
       offset: this.offset,
       limit: 10,
-      category: 1,
-      is_active: 1,
+      category: this.catagorieId,
+      is_open:true
     };
     this.sharedService.getRestaurants(vendorData).then((data) => {
       console.log(data, 'getvegVendors');
       let serverData = data.data;
-      if (serverData) {
+      if (serverData.length == 10) {
         this.vegVendors.push(...serverData);
 
         event && event.target.complete();
@@ -54,22 +69,61 @@ export class VegetablesPage implements OnInit {
           this.isClear = true;
         }
       } else {
-        event.target.disabled = true;
-
-        this.sharedService.presentToastWithOptions(
-          serverData.message,
-          'warning'
-        );
+        this.vegVendors.push(...serverData);
+        this.noActiveRestarents = true;
+        this.isActicveFirst = false;
+        event && event.target.complete();
+        this.offset = 0;
+        this.vegVendors.push({id:'closed', name:'Restaurants Closed Today ', address:'null'});
+        this.inActiveGetRestaurants();
+        console.log(serverData, 'no rest');
       }
     });
   }
 
   loadData(event) {
-    this.offset = this.vegVendors.length;
-    this.getvegVendors(event);
+    if(!this.dontDo){
+      if(!this.noActiveRestarents){
+        this.offset = this.vegVendors.length;
+        this.getvegVendors(event);
+      }else{
+      
+        this.inActiveGetRestaurants(event)
+      }
+    }else{
+      event && event.target.complete();
+    }
+    
+  }
+  showVendor(id) {
+    this.navController.navigateForward(['vendor-details', id, this.catagorieId]);
   }
 
-  showVendor(id) {
-    this.navController.navigateForward(['vendor-details', id]);
+
+  inActiveGetRestaurants(event?: any) {
+    let vendorData: any = {
+      offset: this.offset,
+      limit: 10,
+      category:  this.catagorieId,
+      is_open:'false'
+    };
+    this.sharedService.getRestaurants(vendorData).then((data) => {
+      let serverData = data.data;
+      if (serverData.length > 0) {
+        this.closedVendorCount = true;
+        this.offset =  this.offset + serverData.length;
+        this.vegVendors.push(...serverData);
+        event && event.target.complete();
+        if (!serverData) {
+          this.isClear = true;
+        }
+      } else {
+        event && event.target.complete();
+        console.log(serverData, 'no rest');
+        this.dontDo = true;
+      }
+    });
   }
+
+
 }

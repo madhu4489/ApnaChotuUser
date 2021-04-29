@@ -5,7 +5,7 @@
     </ion-button>
     <ion-title class="title-header">
       <h3>{{details.name}}</h3>
-      <h6>{{details.address}}</h6>
+      <!-- <h6>{{details.address}}</h6> -->
     </ion-title>
   </ion-toolbar>
 
@@ -85,6 +85,24 @@
       </ion-item>
     </ion-list>
   </div>
+
+  <div class="address-bar">
+    <div>
+      <ion-icon name="business" class="icon"></ion-icon>
+      <p>{{details.name}}</p>
+    </div>
+    <div>
+      <ion-icon size="small" class="icon" name="location"></ion-icon>
+      <p>{{details.address}}</p>
+    </div>
+    <div>
+      <img src="../../../assets/fassi.png" />
+      <span>License No. 13619011000657</span>
+    </div>
+  </div>
+
+
+
 </ion-content>
 
 <ion-footer  *ngIf="storeOrderCount > 0">

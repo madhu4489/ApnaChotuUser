@@ -72,9 +72,10 @@ export class FoodVendorPage implements OnInit {
     await loading.present().then(() => {
       this.sharedService.getRestaurantVendor(id).then((resp) => {
         this.isloading = true;
-        const data = resp[0];
+        const data = resp.data;
         this.details = data;
 
+        console.log(data, "data")
         data['menu'].forEach((element, index) => {
           this.groups[index] = {
             name: element.group,

@@ -7,14 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { VendorPageRoutingModule } from './vendor-routing.module';
 
 import { VendorPage } from './vendor.page';
+import { PipesModule } from 'src/app/pipes/pipes.module';
+import { CustomOrdercounterComponent } from 'src/app/components/custom-ordercounter/custom-ordercounter';
+import { RemoveItemsComponent } from '../remove-items/remove-items.component';
+import { StepperComponent } from '../stepper/stepper';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    VendorPageRoutingModule
+    VendorPageRoutingModule,
+    PipesModule
   ],
-  declarations: [VendorPage]
+  declarations: [VendorPage, CustomOrdercounterComponent, RemoveItemsComponent, StepperComponent]
 })
 export class VendorPageModule {}

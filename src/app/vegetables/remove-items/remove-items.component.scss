@@ -1,0 +1,14 @@
+.toolbar-container{
+    padding: 0;
+}
+
+.fotter1 {
+    padding: 2px 20px;
+    .custom-btn {
+        --border-radius: 60px;
+       min-height: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        width: 100%;
+    }
+}

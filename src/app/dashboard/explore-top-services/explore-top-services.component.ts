@@ -36,8 +36,8 @@ export class ExploreTopServicesComponent implements OnInit {
     
   }
 
-  vegetables() {
-    this.navController.navigateForward(['/vegetables']);
+  vegetables(id) {
+    this.navController.navigateForward(['/vegetables', id]);
   }
 
 }

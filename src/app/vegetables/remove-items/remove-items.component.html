@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="primary" class="toolbar-container">
+    <ion-button Fill="clear" slot="start" (click)="backHandler()">
+      <ion-icon name="close" color="light"></ion-icon>
+    </ion-button>
+    <ion-title class="title-header">
+      <div style="line-height: 14px;">{{ selectedItems.name }}</div>
+      <small>Available quantites</small>
+      
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-item
+    *ngFor="let menuItem of selectedItems.items"
+    class="ion-activatable item-styles"
+    lines="none"
+    color="light"
+  >
+    <div class="menu-item-sub">
+      <div class="title">{{ menuItem.type }}</div>
+      <div class="price">&#8377; {{ menuItem.price }}</div>
+    </div>
+    <h6>
+      <custom-ordercounter
+          [foodItem]="selectedItems"
+          [variantDetails]="menuItem"
+          (recevieOrder)="recevieOrderFn($event, selectedItems)"
+          (removeOrder)="removeOrderFn($event, selectedItems)"
+          [showVariant] = 'false'
+    ></custom-ordercounter>
+    </h6>
+  </ion-item>
+</ion-content>
+
+<ion-footer class="fotter1 footer-nobc">
+  <ion-button
+    expand="block"
+    color="secondary"
+    class="custom-btn"
+    [disabled]="isDisabled()"
+    (click)="submitForm()"
+    >Add</ion-button
+  >
+  
+</ion-footer>

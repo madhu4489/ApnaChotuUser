@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Network } from '@ionic-native/network/ngx';
-import { ModalController, NavController } from '@ionic/angular';
+import {
+  LoadingController,
+  ModalController,
+  NavController,
+} from '@ionic/angular';
 import { SharedService } from 'src/app/providers/shared.service';
 import { SignupUserComponent } from '../profile/signup-user/signup-user.component';
 
@@ -32,12 +36,14 @@ export class DashboardPage implements OnInit {
     public sharedService: SharedService,
     public modalController: ModalController,
     private navController: NavController,
-    private network: Network
+    private network: Network,
+    public loader: LoadingController
   ) {}
 
   ngOnInit() {
     this.getlocationsFn();
     this.getOffers();
+    console.log('ngOnInit');
   }
 
   ionViewWillEnter() {
@@ -54,6 +60,8 @@ export class DashboardPage implements OnInit {
     if (localStorage.getItem('jwt')) {
       this.isEnabled = true;
       this.getOrders();
+    } else {
+      this.isEnabled = false;
     }
   }
 
@@ -83,6 +91,15 @@ export class DashboardPage implements OnInit {
       componentProps: { isFromPage: isFromPage },
     });
     await modalRef.present();
+    modalRef.onDidDismiss().then((res: any) => {
+      console.log('closedddd', res);
+      if (localStorage.getItem('jwt')) {
+        this.isEnabled = true;
+        this.getOrders();
+      } else {
+        this.isEnabled = false;
+      }
+    });
   }
 
   gotoLocation() {
@@ -101,57 +118,76 @@ export class DashboardPage implements OnInit {
     window.open(`tel:` + '9150915084', '_system');
   }
 
-  getOrders() {
-    let details = {
-      offset: 0,
-      limit: 250,
-      is_active: 1,
-    };
+  async getOrders() {
+    const loading = await this.loader.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present().then(() => {
+      let details = {
+        offset: 0,
+        limit: 250,
+        is_active: 1,
+      };
 
-    this.sharedService.getOrdersAll(details).then((data) => {
-      let serverData = data['data'];
-      if (serverData) {
-        this.allOrders = serverData;
-        console.log('allOrdersallOrdersallOrders', serverData, this.allOrders);
-      }
+      this.sharedService.getOrdersAll(details).then((data) => {
+        loading.dismiss();
+        let serverData = data['data'];
+        if (serverData) {
+          this.allOrders = serverData;
+        }
+      }),
+        (error) => {
+          loading.dismiss();
+        };
     });
   }
 
-  getOffers() {
-    this.sharedService.getDashboardOffers().then((data) => {
-      console.log(data['data'], "data['data']");
-      this.offers = data['data'];
-    }),
-      (error) => {
-        alert(error.message);
-      };
+  async getOffers() {
+
+    const loading = await this.loader.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present().then(() => {
+      this.sharedService.getDashboardOffers().then((data) => {
+        loading.dismiss();
+        this.offers = data['data'];
+      }),
+        (error) => {
+          loading.dismiss();
+          alert(error.message);
+        };
+    })
+
+    
   }
 
   slideOptions(slides) {
     let slideOpts = {
-        speed: 400,
-        loop: 'true',
-      };
+      speed: 400,
+      loop: 'true',
+      autoplay: {
+        delay: 5000,
+      },
+    };
 
-      let slideOpts1 = {
-        speed: 400,
-        loop: 'false',
-      };
+    let slideOpts1 = {
+      speed: 400,
+      loop: 'false',
+    };
 
-      console.log(slides.length, "slides.length")
+    // console.log(slides.length, 'slides.length');
     // if(slides.length > 2){
     //   return slideOpts;
     // }
-    return slideOpts
+    return slideOpts;
   }
 
-
-  getPager(slides){
-    return false
+  getPager(slides) {
+    return false;
   }
 }
-
-
 
 // slideOpts = {
 //   speed: 400,
