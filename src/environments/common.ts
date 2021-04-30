@@ -25,7 +25,7 @@ export const common = {
       getOrdersAll:() => `${BASE_URL}order/getall`,
       getSingleOrderDetails:() => `${BASE_URL}order/get/`,
       getDashboardOffers:() => `${BASE_URL}meta/offers`,
-      
+      getCancelledOrder:() => `${BASE_URL}order/cancel`,
 
     },
   },

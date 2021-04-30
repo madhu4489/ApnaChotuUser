@@ -233,4 +233,12 @@ export class SharedService {
   }
 
 
+  getCancelledOrder(details): Promise<any> {
+    let obj = this;
+      return obj._http
+        .put(environment.urls.function.getCancelledOrder(), details, this.getHeaders())
+        .toPromise();
+  }
+
+
 }

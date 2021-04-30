@@ -34,7 +34,7 @@
         <span class="veg" [ngClass]="{'non-veg' : menuItems.type==='nv'}"
           ><span></span
         ></span>
-        <h6 class="menu-item" style="padding-right: 82px;">
+        <h6 class="menu-item" style="flex-grow: 4;">
           <div class="title" >{{menuItems.name}}</div>
           <div class="price" (click)="menuItems.price_quantity.length > 1 && opengQuantityHandler(menuItems)">
             {{menuItems.defaultVariantDetails.quantity}}
@@ -44,14 +44,16 @@
             &#8377; {{menuItems.defaultVariantDetails.price}}
           </div>
         </h6>
-        <h6 class="step">
-
+        <h6 class="step" style="width: 88px;">
+            <img [src]="menuItems.image" *ngIf="menuItems.image" />
+             
+          <div class="" [ngClass]="{'step-image' : menuItems.image}">
           <stepper
               [count]="menuItems.count" 
               [someText]="menuItems.selectedVariants > 1 ? menuItems.selectedVariants + ' variants':''" 
               (countHandler)="recevieOrderFn($event, menuItems, menu.id)"> 
             </stepper>
-
+          </div>
          
             
         </h6>

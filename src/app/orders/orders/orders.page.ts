@@ -53,7 +53,6 @@ export class OrdersPage implements OnInit {
 
   getOrders(event?: any, fresh?:any) {
 
-    console.log(this.isActive, "this.isActivethis.isActivethis.isActive")
     let details = {
       offset: this.offset,
       limit: this.limit,
@@ -105,7 +104,15 @@ export class OrdersPage implements OnInit {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Confirm!',
-        message: 'Are you sure want to cancel this order?',
+        subHeader: 'Are you sure want to cancel this order?',
+        message: '',
+
+        inputs: [
+          {
+            name: 'cancelReason',
+            type: 'text',
+            placeholder: 'Please enter reasion',
+          }],
         buttons: [
           {
             text: 'Close',
@@ -117,8 +124,18 @@ export class OrdersPage implements OnInit {
           {
             text: 'Cancel Order',
             cssClass: 'secondary',
-            handler: () => {
-              this.cancelOrder(order);
+            handler: (data) => {
+
+              if (!data.cancelReason) {
+                alert.message = "Please enter cancellation reason";
+                return false;
+            } else {
+              console.log(data.cancelReason, "cancelReason")
+                this.cancelOrder(order, data.cancelReason);
+            }
+
+
+              
             },
           },
         ],
@@ -128,7 +145,7 @@ export class OrdersPage implements OnInit {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Sorry!',
-        message: 'Order will cancelled only within 2 minutes...',
+        subHeader: 'Order will cancelled only within 2 minutes...',
         buttons: [
           {
             text: 'Close',
@@ -143,8 +160,12 @@ export class OrdersPage implements OnInit {
     }
   }
 
-  cancelOrder(order?: any) {
-    console.log(order);
+
+
+  cancelOrder(order?: any, cancelReason?:any) {
+    console.log(order, cancelReason);
+    this.getCancelledOrder(order, cancelReason)
+    
   }
 
   loadData(event) {
@@ -163,5 +184,24 @@ export class OrdersPage implements OnInit {
 
   toCall(number){
     window.open(`tel:` + number, '_system');
+  }
+
+  async getCancelledOrder(orderId, cancel_reason){
+    let details = {
+      orderId: orderId.id,
+      cancel_reason: cancel_reason,
+    };
+
+    const loading = await this.loader.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present().then(() => {
+
+    this.sharedService.getCancelledOrder(details).then((data) => {
+      this.getOrders(null, true);
+      loading.dismiss();
+    });
+  });
   }
 }

@@ -47,7 +47,7 @@
           ><span></span
         ></span>
 
-        <h6 class="menu-item" style="padding-right: 82px;">
+        <h6 class="menu-item" >
           <div class="title" >{{menuItems.name}}</div>
 
           <div class="price">
@@ -55,15 +55,19 @@
           </div>
         </h6>
 
-
+        <h6 class="step" style="width: 88px;">
+          <img [src]="menuItems.image" *ngIf="menuItems.image" />
+           
+        <div class="" [ngClass]="{'step-image' : menuItems.image}">
        
-        <h6 class="step">
+        
           <custom-counter
             [foodItem]="menuItems"
             [groupId]="menu.id"
             [vendorId]="route.snapshot.params.id"
             (recevieOrder)="recevieOrderFn($event)"
           ></custom-counter>
+          </div>
         </h6>
       </ion-item>
     </ion-item-group>
