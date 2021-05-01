@@ -168,7 +168,7 @@ export class ViewKartPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Confirm!',
-      message: 'Are you sure want to proceed?',
+      subHeader: 'Are you sure want to proceed?',
       buttons: [
         {
           text: 'Cancel',

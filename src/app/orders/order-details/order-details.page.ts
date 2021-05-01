@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { SharedService } from 'src/app/providers/shared.service';
 
 @Component({
@@ -20,6 +20,8 @@ export class OrderDetailsPage implements OnInit {
     private route: ActivatedRoute,
     public sharedService: SharedService,
     private navController: NavController,
+    public loader: LoadingController,
+    public alertController: AlertController
   ) {
     if (this.route.snapshot.params.id) {
       this.orderID = this.route.snapshot.params.id;
@@ -66,6 +68,86 @@ export class OrderDetailsPage implements OnInit {
     this.getOrders(event);
   }
 
+  // reOrder(details){
 
+  //   console.log(details, "details")
+
+  // }
+
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      subHeader: 'Are you sure want to Order?',
+      buttons: [
+        
+        {
+          text: 'Cancel',
+          role: 'cancel',
+         
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          },
+        },
+        {
+          text: 'Proceed',
+          cssClass: 'secondary',
+          handler: () => {
+            this.placeOrder();
+          },
+        }
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async placeOrder() {
+
+    console.log(this.details, "this.details")
+    // let vendorId: any;
+    // let Items: any = [];
+
+    // this.details.forEach((element) => {
+    //   vendorId = element.vendorId;
+    //   Items.push({
+    //     itemId: element.itemId,
+    //     quantity: element.count,
+    //     price: element.price,
+    //   });
+    // });
+
+    // let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+
+    // let address = details;
+    // let orderData = {
+    //   vendorId: this.details.vendorId,
+    //   price: this.details.totalPrice,
+    //   paymentMode: 'cashoronline',
+    //   address: this.details.address,
+    //   lat: null,
+    //   lng: null,
+    //   items: this.details.items,
+    //   finalPrice: this.details.finalPrice,
+    //   itemsPrice: this.details.totalPrice,
+    //   deliveryFee: this.details,
+    //   locationId: this.serviceLocationId,
+    //   discountPrice: this.discountPrice ? this.discountPrice : 0,
+    //   extra_items: this.extra_items,
+    //   alt_mobile: this.alternate ? this.alternate : '',
+    // };
+
+    // const loading = await this.loader.create({
+    //   cssClass: 'my-custom-class',
+    //   message: 'Please wait...',
+    // });
+    // await loading.present().then(() => {
+    //   this.sharedService.createOrder(orderData).then((data) => {
+    //     console.log(data, 'dataaaaaaaa');
+    //     loading.dismiss();
+    //   });
+    // });
+  }
 
 }

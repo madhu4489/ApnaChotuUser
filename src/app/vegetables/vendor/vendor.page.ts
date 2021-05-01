@@ -86,7 +86,10 @@ export class VendorPage implements OnInit {
         });
 
         this.details.menu.forEach((element) => {
+
+          console.log(element, "element");
           element.items.forEach((item) => {
+
             item.defaultVariantDetails = item.price_quantity[0];
             item.items = item.price_quantity.map(priceQuantity => {
               return { itemId: item.id, quantity: 0, price: priceQuantity.price, type: priceQuantity.quantity }
