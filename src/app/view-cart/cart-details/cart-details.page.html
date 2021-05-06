@@ -37,7 +37,7 @@
     </ion-item-group>
     <ion-item  color="light" class="suggestion">
       <ion-input
-        placeholder="Any suggustions?"
+        placeholder="Any suggestions?"
         [(ngModel)]="extra_items"
         clearInput
       ></ion-input>
@@ -51,7 +51,7 @@
     >
       <table class="bill-table tip-tabel">
         <tr class="">
-          <td colspan="3">Select the amount you'd like to tip</td>
+          <td colspan="4">Select the amount you'd like to tip</td>
         </tr>
         <tr *ngFor="let tip of tipTabel">
           <td *ngFor="let t of tip; let index = index">
@@ -179,7 +179,7 @@
 </ion-content>
 
 <ion-footer *ngIf="isLoading && !isOrderPlaced">
-  <ion-list>
+  <ion-list style="    padding-top: 0;">
     <ion-item lines="none" color="light" *ngIf="deliveryLocation.length === 0">
       <ion-label class="view-cart-label"
         >Please add a delivery address</ion-label
@@ -191,38 +191,37 @@
         fill="clear"
         size="small"
         color="secondary"
+        slot="end"
       >
         Add</ion-button
       >
     </ion-item>
-    <ion-item
-      lines="none"
-      color="light"
-      *ngIf="deliveryLocation && deliveryLocation.length != 0"
-    >
-      <ion-label class="view-cart-label">
-        <h5 color="secondary">
-          Delivery to:
-          <strong
-            >{{deliveryLocation.address_name ||
-            deliveryLocation.address_type}}</strong
-          >
-        </h5>
-        <p class="ion-text-wrap">
-          {{deliveryLocation.h_no}}, {{deliveryLocation.street}},
-          {{deliveryLocation.landmark}}, {{deliveryLocation.locality}},
-          {{deliveryLocation.contact_no}}
-        </p>
+
+    <ion-item  
+    lines="none"
+    color="light" 
+    button >
+    
+      <ion-label>
+        <h3> Delivery to: <strong
+          >{{deliveryLocation.address_name ||
+          deliveryLocation.address_type}}</strong
+        ></h3>
       </ion-label>
       <ion-button
         fill="clear"
         size="small"
         color="secondary"
         class="custom-btn-small"
+        slot="end"
         (click)="addAddress()"
         >Change</ion-button
       >
+
     </ion-item>
+
+
+    
 
     <ion-item *ngIf="deliveryLocation">
       <ion-button

@@ -47,7 +47,7 @@
     </ion-item-group>
     <ion-item  color="light" class="suggestion">
       <ion-input
-        placeholder="Any suggustions?"
+        placeholder="Any suggestions?"
         [(ngModel)]="extra_items"
         clearInput
       ></ion-input>
@@ -61,7 +61,7 @@
     >
       <table class="bill-table tip-tabel">
         <tr class="">
-          <td colspan="3">Select the amount you'd like to tip</td>
+          <td colspan="4">Select the amount you'd like to tip</td>
         </tr>
         <tr *ngFor="let tip of tipTabel">
           <td *ngFor="let t of tip; let index = index">
@@ -218,11 +218,11 @@
             deliveryLocation.address_type}}</strong
           >
         </h5>
-        <p class="ion-text-wrap">
+        <!-- <p class="ion-text-wrap">
           {{deliveryLocation.h_no}}, {{deliveryLocation.street}},
           {{deliveryLocation.landmark}}, {{deliveryLocation.locality}},
           {{deliveryLocation.contact_no}}
-        </p>
+        </p> -->
       </ion-label>
       <ion-button
         fill="clear"
@@ -230,6 +230,7 @@
         color="secondary"
         class="custom-btn-small"
         (click)="addAddress()"
+        slot="end"
         >Change</ion-button
       >
     </ion-item>

@@ -71,13 +71,12 @@
     </ion-slides> 
   </div> -->
 
-  <app-explore-top-services></app-explore-top-services>
-  
   <div class="sliders" *ngIf="offers.length>0">
 
     <ion-row *ngFor="let service of offers">
-      <ion-list-header class="header-dashboard" >
-        <ion-label class="header-title"> Top Deals on&nbsp; <label [innerHTML]="service.group" class="label"></label></ion-label>
+      <ion-list-header class="header-dashboard" style="margin-top: 0;">
+        <!-- <ion-label class="header-title"> Top Deals on&nbsp; <label [innerHTML]="service.group" class="label"></label></ion-label> -->
+        <ion-label class="header-title"> Top deals for you</ion-label>
       </ion-list-header>
 
       <ion-slides pager={getPager(service.items)} [options]="slideOptions(service.items)">
@@ -112,6 +111,10 @@
   </ion-item-group> -->
 
   </div>
+  
+  <app-explore-top-services></app-explore-top-services>
+  
+
 </ion-content>
 <!-- <ion-toolbar *ngIf="allOrders">
   <ion-item lines="none">

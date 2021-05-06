@@ -111,7 +111,7 @@ export class OrdersPage implements OnInit {
           {
             name: 'cancelReason',
             type: 'text',
-            placeholder: 'Please enter reasion',
+            placeholder: 'Please enter reason',
           }],
         buttons: [
           {

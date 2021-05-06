@@ -18,7 +18,7 @@ export class ProfilePage implements OnInit {
       icon: 'business',
       active: true,
     },
-    { name: 'Past Ordes', value: 'ordes', icon: 'bag-handle', active:true },
+    { name: 'Past Orders', value: 'ordes', icon: 'bag-handle', active:true },
     { name: 'Logout', value: 'logout', icon: 'log-out', active: true },
   ];
 
@@ -77,7 +77,7 @@ export class ProfilePage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Confirm!',
-      message: 'Are you sure want to logout?',
+      subHeader: 'Are you sure want to logout?',
       buttons: [
         
        

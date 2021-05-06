@@ -23,7 +23,7 @@ export class FoodVendorPage implements OnInit {
   isVeg: boolean = false;
   isloading: boolean;
   backUpMenus: any = [];
-  terms: string;
+  terms: string = '';
 
   @ViewChild(IonContent, { read: IonContent }) myContent: IonContent;
   @ViewChildren('scrollTo') scrollComponent: any;
@@ -75,7 +75,7 @@ export class FoodVendorPage implements OnInit {
         const data = resp.data;
         this.details = data;
 
-        console.log(data, "data")
+        console.log(data['menu'], "data")
         data['menu'].forEach((element, index) => {
           this.groups[index] = {
             name: element.group,
@@ -88,7 +88,7 @@ export class FoodVendorPage implements OnInit {
         this.cartDataProvider.setRestName(data);
 
         let _cartData = this.cartDataProvider.getCartData();
-        if (_cartData && _cartData.length != 0) {
+        if (_cartData && _cartData?.length != 0) {
           this.storeOrderPrice = 0;
           _cartData.forEach((_cartItem) => {
             this.storeOrderCount = this.storeOrderCount + _cartItem.count;

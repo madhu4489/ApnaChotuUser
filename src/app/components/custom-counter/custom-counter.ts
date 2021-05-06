@@ -18,9 +18,12 @@ export class CustomCounterComponent implements OnInit{
   }
 
   clickFn(val: any) {
+
     this.foodItem.count =
       val == 1 ? this.foodItem.count + 1 : this.foodItem.count - 1;
+      
     let price = Number(this.foodItem.price);
+
     if (val == 1) {
       this.menuOrder = this.foodItem.name;
       this.foodItem.orderPrice = this.foodItem.orderPrice + price;

@@ -201,6 +201,9 @@ ion-segment-button {
   left: 0;
 }
 
+.numberadd .plus.disabled {
+  color: #afafaf;
+}
 .numberadd .inputText {
   height: 26px;
   width: 32px;
@@ -529,7 +532,7 @@ width: 80px;
 .menu-button{
   position: fixed;
     bottom: 40px;
-    left: calc(50% - 30px);
+    left: calc(50% - 73px);
 }
 
 .closed-res{

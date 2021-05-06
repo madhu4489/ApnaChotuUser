@@ -19,7 +19,7 @@
         
         <ion-icon name="call" slot="start" size="small"></ion-icon>
         <ion-label position="stacked">Phone number*</ion-label>
-        <ion-input inputmode="tel" formControlName="phone"></ion-input>
+        <ion-input inputmode="tel"  formControlName="phone" maxlength="10" min="10"></ion-input>
       </ion-item>
     </ion-list>
   </form>
@@ -38,7 +38,7 @@
       <ion-item >
         <ion-icon name="eye" slot="start" size="small"></ion-icon>
         <ion-label position="stacked">OTP*</ion-label>
-        <ion-input inputmode="tel" formControlName="otp" (ngModelChange)="verifyOTP()"></ion-input>
+        <ion-input inputmode="tel" formControlName="otp" maxlength="4" (ngModelChange)="verifyOTP()"></ion-input>
       </ion-item>
       <div *ngIf="otpGroupErrors" class="error-text">
         Please enter valid OTP.
@@ -58,7 +58,7 @@
 
       <ion-item>
         <ion-icon name="person" slot="start" size="small"></ion-icon>
-        <ion-label position="stacked">Name</ion-label>
+        <ion-label position="stacked">First name</ion-label>
         <ion-input inputmode="text" formControlName="name"></ion-input>
       </ion-item>
 
@@ -70,7 +70,7 @@
 
       <ion-item>
         <ion-icon name="mail" slot="start" size="small"></ion-icon>
-        <ion-label position="stacked">Emain ID</ion-label>
+        <ion-label position="stacked">Email ID</ion-label>
         <ion-input inputmode="email" formControlName="email"></ion-input>
       </ion-item>
     </ion-list>

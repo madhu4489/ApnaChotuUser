@@ -29,7 +29,7 @@ export class VendorPage implements OnInit {
   isVeg: boolean = false;
   isloading: boolean;
   backUpMenus: any = [];
-  terms: string;
+  terms: string = '';
 
   orderCountDetails:any;
 

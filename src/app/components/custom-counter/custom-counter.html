@@ -1,8 +1,8 @@
 <div class="numberadd">
-  <span *ngIf="foodItem.count == 0" (click)="clickFn(1)" class="add">Add</span>
+  <span *ngIf="foodItem.count == 0" (click)="clickFn(1)"  class="add">Add</span>
   <span class="minus" *ngIf="foodItem.count != 0" (click)="foodItem.count != 0 && clickFn(0)">-</span>
-  <ion-input type="text" *ngIf="foodItem.count != 0" class="inputText" [(ngModel)]="foodItem.count" readonly ></ion-input>
-  <span class="plus" *ngIf="foodItem.count != 0"  (click)="clickFn(1)">+</span>
+  <ion-input type="text" *ngIf="foodItem.count != 0" class="inputText" maxlength="2" [(ngModel)]="foodItem.count" readonly ></ion-input>
+  <span class="plus" *ngIf="foodItem.count != 0 " [ngClass]="{'disabled' : foodItem.count == 99}" (click)="foodItem.count != 99 && clickFn(1)">+</span>
 
 </div>
 <div class="total-price" *ngIf="foodItem.orderPrice>0">&#8377; {{this.foodItem.orderPrice}}</div>

@@ -1,8 +1,8 @@
 <div class="numberadd">
   <span *ngIf="count == 0" (click)="clickFn(1)" class="add">Add</span>
   <span class="minus" (click)="count != 0 && removeOrderFn()">-</span>
-  <input type="text" class="inputText" [(ngModel)]="count" readonly />
-  <span class="plus" (click)="clickFn(1)">+</span>
+  <input type="text" class="inputText" [(ngModel)]="count" maxlength="2" readonly />
+  <span class="plus" [ngClass]="{'disabled' : count == 99}" (click)="count != 99 && clickFn(1)">+</span>
  
 </div>
 

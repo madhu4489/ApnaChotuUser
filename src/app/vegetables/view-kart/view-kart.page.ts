@@ -37,8 +37,7 @@ export class ViewKartPage implements OnInit {
   orderCountDetails: any;
 
   tipTabel: any = [
-    [5, 10, 15],
-    [20, 40, 60],
+    [10, 20, 30, 50]
   ];
   tipAmount: number = 0;
 

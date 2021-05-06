@@ -22,7 +22,7 @@
 <ion-content>
   <ion-list>
     <ion-item-group *ngFor="let menu of menus" #scrollTo>
-      <ion-item-divider sticky="true" class="item-header">
+      <ion-item-divider sticky="true" class="item-header" *ngIf="terms?.length == 0">
         {{menu.group}}
       </ion-item-divider>
       <ion-item
@@ -67,7 +67,7 @@
     class="menu-button"
     (click)="presentActionSheet()"
     [ngClass]="{'bottom-60' : orderCountDetails?.count > 0}"
-    >Menu</ion-button
+    >Browse Items </ion-button
   >
 
   <div *ngIf="!isloading">

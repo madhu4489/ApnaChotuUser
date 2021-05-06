@@ -38,6 +38,10 @@ export class SignupUserComponent implements OnInit {
 
   isFrom: any;
 
+  mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  regix = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+
   constructor(
     public navController: NavController,
     private _modalCtrl: ModalController,
@@ -47,7 +51,7 @@ export class SignupUserComponent implements OnInit {
   ) {
     this.loginGroup = this.formBuilder.group({
       phone: [
-        '9963887640',
+        '',
         [
           Validators.required,
           Validators.minLength(10),
@@ -75,11 +79,16 @@ export class SignupUserComponent implements OnInit {
   }
 
   ValidateEmail(control: AbstractControl): { [key: string]: any } | null {
-    let regix = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-    if (control.value && !regix.test(control.value)) {
+    let mailformat = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+    if (control.value && (!mailformat.test(control.value))) {
       return { emailInvalid: true };
     }
+
+    // if(control.value && !(/[a-z]/).test(control.value)){
+    //   return { emailInvalid: true };
+    // }
     return null;
   }
 
