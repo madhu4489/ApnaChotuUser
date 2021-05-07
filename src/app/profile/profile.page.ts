@@ -80,7 +80,6 @@ export class ProfilePage implements OnInit {
       subHeader: 'Are you sure want to logout?',
       buttons: [
         
-       
         {
           text: 'Cancel',
           role: 'cancel',

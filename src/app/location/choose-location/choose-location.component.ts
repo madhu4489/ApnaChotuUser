@@ -18,7 +18,7 @@ export class ChooseLocationComponent implements OnInit {
   @Input() addressList:any;
   isOtherName: boolean = false;
   currentIndex: number = -1;
-  flat: string = '5-1-92/5/15';
+  flat: string = '';
   street: string;
   landmark: string;
   contact: string;
@@ -216,7 +216,7 @@ if(index == -1){
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Confirm!',
-      message: 'Are you sure want to delete?',
+      subHeader: 'Are you sure want to delete?',
       buttons: [
         
         {

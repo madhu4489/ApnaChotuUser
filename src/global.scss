@@ -133,11 +133,7 @@ ion-loading {
   border-color: #e4806e !important;
 }
 
-.item-styles {
-  margin: 0 auto 10px;
-  box-shadow: 0 1px 2.94px 0.06px rgb(4 26 55 / 16%);
-  border-radius: 5px;
-}
+
 
 .ion-item {
   --background-color: #fff;
@@ -287,6 +283,10 @@ ion-segment-button {
   display: flex;
   align-items: flex-start;
   // overflow: visible;
+}
+
+.item-styles1{
+  align-items: center;
 }
 
 .item-styles ion-img {
@@ -456,7 +456,7 @@ width: 80px;
 .header-dashboard {
   padding-left: 16px;
   max-height: 20px;
-  background: #e4e4e5 !important;
+  background: #fff !important;
   margin: 6px 0 14px;
   border-bottom: 1px solid #607d8b17;
 }

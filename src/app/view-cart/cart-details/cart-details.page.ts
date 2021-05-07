@@ -186,7 +186,7 @@ export class CartDetailsPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Oops!',
-      message: `Currently unable to deliver your ${
+      subHeader: `Currently unable to deliver your ${
         this.serviceLocation && this.serviceLocation.name
       } location.`,
       buttons: [

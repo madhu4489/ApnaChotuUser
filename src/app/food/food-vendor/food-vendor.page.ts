@@ -80,6 +80,7 @@ export class FoodVendorPage implements OnInit {
           this.groups[index] = {
             name: element.group,
             is_active: element.is_active,
+            count: element.items.length,
           };
         });
 
@@ -150,7 +151,7 @@ export class FoodVendorPage implements OnInit {
     this.groups.forEach((group, index) => {
       let button = {
         cssClass: 'action-button',
-        text: group.name,
+        text: `${group.name} (${group.count})`,
         handler: () => {
           this.setDefault = group.name;
           this.gotoMenu(index);

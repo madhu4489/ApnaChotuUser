@@ -27,7 +27,7 @@
         lines="none"
         color="light"
         [ngClass]="{'closed' : !restaurant.is_open, 'closed-res' : restaurant.id =='closed', 'display-none': !closedVendorCount && restaurant.id =='closed'}"
-        (click)="restaurant.id !='closed' && showVendor(restaurant.id)"
+        (click)="restaurant.is_open && showVendor(restaurant.id)"
       >
       <div *ngIf="restaurant.id =='closed'">{{restaurant.name}}</div>
       

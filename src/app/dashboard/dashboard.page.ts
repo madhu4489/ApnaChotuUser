@@ -43,6 +43,22 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
     this.getlocationsFn();
     this.getOffers();
+
+    // if (localStorage.getItem('selectedLocation')) {
+    //   let address = JSON.parse(localStorage.getItem('selectedLocation'));
+    //   this.chooseLocation =
+    //     (address.address_name || address.address_type) +
+    //     ', ' +
+    //     address.locality;
+    // }
+
+    // if (localStorage.getItem('jwt')) {
+    //   this.isEnabled = true;
+    //   this.getOrders();
+    // } else {
+    //   this.isEnabled = false;
+    // }
+
     console.log('ngOnInit');
   }
 
@@ -55,6 +71,8 @@ export class DashboardPage implements OnInit {
         (address.address_name || address.address_type) +
         ', ' +
         address.locality;
+    }else{
+      this.chooseLocation = 'Unnamed Road, Sangareddy';
     }
 
     if (localStorage.getItem('jwt')) {

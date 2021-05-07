@@ -31,21 +31,21 @@
       <ion-item lines="none" class="ion-text-wrap">
         <ion-title style="font-size: 0.9rem;text-align: left;padding: 0;">
           Enter the OTP sent to<strong> {{userPhone}}</strong>
-          <strong>{{saveOTP}}</strong>
+          <!-- <strong>{{saveOTP}}</strong> -->
         </ion-title>
       </ion-item>
   
       <ion-item >
         <ion-icon name="eye" slot="start" size="small"></ion-icon>
         <ion-label position="stacked">OTP*</ion-label>
-        <ion-input inputmode="tel" formControlName="otp" maxlength="4" (ngModelChange)="verifyOTP()"></ion-input>
+        <ion-input inputmode="tel" formControlName="otp" (ngModelChange)="verifyOTP()" autofocus maxlength="4"></ion-input>
       </ion-item>
       <div *ngIf="otpGroupErrors" class="error-text">
         Please enter valid OTP.
       </div>
       <ion-item lines="none">
         <!-- <ion-button slot="end" shape="round" color="warning" (click)="editScreen()">Edit</ion-button> -->
-        <ion-button slot="end" shape="round" color="success" (click)="resendOTP()" style="margin-left: 18px;">Resend OTP</ion-button>
+        <ion-button slot="end" color="success" (click)="resendOTP()" style="margin-left: 18px;">Resend OTP</ion-button>
       </ion-item>
 
 

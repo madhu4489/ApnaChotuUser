@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/providers/shared.service';
+import { OrderServicesProvider } from 'src/app/providers/order-services/order-services';
 @Component({
   selector: 'app-vegetables',
   templateUrl: './vegetables.page.html',
@@ -32,6 +33,7 @@ export class VegetablesPage implements OnInit {
     public sharedService: SharedService,
     private router: Router,
     private route: ActivatedRoute,
+    public orderServicesProvider: OrderServicesProvider,
   ) {}
 
   ngOnInit() {
@@ -39,7 +41,7 @@ export class VegetablesPage implements OnInit {
       this.catagorieId = this.route.snapshot.params.id;
       this.getvegVendors();
     }
-
+    this.orderServicesProvider.clearCartData()
   }
 
   backHandler() {
