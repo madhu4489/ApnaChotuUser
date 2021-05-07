@@ -122,10 +122,13 @@ export class SignupUserComponent implements OnInit {
         loading.dismiss();
         this.userPhone = this.loginGroup.value.phone;
         let values = this.loginGroup.value;
+
+        console.log(resp, "loginnnnnnnnnnnnnnnn", values);
+
         let details = {
           first_name: 'Guest',
           last_name: 'Guest',
-          email: (values.email).toLowerCase(),
+          email: values.email && (values.email).toLowerCase(),
           user_role: 'USER',
           mobile: values.phone,
           password: null,
