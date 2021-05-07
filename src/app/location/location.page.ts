@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { SharedService } from '../providers/shared.service';
 import { ChooseLocationComponent } from './choose-location/choose-location.component';
@@ -18,7 +18,9 @@ export class LocationPage implements OnInit {
   constructor(
     private navController: NavController,
     public modalController: ModalController,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    public alertController: AlertController,
+    public loader: LoadingController,
   ) {}
 
   ngOnInit() {
@@ -40,6 +42,7 @@ export class LocationPage implements OnInit {
       cssClass: 'my-custom-model',
       componentProps: {
         details: details,
+        addressList: this.savedLocations
       },
     });
     await modalRef.present();
@@ -74,4 +77,52 @@ export class LocationPage implements OnInit {
       }
     });
   }
+
+
+  async presentAlertConfirm(id) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      subHeader: 'Are you sure want to delete?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          },
+        },
+        {
+          text: 'Okay',
+          handler: () => {
+            this.deleteHandler(id);
+            console.log('Confirm Okay');
+          },
+        },
+        
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async deleteHandler(id) {
+    let selectedLocation = JSON.parse(localStorage.getItem('selectedLocation'));
+    if(selectedLocation && selectedLocation.id === id){
+      localStorage.setItem('selectedLocation', '');
+    }
+    const loading = await this.loader.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present().then(() => {
+      this.sharedService.deleteAddress(id).then((resp) => {
+        loading.dismiss();
+       this.getAllAddress();
+      });
+    });
+  }
+
+
 }

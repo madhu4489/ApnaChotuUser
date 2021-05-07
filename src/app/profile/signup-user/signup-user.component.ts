@@ -86,9 +86,7 @@ export class SignupUserComponent implements OnInit {
       return { emailInvalid: true };
     }
 
-    // if(control.value && !(/[a-z]/).test(control.value)){
-    //   return { emailInvalid: true };
-    // }
+
     return null;
   }
 
@@ -127,7 +125,7 @@ export class SignupUserComponent implements OnInit {
         let details = {
           first_name: 'Guest',
           last_name: 'Guest',
-          email: values.email,
+          email: (values.email).toLowerCase(),
           user_role: 'USER',
           mobile: values.phone,
           password: null,
@@ -249,7 +247,7 @@ export class SignupUserComponent implements OnInit {
       let details = {
         first_name: this.f.name.value || 'Guest',
         last_name: this.f.lastName.value || 'Guest',
-        email: this.f.email.value || '',
+        email: (this.f.email.value).toLowerCase() || '',
         gender: "notchoose"
         
       };
@@ -305,7 +303,7 @@ export class SignupUserComponent implements OnInit {
           this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
           this.userDetails.first_name = details.first_name;
           this.userDetails.last_name = details.last_name;
-          this.userDetails.email = details.email;
+          this.userDetails.email = (details.email).toLowerCase();
           this.userDetails.gender = "notchoose";
           localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
           this.sharedService.presentToastWithOptions(

@@ -23,6 +23,25 @@
     padding: 4px 8px 0px;
     margin-right: 12px;
 }
+
+.address-icon.briefcase{
+    background: #36abe0;
+}
+
+.address-icon.briefcase ion-icon, .address-icon.home ion-icon, .address-icon.other ion-icon{
+    color: #fff;
+}
+.address-icon.home{
+    background: #3171e0;
+}
+
+.address-icon.other{
+    background: #2dd36f;
+}
+
+
+
+
 .edit-button{
     position: absolute;
     top: 4px;
@@ -34,4 +53,11 @@
         font-weight: 600;
         color: --ion-color-secondary;
     }
+}
+
+.buttons{
+    padding-top: 10px;
+    border-top: 1px solid #d7dfe3;
+    margin-top: 10px;
+    text-align: right;
 }

@@ -20,32 +20,32 @@
     style="top: -32px"
   >
     <ion-fab-button color="secondary">
-      <ion-img src="../../../assets/icon/add_icon.svg" style="    width: 36px;"></ion-img>
+      <ion-img src="../../../assets/icon/add_icon.svg" style="width: 36px;"></ion-img>
       <!-- <ion-icon name="location"></ion-icon> -->
     </ion-fab-button>
   </ion-fab>
 
+
+ 
   <ion-list *ngIf="savedLocations.length > 0">
     <ion-item
       *ngFor="let savedLocation of savedLocations"
       class="ion-activatable item-styles"
       lines="none"
       color="light"
-      (click)="selectLocation(savedLocation)"
+      (click)="!isEditMode && selectLocation(savedLocation)"
     >
-      <div class="address-icon">
+      <div class="address-icon" [ngClass]="{'briefcase' : savedLocation.address_type === 'OFFICE', 'home': savedLocation.address_type === 'HOME', 'other': savedLocation.address_type === 'OTHERS' }">
         <ion-icon
           name="{{savedLocation.address_type === 'OFFICE' ? 'briefcase' : savedLocation.address_type === 'HOME' ? 'home' : 'business'}}"
           size="large"
-          color="medium"
         ></ion-icon>
       </div>
       <ion-label class="address">
+        
         <h3>
-          {{savedLocation.address_name || savedLocation.address_type}}
-          <ion-button color="secondary" slot="end" size="small" *ngIf="isEditMode" style="position: absolute; right: 4px; bottom: 0;">
-            <ion-label>Edit</ion-label>
-          </ion-button>
+          {{savedLocation.address_type === 'OTHERS' ? savedLocation.address_name : savedLocation.address_type}}
+         
         </h3>
         <p class="ion-text-wrap">
           {{savedLocation.h_no}}, {{savedLocation.street}}
@@ -53,7 +53,20 @@
         <p class="ion-text-wrap">{{savedLocation.landmark}}</p>
         <p class="ion-text-wrap">{{savedLocation.contact_no}}</p>
         <h5>{{savedLocation.locality}}</h5>
+        <div *ngIf="isEditMode" class="buttons">
+          <ion-button color="secondary" slot="end" size="small"  (click)="selectLocation(savedLocation)">
+            <ion-label>Edit</ion-label>
+          </ion-button>
+  
+          <ion-button color="primary" slot="end" size="small" (click)="presentAlertConfirm(savedLocation.id)">
+            <ion-label>Delete</ion-label>
+          </ion-button>
+        </div>
+
       </ion-label>
+   
+
+      
 
       <ion-ripple-effect></ion-ripple-effect>
     </ion-item>

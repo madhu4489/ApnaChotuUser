@@ -14,6 +14,8 @@ import { AlertController } from '@ionic/angular';
 })
 export class ChooseLocationComponent implements OnInit {
   @Input() details = null;
+
+  @Input() addressList:any;
   isOtherName: boolean = false;
   currentIndex: number = -1;
   flat: string = '5-1-92/5/15';
@@ -27,11 +29,12 @@ export class ChooseLocationComponent implements OnInit {
   defaultOption = { charge: '0', id: 0, is_active: 1, name: 'Select' };
   id: any;
   typeOptions: any = [
-    { name: 'Home', id: 0 },
-    { name: 'Office', id: 1 },
-    { name: 'Others', id: 2 },
+    { name: 'HOME', id: 0 },
+    { name: 'OFFICE', id: 1 },
+    { name: 'OTHERS', id: 2 },
   ];
 
+  addressListArr:any = [];
   constructor(
     public modalController: ModalController,
     public loader: LoadingController,
@@ -50,6 +53,22 @@ export class ChooseLocationComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.addressList.length > 0){
+      this.addressListArr =this.addressList.map(element => element.address_type);
+      this.addressListArr = [...new Set(this.addressListArr)];
+
+      if( this.details?.address_type && this.addressListArr.indexOf(this.details.address_type) != -1 ){
+       this.addressListArr.splice(this.addressListArr.indexOf(this.details.address_type), 1);
+      }
+
+      if( this.addressListArr.indexOf("OTHERS") != -1 ){
+        this.addressListArr.splice(this.addressListArr.indexOf("OTHERS"), 1);
+       }
+
+
+      console.log(this.addressListArr, "this.addressListArr")
+      
+    }
     if (this.details) {
       console.log('details', this.details);
       this.flat = this.details.h_no;
@@ -81,7 +100,7 @@ export class ChooseLocationComponent implements OnInit {
   onSelectTypeHandler(type) {
     this.type = type;
     this.typeText = '';
-    this.isOtherName = type === 'Others' ? true : false;
+    this.isOtherName = type === this.typeOptions[2].name ? true : false;
   }
 
   disabledButton(flat, street, locality) {
@@ -95,57 +114,83 @@ export class ChooseLocationComponent implements OnInit {
   }
 
   async addAddress() {
-    let addAddress = {
-      h_no: this.flat,
-      street: this.street,
-      landmark: this.landmark,
-      contact_no: this.contact,
-      locality: this.locality,
-      address_type: this.type,
-      address_name: this.typeText
-    };
 
-    const loading = await this.loader.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-    });
-    await loading.present().then(() => {
-      this.sharedService.addAddress(addAddress).then((resp) => {
-        console.log(resp);
-        loading.dismiss();
-        this.modalController.dismiss({
-          dismissed: true,
-          address: addAddress,
-        });
+
+    let checkType = this.addressListArr.forEach(element =>  element == this.type);
+
+
+console.log(checkType, "checkTypecheckTypecheckType")
+    
+
+let index = this.addressListArr.indexOf((this.type).toUpperCase());
+
+if(index == -1){
+
+  let addAddress = {
+    h_no: this.flat,
+    street: this.street,
+    landmark: this.landmark,
+    contact_no: this.contact,
+    locality: this.locality,
+    address_type: (this.type).toUpperCase(),
+    address_name: this.typeText
+  };
+
+  const loading = await this.loader.create({
+    cssClass: 'my-custom-class',
+    message: 'Please wait...',
+  });
+  await loading.present().then(() => {
+    this.sharedService.addAddress(addAddress).then((resp) => {
+      console.log(resp);
+      loading.dismiss();
+      this.modalController.dismiss({
+        dismissed: true,
+        address: addAddress,
       });
     });
+  });
+}else{
+  this.presentAlertConfirm1((this.type).toUpperCase())
+}
+   
   }
 
   async updateAddress() {
-    let addAddress = {
-      id: this.id,
-      h_no: this.flat,
-      street: this.street,
-      landmark: this.landmark,
-      contact_no: this.contact,
-      locality: this.locality,
-      address_type: this.type,
-      address_name: this.typeText
-    };
 
-    const loading = await this.loader.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-    });
-    await loading.present().then(() => {
-      this.sharedService.updateAddress(addAddress).then((resp) => {
-        loading.dismiss();
-        this.modalController.dismiss({
-          dismissed: true,
-          address: addAddress,
+    let index = this.addressListArr.indexOf((this.type).toUpperCase());
+
+      if(index == -1){
+        let addAddress = {
+          id: this.id,
+          h_no: this.flat,
+          street: this.street,
+          landmark: this.landmark,
+          contact_no: this.contact,
+          locality: this.locality,
+          address_type: (this.type).toUpperCase(),
+          address_name: this.typeText
+        };
+
+        const loading = await this.loader.create({
+          cssClass: 'my-custom-class',
+          message: 'Please wait...',
         });
-      });
-    });
+
+        await loading.present().then(() => {
+          this.sharedService.updateAddress(addAddress).then((resp) => {
+            loading.dismiss();
+            this.modalController.dismiss({
+              dismissed: true,
+              address: addAddress,
+            });
+          });
+        });
+      }else{
+        this.presentAlertConfirm1((this.type).toUpperCase())
+      }
+
+    
   }
 
   async deleteHandler() {
@@ -194,4 +239,28 @@ export class ChooseLocationComponent implements OnInit {
 
     await alert.present();
   }
+
+  async presentAlertConfirm1(type) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Oops!',
+      subHeader: `You have already added ${type} address.`,
+      buttons: [
+        
+
+        {
+          text: 'Okay',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+
 }
