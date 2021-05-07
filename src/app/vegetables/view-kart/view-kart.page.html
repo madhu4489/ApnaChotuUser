@@ -211,18 +211,13 @@
       *ngIf="deliveryLocation && deliveryLocation.length != 0"
     >
       <ion-label class="view-cart-label">
-        <h5 color="secondary">
-          Delivery to:
-          <strong
-            >{{deliveryLocation.address_name ||
-            deliveryLocation.address_type}}</strong
-          >
-        </h5>
-        <!-- <p class="ion-text-wrap">
-          {{deliveryLocation.h_no}}, {{deliveryLocation.street}},
-          {{deliveryLocation.landmark}}, {{deliveryLocation.locality}},
-          {{deliveryLocation.contact_no}}
-        </p> -->
+
+        <h3> Delivery to: </h3>
+        <h3><strong
+          >{{deliveryLocation.address_name ||
+          deliveryLocation.address_type}}</strong
+        > </h3>
+      
       </ion-label>
       <ion-button
         fill="clear"

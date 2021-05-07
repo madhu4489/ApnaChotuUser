@@ -29,7 +29,6 @@
         clearInput
       ></ion-input>
     </ion-item>
-
     <ion-item
       lines="none"
       color="light"
@@ -49,19 +48,23 @@
         Add</ion-button
       >
     </ion-item>
+
+
     <ion-item
       lines="none"
       color="light"
       *ngIf="deliveryLocation && deliveryLocation.length != 0"
     >
       <ion-label class="view-cart-label">
-        <h5 color="secondary">
-          Delivery to:
-         <strong
-            >{{deliveryLocation.address_name ||
-            deliveryLocation.address_type}}</strong
-          >
-        </h5>
+
+        <h3 color="secondary"> Delivery to: </h3>
+        <h3><strong
+          >{{deliveryLocation.address_name ||
+          deliveryLocation.address_type}}</strong
+        > </h3>
+
+
+       
         <!-- <p class="ion-text-wrap">
           {{deliveryLocation.h_no}}, {{deliveryLocation.street}},
           {{deliveryLocation.landmark}}, {{deliveryLocation.locality}},
