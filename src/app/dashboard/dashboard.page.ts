@@ -185,9 +185,9 @@ export class DashboardPage implements OnInit {
     let slideOpts = {
       speed: 400,
       loop: 'true',
-      // autoplay: {
-      //   delay: 5000,
-      // },
+      autoplay: {
+        delay: 5000,
+      },
     };
 
     let slideOpts1 = {
