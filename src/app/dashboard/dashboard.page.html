@@ -76,16 +76,16 @@
     <ion-row *ngFor="let service of offers">
       <ion-list-header class="header-dashboard" style="margin-top: 0;">
         <!-- <ion-label class="header-title"> Top Deals on&nbsp; <label [innerHTML]="service.group" class="label"></label></ion-label> -->
-        <ion-label class="header-title"> Top deals for you</ion-label>
+        <ion-label class="header-title">Top deals for you</ion-label>
       </ion-list-header>
 
       <ion-slides pager={getPager(service.items)} [options]="slideOptions(service.items)">
         <ion-slide *ngFor="let slide of service.items">
-          <div class="card bg-primary new-card" [ngClass]="{'bg-warning' : service.group == 'Food', 'bg-success' : service.group == 'Groceries '}">
+          <div class="card new-card">
             <div class="card-body">
               <div class="d-flex">
                 <div class="mr-3">
-                  <div class="text-white-75">{{slide.title}}</div>
+                  <div class="text-header">{{slide.title}}</div>
                   <p class="conten" [innerHTML]="slide.description"></p>
                 </div>
               </div>
