@@ -15,7 +15,7 @@
         class="seach-input"
         color="primary"
         clearInput
-        placeholder="search for item"
+        placeholder="Search for an item"
         [(ngModel)]="terms"
       ></ion-input>
     </ion-label>
@@ -75,11 +75,11 @@
 
   <ion-button
   *ngIf="isloading"
-    color="secondary"
+    color="primary"
     class="menu-button"
     (click)="presentActionSheet()"
     [ngClass]="{'bottom-60' : storeOrderCount > 0}"
-    >Browse Menu</ion-button
+    >Choose Menu</ion-button
   >
 
   <div *ngIf="!isloading">

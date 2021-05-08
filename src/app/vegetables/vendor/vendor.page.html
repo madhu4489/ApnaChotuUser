@@ -4,7 +4,7 @@
       <ion-icon name="arrow-back-outline" color="light"></ion-icon>
     </ion-button>
     <ion-title class="title-header">
-      <span>Order Vegetables / Fruits</span>
+      <span>{{details.name}}</span>
     </ion-title>
   </ion-toolbar>
     <ion-item >
@@ -12,7 +12,7 @@
         class="seach-input"
         color="primary"
         clearInput
-        placeholder="search for item"
+        placeholder="Search for an item"
         [(ngModel)]="terms"
       ></ion-input>
     </ion-item>
@@ -47,6 +47,7 @@
         <h6 class="step" style="width: 88px;">
             <img [src]="menuItems.image" *ngIf="menuItems.image" />
              
+  
           <div class="" [ngClass]="{'step-image' : menuItems.image}">
           <stepper
               [count]="menuItems.count" 
@@ -63,11 +64,11 @@
 
   <ion-button
     *ngIf="isloading"
-    color="secondary"
+    color="primary"
     class="menu-button"
     (click)="presentActionSheet()"
     [ngClass]="{'bottom-60' : orderCountDetails?.count > 0}"
-    >Browse Items </ion-button
+    >Choose Menu </ion-button
   >
 
   <div *ngIf="!isloading">

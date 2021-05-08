@@ -37,13 +37,34 @@ export class MiscOrderPage implements OnInit {
 
   ngOnInit() {
     this.getlocationsFn();
+    console.log('dfdfdf', )
+    
   }
+
+  ionViewWillEnter() {
+    if(localStorage.getItem("misc-order")){
+      this.items =   JSON.parse(localStorage.getItem("misc-order"))
+    }
+    
+    if(localStorage.getItem("pickup")){
+      this.pickup =   JSON.parse(localStorage.getItem("pickup"))
+    }
+    
+    console.log('ionViewWillEnter');
+  }
+  
 
   backHandler() {
     this.navController.navigateBack(['../dashboard']);
+    localStorage.setItem("misc-order","");
+    localStorage.setItem("pickup", "");
   }
 
   addAddress() {
+
+    localStorage.setItem("misc-order", JSON.stringify(this.items));
+    localStorage.setItem("pickup", JSON.stringify(this.pickup));
+    
     if (localStorage.getItem('userDetails')) {
       this.navController.navigateBack(['/location']);
     } else {
@@ -59,6 +80,19 @@ export class MiscOrderPage implements OnInit {
       componentProps: { isFromPage: isFromPage },
     });
     await modalRef.present();
+
+    modalRef.onDidDismiss().then((res: any) => {
+
+      if(localStorage.getItem("misc-order")){
+      this.items =   JSON.parse(localStorage.getItem("misc-order"))
+      }
+
+      if(localStorage.getItem("pickup")){
+        this.pickup =   JSON.parse(localStorage.getItem("pickup"))
+      }
+
+        console.log('local',  this.items)
+    })
   }
 
   async getlocationsFn() {
@@ -172,6 +206,8 @@ export class MiscOrderPage implements OnInit {
         console.log(data, 'dataaaaaaaa');
         this.isOrderPlaced = true;
         loading.dismiss();
+        localStorage.setItem("misc-order","");
+        localStorage.setItem("pickup", "");
       });
     });
   }

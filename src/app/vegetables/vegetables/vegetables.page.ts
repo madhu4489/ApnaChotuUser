@@ -76,7 +76,7 @@ export class VegetablesPage implements OnInit {
         this.isActicveFirst = false;
         event && event.target.complete();
         this.offset = 0;
-        this.vegVendors.push({id:'closed', name:'Restaurants Closed Today ', address:'null'});
+        this.vegVendors.push({id:'closed', name:'Stores Closed Today ', address:'null'});
         this.inActiveGetRestaurants();
         console.log(serverData, 'no rest');
       }

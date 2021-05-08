@@ -23,7 +23,7 @@
         ></span>
         <h6 class="menu-item">
           {{menuItem.name}}
-          <div>&#8377; {{menuItem.price}}</div>
+          <div class="price">&#8377; {{menuItem.price}}</div>
         </h6>
         <h6>
           <custom-counter
@@ -225,7 +225,7 @@
 
     
 
-    <ion-item *ngIf="deliveryLocation">
+    <ion-item *ngIf="deliveryLocation" lines="none">
       <ion-button
         (click)="presentAlertConfirm()"
         color="secondary"

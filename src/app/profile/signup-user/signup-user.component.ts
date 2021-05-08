@@ -118,12 +118,9 @@ export class SignupUserComponent implements OnInit {
     });
     await loading.present().then(() => {
       this.sharedService.getLogin(mobileNum).then((resp) => {
-        console.log(resp, "loginnnnnnnnnnnnnnnn");
         loading.dismiss();
         this.userPhone = this.loginGroup.value.phone;
         let values = this.loginGroup.value;
-
-        console.log(resp, "loginnnnnnnnnnnnnnnn", values);
 
         let details = {
           first_name: 'Guest',

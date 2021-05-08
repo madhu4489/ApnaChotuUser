@@ -31,6 +31,8 @@ export class VendorPage implements OnInit {
   backUpMenus: any = [];
   terms: string = '';
 
+  vendorName:string = '';
+
   orderCountDetails:any;
 
   @ViewChild(IonContent, { read: IonContent }) myContent: IonContent;
@@ -72,9 +74,13 @@ export class VendorPage implements OnInit {
     });
     await loading.present().then(() => {
       this.sharedService.getRestaurantVendor(id).then((resp) => {
+
+        console.log(resp, "resp")
         this.isloading = true;
         const data = resp.data;
         this.details = data;
+
+       
 
         data['menu'].forEach((element, index) => {
           this.groups[index] = {
@@ -100,6 +106,7 @@ export class VendorPage implements OnInit {
         this.backUpMenus = data['menu'];
         this.menus = this.backUpMenus;
 
+     
 
         let _cartData = this.orderServicesProvider.getCartData();
 
@@ -116,6 +123,8 @@ export class VendorPage implements OnInit {
                           return item.quantity > 0 && item.quantity
                         })).reduce(function(acc, val) { return acc + val; }, 0);
                         item.items = _cartItem.items
+                        item.selectedVariants =  item.items.filter(item =>item.quantity > 0).length;
+
                     }
                   });
                 }
@@ -190,7 +199,7 @@ export class VendorPage implements OnInit {
         this.orderDeatils.push(menuItem);
       }else{
         
-menuItem.count = event+1; 
+        menuItem.count = event+1; 
 
         this.orderDeatils[findItemIndex].vendorId = this.route.snapshot.params.id;
         this.orderDeatils[findItemIndex].groupId = this.groupId;

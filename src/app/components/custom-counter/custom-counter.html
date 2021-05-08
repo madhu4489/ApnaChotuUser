@@ -5,4 +5,4 @@
   <span class="plus" *ngIf="foodItem.count != 0 " [ngClass]="{'disabled' : foodItem.count == 99}" (click)="foodItem.count != 99 && clickFn(1)">+</span>
 
 </div>
-<div class="total-price" *ngIf="foodItem.orderPrice>0">&#8377; {{this.foodItem.orderPrice}}</div>
+<div class="total-price" ><span *ngIf="foodItem.orderPrice>0">&#8377; {{this.foodItem.orderPrice}}</span></div>

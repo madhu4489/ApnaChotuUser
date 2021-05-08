@@ -550,13 +550,14 @@ width: 80px;
   margin: 0;
   font-weight: 600;
   color: #333;
-  position: absolute;
+  // position: absolute;
   /* right: 4px; */
   width: 80px;
   font-size: 14PX;
   /* top: 34px; */
-  padding: 4px 0;
+  padding: 4px 0 0;
   text-align: center;
+  min-height: 20px;
 }
 
 
@@ -578,9 +579,11 @@ width: 80px;
 
 .step{
   position: relative;
-    // right: 6px;
     text-align: center;
-    margin-bottom: 22px;
+    
+
+    margin-top: 16px;
+    margin-bottom: 10px;
 }
 
 .step img{

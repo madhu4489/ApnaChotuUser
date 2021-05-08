@@ -240,7 +240,11 @@ export class ViewKartPage implements OnInit {
     this.cartDataProvider.addCartData(this.orderDetails);
     this.orderCountDetails = this.cartDataProvider.getOrderDeatils();
 
-    console.log(this.orderDetails);
+    console.log(this.orderCountDetails);
+
+    if(this.orderCountDetails.count == 0){
+      this.backHandler()
+    }
   }
 
   filterItemsOfType(type) {

@@ -107,22 +107,11 @@
           <p>{{order.cancel_reason}} </p>
         </ion-text>
 
-        <ion-text>
+        <ion-text  *ngIf="(order.status.id == 1 || order.status.id == 10 ) && isCancelShow(order)">
           <hr />
           <div class="fotter-order">
-           
-            <ion-button
-              color="secondary"
-              *ngIf="order.status.id == 1 && isCancelShow(order)"
-              (click)="presentAlertConfirm(order)"
-              >Cancel</ion-button>
-
-
-              <ion-button
-              *ngIf="order.status.id == 1 && isCancelShow(order)"
-              color="primary"
-              (click)="showOrder(order.id)"
-              >Order Details</ion-button>
+            <ion-button color="secondary" (click)="presentAlertConfirm(order)">Cancel</ion-button>
+            <ion-button color="primary" (click)="showOrder(order.id)">Order Details</ion-button>
           </div>
         </ion-text>
       </ion-label>

@@ -33,7 +33,6 @@ export class OrdersPage implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.route.snapshot.params.id, 'orders')
     if (this.route.snapshot.params.id) {
      this.isActive = false;
      this.limit = 10;
@@ -42,6 +41,7 @@ export class OrdersPage implements OnInit {
     }
     this.getOrders();
   }
+
   backHandler() {
     if(this.isActive){
       this.navController.navigateBack(['../dashboard']);
@@ -87,7 +87,6 @@ export class OrdersPage implements OnInit {
     let timeStart = new Date(order.createdOn).getTime();
     let timeEnd = new Date().getTime();
     let hourDiff = timeEnd - timeStart; //in ms
-    // let secDiff = hourDiff / 1000; //in s
     let minDiff = hourDiff / 60 / 1000; //in minutes
     let hDiff = hourDiff / 3600 / 1000; //in hours
     let hours = Math.floor(hDiff);
