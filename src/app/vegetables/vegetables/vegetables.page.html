@@ -7,7 +7,7 @@
       <span>Order Vegetables / Fruits</span>
     </ion-title>
   </ion-toolbar>
-  <ion-item lines="full" color="light" *ngIf="vegVendors">
+  <ion-item lines="full" color="light" *ngIf="!noStores">
     <ion-input
       color="primary"
       clearInput
@@ -75,7 +75,7 @@
 
 
   <!-- Skeleton screen -->
-  <div *ngIf="vegVendors.length ===0">
+  <div *ngIf="vegVendors.length ===0 && !noStores">
     <ion-list>
       <ion-item *ngFor="let list of [1,1,1,1,1,1]">
         <ion-thumbnail slot="start" style="height: 90px; width: 90px">
@@ -103,4 +103,13 @@
     >
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+
+
+  <div class="no-stores" *ngIf="noStores">
+    <img src="../../../assets/na.png" />
+    <h3> Currently no stores available...!</h3>
+   
+  </div>
+
+  
 </ion-content>

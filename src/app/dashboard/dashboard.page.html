@@ -79,9 +79,9 @@
         <ion-label class="header-title">Top deals for you</ion-label>
       </ion-list-header>
 
-      <ion-slides pager={getPager(service.items)} [options]="slideOptions(service.items)">
+      <ion-slides [pager]="true"  [options]="slideOpts" *ngIf="service.items.length > 1">
         <ion-slide *ngFor="let slide of service.items">
-          <div class="card new-card">
+          <div class="card new-card add-bottom">
             <div class="card-body">
               <div class="d-flex">
                 <div class="mr-3">
@@ -96,19 +96,20 @@
         </ion-slide>
       </ion-slides>
 
+      <div class="card new-card" style="margin: 0 10px 8px;" *ngIf="service.items.length == 1">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="mr-3">
+              <div class="text-header">{{service.items[0].title}}</div>
+              <p class="conten" [innerHTML]="service.items[0].description"></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </ion-row>
 
-
-    
-  <!-- <ion-item-group *ngFor="let service of offers" class="group-item">
-
-    <ion-item-divider class="divider-sub">
-      Top Deals on&nbsp; <label [innerHTML]="service.group"></label>
-    </ion-item-divider>
-
-    
-
-  </ion-item-group> -->
 
   </div>
   

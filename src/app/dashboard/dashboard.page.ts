@@ -18,11 +18,10 @@ export class DashboardPage implements OnInit {
   slideOpts = {
     speed: 400,
     loop: 'true',
+    autoplay: {
+      delay: 5000,
+    },
   };
-
-  // autoplay: {
-  //   delay: 5000,
-  // },
 
   offers: any = [];
   order: any = [];
@@ -181,29 +180,12 @@ export class DashboardPage implements OnInit {
     
   }
 
-  slideOptions(slides) {
-    let slideOpts = {
-      speed: 400,
-      loop: 'true',
-      autoplay: {
-        delay: 5000,
-      },
-    };
-
-    let slideOpts1 = {
-      speed: 400,
-      loop: 'false',
-    };
-
-    // console.log(slides.length, 'slides.length');
-    // if(slides.length > 2){
-    //   return slideOpts;
-    // }
-    return slideOpts;
-  }
 
   getPager(slides) {
-    return false;
+    if(slides.length > 2){
+      return true;
+    }
+    return "false";
   }
 }
 
