@@ -64,7 +64,7 @@ export class VegetablesPage implements OnInit {
       console.log(data.closeCount == 0 && data.openCount == 0, 'getvegVendors');
       let serverData = data.data;
 
-      if(data.closeCount == 0 && data.openCount == 0){
+      if(data.closeCount == 0 && data.openCount == 0 || serverData.length == 0){
         this.noStores = true;
        
       }
