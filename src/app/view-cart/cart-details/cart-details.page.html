@@ -180,7 +180,7 @@
 
 <ion-footer *ngIf="isLoading && !isOrderPlaced">
   <ion-list style="    padding-top: 0;">
-    <ion-item lines="none" color="light"  *ngIf="deliveryLocation && deliveryLocation.length == 0" >
+    <ion-item lines="none" color="light"  *ngIf="deliveryLocation.length == 0" >
       <ion-label class="view-cart-label"
         >Please add a delivery address</ion-label
       >
