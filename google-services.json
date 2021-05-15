@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "70027341330",
+    "project_id": "apnachotuuser",
+    "storage_bucket": "apnachotuuser.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70027341330:android:e0d5fab50fb78ab030b2cb",
+        "android_client_info": {
+          "package_name": "com.apna.chotu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70027341330-1me00f850r8sbgvbjf5qobfi4d0hh27m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_XnpZpdK0ilQ4P02kwbugtHwClo_wAbI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "70027341330-1me00f850r8sbgvbjf5qobfi4d0hh27m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
