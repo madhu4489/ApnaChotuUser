@@ -11,15 +11,21 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Network } from '@ionic-native/network/ngx';
 
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+
 // import FCM
-import { FCM } from '@ionic-native/fcm/ngx';
+// import { FCM } from '@ionic-native/fcm/ngx';
+
+
+import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,FormsModule,
     ReactiveFormsModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FCM, HTTP, Network],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FirebaseX, HTTP, Network, StatusBar],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
