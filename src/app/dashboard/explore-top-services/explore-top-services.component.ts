@@ -12,8 +12,8 @@ export class ExploreTopServicesComponent implements OnInit {
     { id:'1', name: 'Medicine', icon: '../../../assets/icon/med_small.svg', type:"order" },
     { id:8, name: 'Cabs', icon: '../../../assets/icon/cabs_small.svg', type:"call" },
     { id:4, name: 'Appliance Repair', icon: '../../../assets/icon/reapir_small.svg', type:"call" },
-    { id:6, name: 'Wedding and Events', icon: '../../../assets/icon/events_small.svg', type:"call" },
     { id:3, name: 'Online Services', icon: '../../../assets/icon/online_small.svg' , type:"call" },
+    { id:5, name: 'Apna Chotu Specials', icon: '../../../assets/icon/apna.png', type:"call" },
   ];
 
   // 5 apna chotu ser

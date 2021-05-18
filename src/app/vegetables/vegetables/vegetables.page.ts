@@ -61,10 +61,10 @@ export class VegetablesPage implements OnInit {
       is_open:true
     };
     this.sharedService.getRestaurants(vendorData).then((data) => {
-      console.log(data.closeCount == 0 && data.openCount == 0, 'getvegVendors');
+      console.log(data, 'getvegVendors');
       let serverData = data.data;
 
-      if(data.closeCount == 0 && data.openCount == 0 || serverData.length == 0){
+      if(data.closeCount == 0 && data.openCount == 0){
         this.noStores = true;
        
       }
@@ -83,7 +83,7 @@ export class VegetablesPage implements OnInit {
         this.isActicveFirst = false;
         event && event.target.complete();
         this.offset = 0;
-        this.vegVendors.push({id:'closed', name:'Stores Closed Today ', address:'null'});
+        this.vegVendors.push({id:'closed', name:'Closed', address:'null'});
         this.inActiveGetRestaurants();
         console.log(serverData, 'no rest');
       }

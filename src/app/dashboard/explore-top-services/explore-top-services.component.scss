@@ -53,9 +53,10 @@
   background: linear-gradient(to left,#e15671,#e7758a)!important;
 }
 .bg-gradient-custom-orange {
-  background: -moz-linear-gradient(right,#ff784a,#ff926d)!important;
-  background: -webkit-linear-gradient(right,#ff784a,#ff926d)!important;
-  background: linear-gradient(to left,#ff784a,#ff926d)!important;
+  // background: -moz-linear-gradient(right,#ff784a,#ff926d)!important;
+  // background: -webkit-linear-gradient(right,#ff784a,#ff926d)!important;
+  // background: linear-gradient(to left,#ff784a,#ff926d)!important;
+  background: linear-gradient(to left, #eb445a, #fb8292) !important;
 }
 .bg-gradient-custom-teal {
   background: -moz-linear-gradient(right,#0aab7b,#0cd096)!important;
@@ -216,3 +217,35 @@
     position: absolute;
     width: 80%;
 }
+
+
+.anyyhing{
+  .anything-bg{
+    background-image: url("../../../assets/anything.jpg");
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+    background-size: cover;
+    opacity: 0.5;
+    background-position: unset;
+    background-position: right;
+    background-repeat: no-repeat;
+  }
+  .font-style{
+    right: 0;
+    text-align: right;
+    padding-right: 4px;
+    border-radius: 6px 0 0 6px;
+    padding: 1px 9px 2px 10px;
+    left: auto;
+    // background: #f35723;
+    background: rgba(255, 121, 0, 0.8);
+    position: absolute;
+    width: 80%;
+  }
+}
+
+

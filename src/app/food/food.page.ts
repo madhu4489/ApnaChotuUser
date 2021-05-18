@@ -66,7 +66,7 @@ export class FoodPage implements OnInit {
         this.isActicveFirst = false;
         event && event.target.complete();
         this.offset = 0;
-        this.restaurants.push({id:'closed', name:'Restaurants Closed Today ', address:'null'});
+        this.restaurants.push({id:'closed', name:'Closed ', address:'null'});
         this.inActiveGetRestaurants();
         console.log(serverData, 'no rest');
       }

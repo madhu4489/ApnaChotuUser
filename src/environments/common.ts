@@ -26,6 +26,7 @@ export const common = {
       getSingleOrderDetails:() => `${BASE_URL}order/get/`,
       getDashboardOffers:() => `${BASE_URL}meta/offers`,
       getCancelledOrder:() => `${BASE_URL}order/cancel`,
+      addToken:() => `${BASE_URL}user/deviceToken/add`
 
     },
   },

@@ -240,5 +240,14 @@ export class SharedService {
         .toPromise();
   }
 
+  addToken(details): Promise<any> {
+    let obj = this;
+      return obj._http
+        .put(environment.urls.function.addToken(), details, this.getHeaders())
+        .toPromise();
+  }
+
+ 
+
 
 }
