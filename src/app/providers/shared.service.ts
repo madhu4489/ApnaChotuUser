@@ -31,14 +31,25 @@ export class SharedService {
     public _platform: Platform
   ) {}
 
-  async presentToastWithOptions(message, color?: any) {
+  async presentToastWithOptionsNotificarion(header, message, color?: any, duration?:any) {
     const toast = await this.toastController.create({
       color: color || 'success',
-      duration: 3000,
+      duration: duration,
+      header : header,
       message: message,
     });
     toast.present();
   }
+
+  async presentToastWithOptions(message, color?: any, duration?:any) {
+    const toast = await this.toastController.create({
+      color: color || 'success',
+      duration: duration || 3000,
+      message: message,
+    });
+    toast.present();
+  }
+
 
   async presentLoading() {
     this.loading = await this.loadingController.create({

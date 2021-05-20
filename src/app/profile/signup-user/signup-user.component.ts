@@ -207,12 +207,27 @@ export class SignupUserComponent implements OnInit {
         if (!isFrom) {
         this.extraLogin()
         } else {
-          this.sharedService.presentToastWithOptions(
-            'Updated successfully.',
-            'success'
-          );
-          localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
-          this._modalCtrl.dismiss();
+
+          let tokanData ={
+            "deviceToken":JSON.parse(localStorage.getItem('deviceToken')),
+            "deviceId":localStorage.getItem('deviceId'),
+            "mobile":this.userPhone
+          }
+
+          console.log(tokanData, "tokanData::::");
+
+          this.sharedService.addToken(tokanData).then((data) => {
+
+            this.sharedService.presentToastWithOptions(
+              'Updated successfully.',
+              'success'
+            );
+            localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
+            this._modalCtrl.dismiss();
+
+          });
+
+          
         }
       }
     });
@@ -222,16 +237,37 @@ export class SignupUserComponent implements OnInit {
     if (this.otpGroup.value.otp == this.saveOTP) {
       this.otpGroupErrors = false;
       localStorage.setItem('jwt', this.userResponceToken);
-      this.sharedService.presentToastWithOptions(
-        'You have successfully logged in...',
-        'success'
-      );
+
+      let tokanData ={
+        "deviceToken":JSON.parse(localStorage.getItem('deviceToken')),
+        "deviceId":localStorage.getItem('deviceId'),
+        "mobile":this.userPhone
+      }
+
+
+      console.log(tokanData, "tokanData::::");
+      this.sharedService.addToken(tokanData).then((data) => {
+
+        this.sharedService.presentToastWithOptions(
+          'Updated successfully.',
+          'success'
+        );
+        localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
+        this._modalCtrl.dismiss();
+
+      });
+
+
+      // this.sharedService.presentToastWithOptions(
+      //   'You have successfully logged in...',
+      //   'success'
+      // );
       // let serverData= this.userDetails;
       // if (this.sharedService.isBrowser) {
       //   serverData = JSON.stringify(serverData);
       // }
-      localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
-      this._modalCtrl.dismiss();
+      // localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
+      // this._modalCtrl.dismiss();
       if (this.isFromPage) {
         this.navController.navigateBack(['/' + this.isFromPage]);
       }
