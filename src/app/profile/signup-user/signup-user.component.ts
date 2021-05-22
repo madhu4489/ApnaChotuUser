@@ -360,29 +360,52 @@ export class SignupUserComponent implements OnInit {
   }
 
 
-  initializeApp() {
+  async initializeApp() {
   
 
-    this.firebaseX.getToken()
-    .then(token =>{
-      console.log(token, "token ID getToken");
-      if(token){
-        localStorage.setItem("deviceToken", JSON.stringify(token));
-      }
-    }).catch(error => console.error('Error getting token', error));
+    const loading = await this.loader.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present().then(() => {
+      this.firebaseX.setAutoInitEnabled(true)
+      .then((token) =>{
+        console.log("Auto init has been disabled ", token);
+        this.firebaseX.unregister();
+      }).catch(error => console.error('Error getting token', error));
 
 
-    localStorage.setItem("deviceId", "2qwaskjbdf67t67d")
      
-    this.firebaseX.onTokenRefresh()
-      .subscribe((token: string) => {
-        if(token){
-          console.log(`onTokenRefresh ${JSON.stringify(token)}`)
-          localStorage.setItem("deviceToken", JSON.stringify(token))
-        }
-      });
+      this.firebaseX.onTokenRefresh()
+        .subscribe((token: string) => {
+          loading.dismiss();
+          if(token){
+            localStorage.setItem("deviceId", "2qwaskjbdf67t67d");
+            console.log(`onTokenRefresh ${JSON.stringify(token)}`)
+            localStorage.setItem("deviceToken", JSON.stringify(token))
+          }
+        });
 
 
+    })
+    // this.firebaseX.unregister();
+   
+
+
+
+
+    // this.firebaseX.getToken()
+    // .then(token =>{
+    //   console.log(token, "token ID getToken");
+    //   if(token){
+    //     localStorage.setItem("deviceToken", JSON.stringify(token));
+    //   }
+    // }).catch(error => console.error('Error getting token', error));
+
+
+   
+
+      
    
   }
 

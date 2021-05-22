@@ -100,7 +100,7 @@ export class AppComponent implements OnInit {
           console.log(`onTokenRefresh ${JSON.stringify(token)}`)
           localStorage.setItem("deviceToken", JSON.stringify(token))
         }
-      });
+      })
 
 
 
