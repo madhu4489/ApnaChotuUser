@@ -146,3 +146,36 @@ ion-slide:nth-child(odd) .new-card .text-header{
 .sliders{
   background-color: #fff;
 }
+
+
+.announcment{
+  width: 98%;
+  margin: 10px 0;
+  box-shadow: none;
+  background: rgba(255, 87, 34, 0.28);
+  border: none;
+
+  background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+  background: linear-gradient(45deg,#4099ff,#73b4ff);
+  background: linear-gradient(-25deg, #f4e2c8, #f6c47d);
+  // background: linear-gradient(45deg, #eaae56, #f8bc63);500
+  // box-shadow: 0 1px 2.94px 0.06px rgb(4 26 55 / 16%);
+  color: #392202 !important;
+
+  .text-header{
+    background-color: transparent;
+    font-weight: 900;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 5px;
+  }
+  p{
+    color: #392202 !important;
+  }
+}
+
+.notifi{
+  margin: 6px 0 0 6px;
+}
+
+// 

@@ -26,6 +26,7 @@ export class DashboardPage implements OnInit {
   offers: any = [];
   order: any = [];
   allOrders: any = [];
+  announcements:any = [];
 
   orderStatusText: string;
 
@@ -42,7 +43,7 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
     this.getlocationsFn();
     this.getOffers();
-
+    this.getAllAnnouncements();
     // if (localStorage.getItem('selectedLocation')) {
     //   let address = JSON.parse(localStorage.getItem('selectedLocation'));
     //   this.chooseLocation =
@@ -74,7 +75,7 @@ export class DashboardPage implements OnInit {
       this.chooseLocation = 'Unnamed Road, Sangareddy';
     }
 
-    if (localStorage.getItem('jwt')) {
+    if (localStorage.getItem('jwt') && localStorage.getItem('userDetails')) {
       this.isEnabled = true;
       this.getOrders();
     } else {
@@ -180,6 +181,28 @@ export class DashboardPage implements OnInit {
     
   }
 
+  async getAllAnnouncements() {
+
+    const loading = await this.loader.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present().then(() => {
+      this.sharedService.getAllAnnouncements().then((data) => {
+        loading.dismiss();
+        this.announcements = data['data'];
+      }),
+        (error) => {
+          loading.dismiss();
+          alert(error.message);
+        };
+    })
+
+    
+  }
+
+
+ 
 
   getPager(slides) {
     if(slides.length > 2){

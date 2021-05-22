@@ -6,6 +6,7 @@ import {
   AbstractControl,
   ValidatorFn,
 } from '@angular/forms';
+import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { LoadingController, ModalController, NavController } from '@ionic/angular';
 import { SharedService } from 'src/app/providers/shared.service';
 
@@ -48,6 +49,7 @@ export class SignupUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     public sharedService: SharedService,
     public loader: LoadingController,
+    private firebaseX: FirebaseX,
   ) {
     this.loginGroup = this.formBuilder.group({
       phone: [
@@ -99,6 +101,9 @@ export class SignupUserComponent implements OnInit {
       this.f.lastName.setValue(this.storedUserDetails.last_name);
       this.f.name.setValue(this.storedUserDetails.first_name);
       this.f.email.setValue(this.storedUserDetails.email);
+    }else{
+      console.log('loginininnnnn')
+      this.initializeApp();
     }
     // this.sharedService.presentLoading();
   }
@@ -148,20 +153,13 @@ export class SignupUserComponent implements OnInit {
             this.calcOTP();
           } else {
             this.signUp(details);
-            // this.sharedService.presentToastWithOptions(
-            //   serverData.message,
-            //   'warning'
-            // );
           }
   
         } else {
           serverData = resp.body;
           if (serverData.status == 'error') {
             this.signUp(details);
-            // this.sharedService.presentToastWithOptions(
-            //   serverData.message,
-            //   'warning'
-            // );
+        
           } else {
             this.userResponceToken = 'Bearer ' + resp.headers.get('token');
             this.userDetails = serverData.data;
@@ -207,27 +205,8 @@ export class SignupUserComponent implements OnInit {
         if (!isFrom) {
         this.extraLogin()
         } else {
-
-          let tokanData ={
-            "deviceToken":JSON.parse(localStorage.getItem('deviceToken')),
-            "deviceId":localStorage.getItem('deviceId'),
-            "mobile":this.userPhone
-          }
-
-          console.log(tokanData, "tokanData::::");
-
-          this.sharedService.addToken(tokanData).then((data) => {
-
-            this.sharedService.presentToastWithOptions(
-              'Updated successfully.',
-              'success'
-            );
-            localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
-            this._modalCtrl.dismiss();
-
-          });
-
-          
+          localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
+          this._modalCtrl.dismiss();
         }
       }
     });
@@ -243,34 +222,22 @@ export class SignupUserComponent implements OnInit {
         "deviceId":localStorage.getItem('deviceId'),
         "mobile":this.userPhone
       }
-
-
       console.log(tokanData, "tokanData::::");
       this.sharedService.addToken(tokanData).then((data) => {
-
         this.sharedService.presentToastWithOptions(
-          'Updated successfully.',
+          'You have successfully logged in...',
           'success'
         );
+       
         localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
         this._modalCtrl.dismiss();
 
       });
 
-
-      // this.sharedService.presentToastWithOptions(
-      //   'You have successfully logged in...',
-      //   'success'
-      // );
-      // let serverData= this.userDetails;
-      // if (this.sharedService.isBrowser) {
-      //   serverData = JSON.stringify(serverData);
-      // }
-      // localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
-      // this._modalCtrl.dismiss();
       if (this.isFromPage) {
         this.navController.navigateBack(['/' + this.isFromPage]);
       }
+      
     } else {
       this.otpGroupErrors = true;
     }
@@ -363,8 +330,6 @@ export class SignupUserComponent implements OnInit {
   extraLogin(){
     let mobileNum = { mobile: Number(this.userPhone) };
     this.sharedService.getLogin(mobileNum).then((resp) => {
-
-
       let serverData: any;
       let serverHeader: any;
 
@@ -393,4 +358,33 @@ export class SignupUserComponent implements OnInit {
 
     });
   }
+
+
+  initializeApp() {
+  
+
+    this.firebaseX.getToken()
+    .then(token =>{
+      console.log(token, "token ID getToken");
+      if(token){
+        localStorage.setItem("deviceToken", JSON.stringify(token));
+      }
+    }).catch(error => console.error('Error getting token', error));
+
+
+    localStorage.setItem("deviceId", "2qwaskjbdf67t67d")
+     
+    this.firebaseX.onTokenRefresh()
+      .subscribe((token: string) => {
+        if(token){
+          console.log(`onTokenRefresh ${JSON.stringify(token)}`)
+          localStorage.setItem("deviceToken", JSON.stringify(token))
+        }
+      });
+
+
+   
+  }
+
+
 }

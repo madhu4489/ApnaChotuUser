@@ -92,6 +92,10 @@ export class ProfilePage implements OnInit {
           text: 'Logout',
           handler: () => {
             localStorage.clear();
+            // localStorage.removeItem('userDetails');
+            // localStorage.removeItem('selectedLocation');
+            // localStorage.removeItem('deliveryLocations');
+            // localStorage.removeItem('jwt');
             this.backHandler();
             console.log('Confirm Okay');
           },

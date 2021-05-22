@@ -206,8 +206,8 @@ export class MiscOrderPage implements OnInit {
         console.log(data, 'dataaaaaaaa');
         this.isOrderPlaced = true;
         loading.dismiss();
-        localStorage.setItem("misc-order","");
-        localStorage.setItem("pickup", "");
+        localStorage.removeItem("misc-order");
+        localStorage.removeItem("pickup");
       });
     });
   }

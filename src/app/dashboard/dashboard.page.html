@@ -70,6 +70,75 @@
       </ion-slide>
     </ion-slides> 
   </div> -->
+<!-- 
+<div>
+  <ion-slides >
+    <ion-slide >
+      <div class="card announcment">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="mr-3">
+              <div class="text-header">Apna Chotu will be operational 6:00 AM to 11:00 PM </div>
+              <p class="conten">Delivery might be slower than usual currently due to higher order volume. </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </ion-slide>
+    <ion-slide >
+      <div class="card announcment">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="mr-3">
+              <div class="text-header">Telangana Bandh</div>
+              <p class="conten">Delivery might be slower than usual currently due to higher order volume. </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </ion-slide>
+  </ion-slides>
+
+</div> -->
+<div class="notifi" *ngIf="announcements?.length > 0">
+
+  <ion-slides *ngIf="announcements?.length > 1" [pager]="true"  [options]="slideOpts">
+    <ion-slide *ngFor="let announcement of announcements" >
+      <div class="card announcment">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="mr-3">
+              <div class="text-header">{{announcement.title}}</div>
+              <p class="conten">{{announcement.description}}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </ion-slide>
+  
+  </ion-slides>
+
+
+  <div class="card announcment" *ngIf="announcements?.length == 1">
+    <div class="card-body">
+      <div class="d-flex">
+        <div class="mr-3">
+          <div class="text-header">{{announcements[0].title}}</div>
+              <p class="conten">{{announcements[0].description}}</p>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+
+</div>
+
 
   <div class="sliders" *ngIf="offers.length>0">
 

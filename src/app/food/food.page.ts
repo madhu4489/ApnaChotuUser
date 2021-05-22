@@ -24,6 +24,7 @@ export class FoodPage implements OnInit {
 
   noActiveRestarents:boolean;
   closedVendorCount:boolean;
+  isShowSkelton:boolean;
 
   constructor(
     private navController: NavController,
@@ -48,23 +49,32 @@ export class FoodPage implements OnInit {
   getRestaurants(event?: any) {
     let vendorData: any = {
       offset: this.offset,
-      limit: 10,
+      limit: 1000,
       category: 1,
       is_open:this.isActicveFirst
     };
     this.sharedService.getRestaurants(vendorData).then((data) => {
       let serverData = data.data;
       console.log(serverData, 'getRestaurants');
-      if (serverData.length == 10) {
+      if (serverData) {
         this.restaurants.push(...serverData);
-        event && event.target.complete();
+        // event && event.target.complete();
         if (!serverData) {
           this.isClear = true;
         }
+
+        this.noActiveRestarents = true;
+        this.isActicveFirst = false;
+        this.offset = 0;
+        this.restaurants.push({id:'closed', name:'Closed ', address:'null'});
+        this.inActiveGetRestaurants();
+        console.log(serverData, 'no rest');
+
+
       } else {
         this.noActiveRestarents = true;
         this.isActicveFirst = false;
-        event && event.target.complete();
+        // event && event.target.complete();
         this.offset = 0;
         this.restaurants.push({id:'closed', name:'Closed ', address:'null'});
         this.inActiveGetRestaurants();
@@ -76,7 +86,7 @@ export class FoodPage implements OnInit {
   inActiveGetRestaurants(event?: any) {
     let vendorData: any = {
       offset: this.offset,
-      limit: 10,
+      limit: 1000,
       category: 1,
       is_open:'false'
     };
@@ -90,11 +100,15 @@ export class FoodPage implements OnInit {
         if (!serverData) {
           this.isClear = true;
         }
+
+      
       } else {
         event && event.target.complete();
         console.log(serverData, 'no rest');
         this.dontDo = true;
       }
+
+      this.isShowSkelton = true;
     });
   }
 

@@ -95,16 +95,16 @@
                 <li
                   class="list-group-item d-flex justify-content-between align-items-center"
                 >
-                  Order amount
+                  Order Price
                   <div class="">
                     <span *ngIf="details.itemsPrice">&#8377;</span
                     >{{details.itemsPrice ? details.itemsPrice : 'Pending'}}
                   </div>
                 </li>
 
-                <li class="list-group-item d-flex justify-content-between align-items-center" *ngIf="details.finalPrice">
+                <li class="list-group-item d-flex justify-content-between align-items-center" >
                   Delivery charges
-                  <span class=""> &#8377; {{details.deliveryFee || 0}}</span>
+                  <span class=""> <span *ngIf="details.finalPrice">&#8377;</span> {{details.finalPrice ? details.deliveryFee || 0 : 'Pending'}}</span>
                 </li>
 
                 <li
@@ -112,7 +112,7 @@
                   class="list-group-item d-flex justify-content-between align-items-center"
                 >
                   Tip
-                  <span class=""> &#8377; {{details.tip}}</span>
+                  <span class=""> &#8377;{{details.tip}}</span>
                 </li>
 
                 <li
@@ -121,7 +121,7 @@
                 >
                   Discount(-)
                   <span class="" style="color: #278a00">
-                    - &#8377; {{details.discountPrice}}</span
+                    - &#8377;{{details.discountPrice}}</span
                   >
                 </li>
               </ul>
@@ -133,9 +133,9 @@
                   class="list-group-item d-flex justify-content-between align-items-center"
                   style="font-weight: 600; color: #ff7900"
                 >
-                  Total order amount
+                  Total amount
                   <span
-                    ><span *ngIf="details.finalPrice">&#8377; </span>
+                    ><span *ngIf="details.finalPrice">&#8377;</span>
                     {{details.finalPrice ? details.finalPrice :
                     'Pending'}}</span
                   >

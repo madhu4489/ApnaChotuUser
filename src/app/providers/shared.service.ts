@@ -34,9 +34,12 @@ export class SharedService {
   async presentToastWithOptionsNotificarion(header, message, color?: any, duration?:any) {
     const toast = await this.toastController.create({
       color: color || 'success',
-      duration: duration,
+      position: 'top', 
+      duration: duration || 3000,
       header : header,
       message: message,
+      animated:true,
+    
     });
     toast.present();
   }
@@ -258,7 +261,12 @@ export class SharedService {
         .toPromise();
   }
 
- 
+  getAllAnnouncements(): Promise<any> {
+    let obj = this;
+      return obj._http
+        .get(environment.urls.function.getAllAnnouncements())
+        .toPromise();
+  }
 
 
 }

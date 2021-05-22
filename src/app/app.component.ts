@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
 
       this.firebaseX.getToken()
         .then(token =>{
-          console.log(token, "token ID");
+          console.log(token, "token ID getToken");
           if(token){
             localStorage.setItem("deviceToken", JSON.stringify(token))
           }
@@ -63,33 +63,41 @@ export class AppComponent implements OnInit {
     this.firebaseX.onMessageReceived()
       .subscribe(data => {
         
-        
-        if (localStorage.getItem('userDetails')) {
-          console.log(`User opened a notification ${JSON.stringify(data)}`)
-          this.sharedService.presentToastWithOptionsNotificarion(
-            'Order Status!',
-            'Your order has been updated.',
-            'success',
-             6000
-          );
-         
+        if(data.tap == "background"){
+          console.log(`User Tapped a notification ${JSON.stringify(data)}`);
+          
+          this.navController.navigateForward(['/orders', '']);
+          
         }else{
-          this.sharedService.presentToastWithOptionsNotificarion(
-            'Order Status!',
-            'Please login and check the Order Status.',
-            'warning', 
-            6000
-          );
+
+          if (localStorage.getItem('userDetails')) {
+            console.log(`Open APP notification ${JSON.stringify(data)}`)
+            this.sharedService.presentToastWithOptionsNotificarion(
+              `Order #${data.orderId} Status!`,
+              `${data.body}.`,
+              'primary',
+               6000
+            );
+           
+          }else{
+            this.sharedService.presentToastWithOptionsNotificarion(
+              `Order #${data.orderId} Status!`,
+              `${data.body}. You can login and find more Informtoin`,
+              'warning', 
+              6000
+            );
+          }
+
         }
-
-
         
-        console.log(`out notification ${JSON.stringify(data)}`);
+        
+
       });
 
     this.firebaseX.onTokenRefresh()
       .subscribe((token: string) => {
         if(token){
+          console.log(`onTokenRefresh ${JSON.stringify(token)}`)
           localStorage.setItem("deviceToken", JSON.stringify(token))
         }
       });
