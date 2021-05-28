@@ -142,9 +142,7 @@
       size="4"
       size-md
       *ngFor="let subCategorie of subCategories"
-      (click)="
-        goToMiscOrder(subCategorie.name, subCategorie.type, subCategorie.id)
-      "
+      (click)="goToMiscOrder(subCategorie.name, subCategorie.type, subCategorie.id)"
     >
       <div class="sub-categories ion-activatable ripple-parent">
         <ion-img src="{{ subCategorie.icon }}" class="small-icon"></ion-img>

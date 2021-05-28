@@ -148,14 +148,20 @@ export class CartDetailsPage implements OnInit {
               address.is_active === 1
             );
           });
-        this.serviceLocation = this.serviceLocation
-          ? this.serviceLocation[0]
-          : [];
 
-        if (this.serviceLocation && this.serviceLocation.is_active != 1) {
+
+        // this.serviceLocation = this.serviceLocation
+        //   ? this.serviceLocation[0]
+        //   : [];
+
+         
+
+        if (this.serviceLocation?.length == 0) {
           this.notAvailable();
         } else {
           this.restaurantDetails = this.cartDataProvider.getRestName();
+          this.serviceLocation = this.serviceLocation[0];
+
           if (this.restaurantDetails['offer'].length) {
             this.vendorOffer.minOrder = this.restaurantDetails[
               'offer'
@@ -167,6 +173,8 @@ export class CartDetailsPage implements OnInit {
               'offer'
             ][0].maxOfferAmount;
           }
+     
+        //   ? this.serviceLocation[0]
           this.serviceLocation.charge = this.restaurantDetails.is_free_delivery
             ? 0
             : this.serviceLocation.charge;
@@ -186,9 +194,7 @@ export class CartDetailsPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Oops!',
-      subHeader: `Currently unable to deliver your ${
-        this.serviceLocation && this.serviceLocation.name
-      } location.`,
+      subHeader: `Currently unable to deliver your ${this.deliveryLocation.address_type} location.`,
       buttons: [
         {
           text: 'Okey',
@@ -290,6 +296,8 @@ export class CartDetailsPage implements OnInit {
     });
 
     let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+
+
 
     let address = `${userDetails.first_name}, ${this.deliveryLocation.h_no}, ${this.deliveryLocation.street}, landmark: ${this.deliveryLocation.landmark}, ${this.deliveryLocation.locality}, ${this.deliveryLocation.contact_no}, ${userDetails.mobile}`;
     let orderData = {

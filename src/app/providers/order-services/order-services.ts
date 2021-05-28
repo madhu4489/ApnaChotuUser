@@ -13,13 +13,14 @@ export class OrderServicesProvider {
   restaurantName: any = [];
   isDeliveryFee:any;
 
+  vendorDetails:any =[];
+
   constructor(public http: HttpClient) {
     console.log("Hello CartDataProvider Provider");
   }
 
   addCartData(_data) {
     this.cartData = _data;
-    // this.orderItemsCount = 
 
      let count = this.cartData.map(element => {
         return element.count
@@ -32,8 +33,6 @@ export class OrderServicesProvider {
       this.orderItemsCount = count.reduce(function(acc, val) { return acc + val; }, 0);
       this.orderItemsPrice = price.reduce(function(acc, val) { return acc + val; }, 0);
 
-
-    // console.log(_data, "_data_data services", this.orderItemsCount)
   }
 
   clearCartData() {
@@ -50,6 +49,14 @@ export class OrderServicesProvider {
 
   removeCartItems(){
     
+  }
+
+  setVendorDetails(vendorDetails){
+    this.vendorDetails = vendorDetails;
+  }
+
+  getVendorDetails(){
+    return this.vendorDetails;
   }
 
 }

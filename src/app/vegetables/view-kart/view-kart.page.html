@@ -89,7 +89,7 @@
         </tr>
         <tr>
           <td>Delivery charge</td>
-          <td>&#8377; {{serviceLocation?.charge}}</td>
+          <td>&#8377; {{serviceLocation?.charge || 0}}</td>
         </tr>
         <tr class="secondary" *ngIf="discountPrice>0">
           <td>Discount</td>
@@ -101,7 +101,7 @@
         </tr>
         <tr>
           <td>To Pay</td>
-          <td>&#8377; {{totalToPayPrice(orderCountDetails?.price, serviceLocation?.charge, tipAmount, discountPrice)}}</td>
+          <td>&#8377; {{totalToPayPrice(orderCountDetails?.price, serviceLocation?.charge || 0, tipAmount, discountPrice)}}</td>
         </tr>
       </table>
     </ion-item>
@@ -230,13 +230,13 @@
       >
     </ion-item>
 
-    <ion-item *ngIf="deliveryLocation" lines="none">
+    <ion-item  lines="none">
       <ion-button
         (click)="presentAlertConfirm()"
         color="secondary"
         expand="block"
         class="custom-btn"
-        [disabled]="deliveryLocation && deliveryLocation.length == 0 || this.serviceLocation && this.serviceLocation.is_active != 1"
+        [disabled]="serviceLocation.length == 0"
         >Place your order</ion-button
       >
     </ion-item>

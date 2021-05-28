@@ -23,7 +23,6 @@ export class AppComponent implements OnInit {
     public sharedService: SharedService,
    ) {
     // private fcm: FCM
-
       this.initializeApp();
     }
 

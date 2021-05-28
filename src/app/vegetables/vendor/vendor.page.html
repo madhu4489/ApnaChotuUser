@@ -7,24 +7,81 @@
       <span>{{details.name}}</span>
     </ion-title>
   </ion-toolbar>
-    <ion-item >
-      <ion-input
-        class="seach-input"
-        color="primary"
-        clearInput
-        placeholder="Search for an item"
-        [(ngModel)]="terms"
-      ></ion-input>
-    </ion-item>
+   
 
+    <ion-toolbar style="padding: 6px;">
+
+      <ion-segment scrollable color="secondary" [value]="selectedMenu" mode="ios"  mode="ios" >
+        <ion-segment-button [id]="'segment-'+i" [value]="group.name" *ngFor="let group of groups; let i = index" (click)="selectTab($event, i)">
+          <ion-label>{{group.name}}</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+
+      </ion-toolbar>
+      <ion-item >
+        <ion-input
+          class="seach-input"
+          color="primary"
+          clearInput
+          placeholder="Search for an item"
+          [(ngModel)]="terms"
+        ></ion-input>
+      </ion-item>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item-group *ngFor="let menu of menus" #scrollTo>
-      <ion-item-divider sticky="true" class="item-header" *ngIf="terms?.length == 0">
+
+  <ion-slides #pageSlider  (ionSlideWillChange)="slideChanged()">
+    <ion-slide *ngFor="let group of menus; let in = index">
+      <ion-list style="width: 100%;">
+          <ion-item
+            *ngFor="let menuItems of  group.items"
+            class="ion-activatable item-styles"
+            lines="none"
+            color="light"
+          >
+            <span class="veg" [ngClass]="{'non-veg' : menuItems.type==='nv'}"
+              ><span></span
+            ></span>
+            <h6 class="menu-item" style="flex-grow: 4;">
+              <div class="title" >{{menuItems.name}}</div>
+              <div class="price" (click)="menuItems.price_quantity.length > 1 && opengQuantityHandler(menuItems)">
+                {{menuItems.defaultVariantDetails.quantity}}
+                <ion-icon *ngIf="menuItems.price_quantity.length > 1" class="color-orange size" name="chevron-down"></ion-icon>
+              </div>
+              <div class="quantity">
+                &#8377; {{menuItems.defaultVariantDetails.price}}
+              </div>
+            </h6>
+            <h6 class="step" style="width: 88px;">
+                <img [src]="menuItems.image" *ngIf="menuItems.image" />
+                 
+      
+              <div class="" [ngClass]="{'step-image' : menuItems.image}">
+              <stepper
+                  [count]="menuItems.count" 
+                  [increment]="true" 
+                  [someText]="menuItems.selectedVariants > 1 ? menuItems.selectedVariants + ' variants':''" 
+                  (countHandler)="recevieOrderFn($event, menuItems, menu.id)"> 
+                </stepper>
+              </div>
+             
+                
+            </h6>
+          </ion-item>
+      </ion-list>
+    </ion-slide>
+
+</ion-slides>
+
+
+<!-- <ion-item-divider sticky="true" class="item-header" *ngIf="terms?.length == 0">
         {{menu.group}}
-      </ion-item-divider>
+      </ion-item-divider> -->
+
+  <!-- <ion-list>
+    <ion-item-group *ngFor="let menu of getMenus(selectedMenu)" #scrollTo>
+      
       <ion-item
         *ngFor="let menuItems of  (menu.items | search : terms : name)"
         class="ion-activatable item-styles"
@@ -51,6 +108,7 @@
           <div class="" [ngClass]="{'step-image' : menuItems.image}">
           <stepper
               [count]="menuItems.count" 
+              [increment]="true" 
               [someText]="menuItems.selectedVariants > 1 ? menuItems.selectedVariants + ' variants':''" 
               (countHandler)="recevieOrderFn($event, menuItems, menu.id)"> 
             </stepper>
@@ -60,16 +118,15 @@
         </h6>
       </ion-item>
     </ion-item-group>
-  </ion-list>
+  </ion-list> -->
 
-  <ion-button
+  <!-- <ion-button
     *ngIf="isloading"
     color="primary"
     class="menu-button"
     (click)="presentActionSheet()"
     [ngClass]="{'bottom-60' : orderCountDetails?.count > 0}"
-    >Choose Menu </ion-button
-  >
+    >Choose Menu </ion-button> -->
 
   <div *ngIf="!isloading">
     <ion-list>
@@ -100,9 +157,6 @@
       <span>License No. {{details.license_no}}</span>
     </div>
   </div>
-
-
-
 
 </ion-content>
 

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import {
   ActionSheetController,
   IonContent,
+  IonSlides,
   LoadingController,
   ModalController,
   NavController,
@@ -34,6 +35,13 @@ export class VendorPage implements OnInit {
   vendorName:string = '';
 
   orderCountDetails:any;
+  selectedMenu:string;
+
+  slideOpts = {
+    zoom: false
+};
+
+@ViewChild('pageSlider') pageSlider: IonSlides;
 
   @ViewChild(IonContent, { read: IonContent }) myContent: IonContent;
   @ViewChildren('scrollTo') scrollComponent: any;
@@ -57,7 +65,7 @@ export class VendorPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log('Ion View Will Enter ');
+    //console.log('Ion View Will Enter ');
     this.groups = [];
     this.getRestaurantVendor(this.route.snapshot.params.id);
   }
@@ -75,11 +83,12 @@ export class VendorPage implements OnInit {
     await loading.present().then(() => {
       this.sharedService.getRestaurantVendor(id).then((resp) => {
 
-        console.log(resp, "resp")
+        //console.log(resp, "resp")
         this.isloading = true;
         const data = resp.data;
         this.details = data;
 
+        this.orderServicesProvider.setVendorDetails(this.details);
        
 
         data['menu'].forEach((element, index) => {
@@ -93,7 +102,7 @@ export class VendorPage implements OnInit {
 
         this.details.menu.forEach((element) => {
 
-          console.log(element, "element");
+          //console.log(element, "element");
           element.items.forEach((item) => {
 
             item.defaultVariantDetails = item.price_quantity[0];
@@ -105,6 +114,7 @@ export class VendorPage implements OnInit {
         });
         this.backUpMenus = data['menu'];
         this.menus = this.backUpMenus;
+        this.selectedMenu = this.menus[0].group;
 
      
 
@@ -149,7 +159,7 @@ export class VendorPage implements OnInit {
         handler: () => {
           this.setDefault = group.name;
           this.gotoMenu(index);
-          console.log('Delete clicked', group);
+          //console.log('Delete clicked', group);
         },
       };
       buttons.push(button);
@@ -168,7 +178,7 @@ export class VendorPage implements OnInit {
   }
 
   async gotoMenu(value) {
-    console.log(value);
+    //console.log(value);
     let pos = value;
     await this.myContent.scrollToPoint(
       0,
@@ -181,6 +191,8 @@ export class VendorPage implements OnInit {
   groupId:any;
   recevieOrderFn(event, menuItem, groupId) {
 
+    //console.log(event, "event")
+
     this.groupId = groupId;
     if(menuItem.price_quantity.length > 1){
       this.openQuantites(menuItem);
@@ -191,7 +203,7 @@ export class VendorPage implements OnInit {
       );
 
       if(findItemIndex == -1){
-        menuItem.count = event+1; 
+        menuItem.count = event == 1 ? menuItem.count+1 : menuItem.count-1; 
         menuItem.groupId = this.groupId;
         menuItem.vendorId =  this.route.snapshot.params.id;
         menuItem.items[0].quantity = event+1; 
@@ -199,16 +211,16 @@ export class VendorPage implements OnInit {
         this.orderDeatils.push(menuItem);
       }else{
         
-        menuItem.count = event+1; 
+        menuItem.count = event == 1 ? menuItem.count+1 : menuItem.count-1; 
 
         this.orderDeatils[findItemIndex].vendorId = this.route.snapshot.params.id;
         this.orderDeatils[findItemIndex].groupId = this.groupId;
         
-        this.orderDeatils[findItemIndex].items[0].quantity =event+1;
+        this.orderDeatils[findItemIndex].items[0].quantity =event == 1 ?  this.orderDeatils[findItemIndex].items[0].quantity+1 :  this.orderDeatils[findItemIndex].items[0].quantity-1;
        this.orderDeatils[findItemIndex].count =  menuItem.count;
         this.orderDeatils[findItemIndex].orderPrice =  this.orderDeatils[findItemIndex].items[0].quantity * this.orderDeatils[findItemIndex].items[0].price;
 
-        console.log(this.orderDeatils[findItemIndex].count, "countttt");
+        //console.log(this.orderDeatils[findItemIndex].count, "countttt");
       }
 
       this.orderServicesProvider.addCartData(this.orderDeatils);
@@ -233,7 +245,7 @@ export class VendorPage implements OnInit {
           // this.setDefault = group.name;
           // this.gotoMenu(index);
           data.defaultVariantDetails = group;
-          console.log('Delete clicked', group, data);
+          //console.log('Delete clicked', group, data);
         },
       };
       buttons.push(button);
@@ -290,13 +302,41 @@ export class VendorPage implements OnInit {
     this.orderServicesProvider.addCartData(this.orderDeatils);
     this.orderCountDetails = this.orderServicesProvider.getOrderDeatils();
     this.groupId = null;
-    console.log(this.orderCountDetails, "orderCountDetails:::::");
   }
 
   viewCart(){
-    console.log(this.orderDeatils, "this.orderDeatils")
     this.navController.navigateForward(['/view-kart']);
-    
   }
+
+  getMenus(selectedMenu){
+    return this.menus.filter(menu => menu.group == selectedMenu);
+  }
+
+
+
+
+
+selectTab(event, index) {
+  this.pageSlider.slideTo(index);
+  this.selectedMenu = this.menus[index].group;
+  event.target.scrollIntoView({
+    behavior: 'smooth', 
+    inline: 'center'
+  });
+}
+
+slideChanged() {
+  this.pageSlider.getActiveIndex().then(index => {
+    //console.log(index);
+    this.selectedMenu = this.menus[index].group;
+    document.getElementById("segment-" + index).scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center'
+    });
+ });
+
+}
+
 
 }

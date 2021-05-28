@@ -41,6 +41,10 @@ export class ViewKartPage implements OnInit {
   ];
   tipAmount: number = 0;
 
+  selectedVendor: any = [];
+
+  payProceed:boolean;
+
   constructor(
     private navController: NavController,
     private cartDataProvider: OrderServicesProvider,
@@ -52,6 +56,8 @@ export class ViewKartPage implements OnInit {
 
   ngOnInit() {
     this.getlocationsFn();
+    this.selectedVendor = this.cartDataProvider.getVendorDetails();
+    console.log("this.selectedVendor:::---------", this.selectedVendor)
   }
 
   backHandler() {
@@ -61,6 +67,7 @@ export class ViewKartPage implements OnInit {
   getOrderDetails() {
     this.orderDetails = this.cartDataProvider.getCartData();
     this.orderCountDetails = this.cartDataProvider.getOrderDeatils();
+    
     console.log(this.orderDetails, ' orderDetails');
   }
 
@@ -100,6 +107,12 @@ export class ViewKartPage implements OnInit {
         this.deliveryLocation = JSON.parse(
           localStorage.getItem('selectedLocation')
         );
+
+        console.log(serverData, "serverDataserverData")
+        console.log( this.deliveryLocation, " this.deliveryLocation");
+
+
+
         this.serviceLocation =
           serverData &&
           serverData.filter((address) => {
@@ -108,31 +121,35 @@ export class ViewKartPage implements OnInit {
               address.is_active === 1
             );
           });
-        this.serviceLocation = this.serviceLocation
-          ? this.serviceLocation[0]
-          : [];
 
-        if (this.serviceLocation && this.serviceLocation.is_active != 1) {
+     
+
+        // this.serviceLocation = this.serviceLocation
+        //   ? this.serviceLocation[0]
+        //   : [];
+
+        if (this.serviceLocation.length == 0) {
           this.notAvailable();
         } else {
-          // this.restaurantDetails = this.cartDataProvider.getRestName();
-          if (this.restaurantDetails['offer']?.length) {
-            this.vendorOffer.minOrder = this.restaurantDetails[
-              'offer'
-            ][0].minOrder;
-            this.vendorOffer.offerPercentage = this.restaurantDetails[
-              'offer'
-            ][0].offerPercentage;
-            this.vendorOffer.maxOfferAmount = this.restaurantDetails[
-              'offer'
-            ][0].maxOfferAmount;
+          this.restaurantDetails = this.selectedVendor;
+          if (this.restaurantDetails['offer']?.length && this.restaurantDetails['offer'][0].is_active == 1) {
+            this.vendorOffer.minOrder = this.restaurantDetails['offer'][0].minOrder;
+            this.vendorOffer.offerPercentage = this.restaurantDetails['offer'][0].offerPercentage;
+            this.vendorOffer.maxOfferAmount = this.restaurantDetails['offer'][0].maxOfferAmount;
           }
+
+          
+          this.serviceLocation = this.serviceLocation[0];
+
+          console.log( this.serviceLocation, " this.serviceLocation");
+
+          
           this.serviceLocation.charge = this.restaurantDetails.is_free_delivery
             ? 0
             : this.serviceLocation.charge;
 
           this.serviceLocationId = this.serviceLocation.id;
-          
+          this.discountPriceFn(this.orderCountDetails?.price);
         }
       } else {
         
@@ -146,8 +163,8 @@ export class ViewKartPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Oops!',
-      message: `Currently unable to deliver your ${
-        this.serviceLocation && this.serviceLocation.name
+      subHeader: `Currently unable to deliver your ${
+        this.deliveryLocation.address_type
       } location.`,
       buttons: [
         {
@@ -238,10 +255,9 @@ export class ViewKartPage implements OnInit {
     this.orderDetails[this.orderDetails.indexOf(menuItem)].orderPrice = orderPrice.reduce(function(acc, val) { return acc + val; }, 0);
 
     this.cartDataProvider.addCartData(this.orderDetails);
+
     this.orderCountDetails = this.cartDataProvider.getOrderDeatils();
-
-    console.log(this.orderCountDetails);
-
+    this.discountPriceFn(this.orderCountDetails.price);
     if(this.orderCountDetails.count == 0){
       this.backHandler()
     }
@@ -256,17 +272,9 @@ export class ViewKartPage implements OnInit {
     let vendorId: any;
     let Items: any = [];
 
-
-    console.log( this.orderDetails, " this.orderDetails");
-
-
     this.orderDetails.forEach((order) => {
       vendorId = order.vendorId;
-
       order.items.forEach(element => {
-
-        console.log(element, "element Itemssss");
-
         if(element.quantity != 0){
           Items.push({
             itemId: element.itemId,
@@ -274,10 +282,7 @@ export class ViewKartPage implements OnInit {
             price: element.price*element.quantity,
           });
         }
-        
       });
-
-     
     });
 
 
@@ -324,8 +329,26 @@ export class ViewKartPage implements OnInit {
 
 
   totalToPayPrice(a,b,c,d){
-console.log(a,b,c,d)
-return a+Number(b)+c-d
+    console.log(a,b,c,d)
+      return Number(a)+Number(b)+Number(c)-Number(d)
+  }
+
+
+  discountPriceFn(pric){
+    this.discountPrice =
+      pric >= this.vendorOffer.minOrder
+        ? (pric / 100) * parseInt(this.vendorOffer.offerPercentage)
+        : null;
+
+    this.discountPrice =
+      this.discountPrice &&
+      this.discountPrice >= parseInt(this.vendorOffer.maxOfferAmount)
+        ? this.vendorOffer.maxOfferAmount
+        : this.discountPrice;
+    this.discountPrice = Math.round(this.discountPrice) > 0 ? Math.round(this.discountPrice) : 0;
+    console.log(pric, "pricpricpricpric", this.vendorOffer)
+
+    console.log(this.discountPrice, "this.discountPrice");
   }
 
 }

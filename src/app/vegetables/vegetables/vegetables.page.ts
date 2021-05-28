@@ -68,14 +68,11 @@ export class VegetablesPage implements OnInit {
       is_open:true
     };
     this.sharedService.getRestaurants(vendorData).then((data) => {
-      console.log(data, 'getvegVendors');
       let serverData = data.data;
 
       if(data.closeCount == 0 && data.openCount == 0){
         this.noStores = true;
-       
       }
-
 
       if (serverData.length == 10) {
         this.vegVendors.push(...serverData);
@@ -84,6 +81,7 @@ export class VegetablesPage implements OnInit {
         if (!serverData) {
           this.isClear = true;
         }
+
       } else  {
         this.vegVendors.push(...serverData);
         this.noActiveRestarents = true;
