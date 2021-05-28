@@ -36,6 +36,7 @@ export class VendorPage implements OnInit {
 
   orderCountDetails:any;
   selectedMenu:string;
+  groupItems:any =[];
 
   slideOpts = {
     zoom: false
@@ -116,7 +117,9 @@ export class VendorPage implements OnInit {
         this.menus = this.backUpMenus;
         this.selectedMenu = this.menus[0].group;
 
-     
+        this.groupItems = this.menus[0].items;
+
+        console.log( this.groupItems, " this.groupItems")
 
         let _cartData = this.orderServicesProvider.getCartData();
 
@@ -313,12 +316,10 @@ export class VendorPage implements OnInit {
   }
 
 
-
-
-
 selectTab(event, index) {
   this.pageSlider.slideTo(index);
   this.selectedMenu = this.menus[index].group;
+  this.groupItems = this.menus[index].items;
   event.target.scrollIntoView({
     behavior: 'smooth', 
     inline: 'center'

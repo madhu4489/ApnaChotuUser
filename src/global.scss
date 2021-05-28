@@ -471,6 +471,7 @@ width: 80px;
   margin-top: 10px;
   border-top: 1px solid #dfdfdf;
   margin-bottom: 64px;
+  text-align: left;
   .icon {
     color: rgb(141, 146, 165);
   }
@@ -480,6 +481,7 @@ width: 80px;
     align-items: center;
     margin-bottom: 8px;
     align-content: center;
+    text-align: left;
     // justify-content: center;
 
     p {
@@ -488,6 +490,7 @@ width: 80px;
       flex: 1 1 0%;
       margin: 0;
       margin-left: 6px;
+      text-align: left;
     }
 
     span{
@@ -622,4 +625,10 @@ width: 70px;
 .segment-button-checked{
   color: #ff7900;
   
+}
+
+.segment-button{
+  padding: 10px 0;
+    background: #eff5f7;
+    border-radius: 0;
 }

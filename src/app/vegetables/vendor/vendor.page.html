@@ -9,24 +9,26 @@
   </ion-toolbar>
    
 
-    <ion-toolbar style="padding: 6px;">
+    <!-- <ion-toolbar style="padding: 6px 6px 0;"> -->
 
-      <ion-segment scrollable color="secondary" [value]="selectedMenu" mode="ios"  mode="ios" >
+      <ion-segment scrollable color="secondary" [value]="selectedMenu" mode="ios"  mode="ios" class="segment-button">
         <ion-segment-button [id]="'segment-'+i" [value]="group.name" *ngFor="let group of groups; let i = index" (click)="selectTab($event, i)">
           <ion-label>{{group.name}}</ion-label>
         </ion-segment-button>
     </ion-segment>
 
-      </ion-toolbar>
-      <ion-item >
-        <ion-input
-          class="seach-input"
-          color="primary"
-          clearInput
-          placeholder="Search for an item"
-          [(ngModel)]="terms"
-        ></ion-input>
-      </ion-item>
+    <ion-item >
+      <ion-input
+        class="seach-input"
+        color="primary"
+        clearInput
+        placeholder="Search for an item"
+        [(ngModel)]="terms"
+      ></ion-input>
+    </ion-item>
+
+      <!-- </ion-toolbar> -->
+      
 </ion-header>
 
 <ion-content>
@@ -35,7 +37,7 @@
     <ion-slide *ngFor="let group of menus; let in = index">
       <ion-list style="width: 100%;">
           <ion-item
-            *ngFor="let menuItems of  group.items"
+            *ngFor="let menuItems of groupItems"
             class="ion-activatable item-styles"
             lines="none"
             color="light"
@@ -62,14 +64,30 @@
                   [count]="menuItems.count" 
                   [increment]="true" 
                   [someText]="menuItems.selectedVariants > 1 ? menuItems.selectedVariants + ' variants':''" 
-                  (countHandler)="recevieOrderFn($event, menuItems, menu.id)"> 
+                  (countHandler)="recevieOrderFn($event, menuItems, group.id)"> 
                 </stepper>
               </div>
              
                 
             </h6>
           </ion-item>
+
+          <div class="address-bar" style="margin-bottom: 0;">
+            <div>
+              <ion-icon name="business" class="icon"></ion-icon>
+              <p>{{details.name}}</p>
+            </div>
+            <div>
+              <ion-icon size="small" class="icon" name="location"></ion-icon>
+              <p>{{details.address}}</p>
+            </div>
+            <div *ngIf="details.license_no">
+              <img src="../../../assets/fassi.png" />
+              <span>License No. {{details.license_no}}</span>
+            </div>
+          </div>
       </ion-list>
+     
     </ion-slide>
 
 </ion-slides>
@@ -143,20 +161,7 @@
     </ion-list>
   </div>
 
-  <div class="address-bar">
-    <div>
-      <ion-icon name="business" class="icon"></ion-icon>
-      <p>{{details.name}}</p>
-    </div>
-    <div>
-      <ion-icon size="small" class="icon" name="location"></ion-icon>
-      <p>{{details.address}}</p>
-    </div>
-    <div *ngIf="details.license_no">
-      <img src="../../../assets/fassi.png" />
-      <span>License No. {{details.license_no}}</span>
-    </div>
-  </div>
+  
 
 </ion-content>
 
