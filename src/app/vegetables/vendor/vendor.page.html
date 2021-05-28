@@ -12,7 +12,7 @@
     <!-- <ion-toolbar style="padding: 6px 6px 0;"> -->
 
       <ion-segment scrollable color="secondary" [value]="selectedMenu" mode="ios"  mode="ios" class="segment-button">
-        <ion-segment-button [id]="'segment-'+i" [value]="group.name" *ngFor="let group of groups; let i = index" (click)="selectTab($event, i); groupItems = []; isloading = false">
+        <ion-segment-button [id]="'segment-'+i" [value]="group.name" *ngFor="let group of groups; let i = index" (click)="selectTab($event, i)">
           <ion-label>{{group.name}}</ion-label>
         </ion-segment-button>
     </ion-segment>
@@ -33,11 +33,11 @@
 
 <ion-content>
 
-  <ion-slides #pageSlider  (ionSlideNextEnd)="slideChanged();" (ionSlideDrag)="groupItems = []; isloading = false">
+  <ion-slides #pageSlider  (ionSlideWillChange)="slideChanged()">
     <ion-slide *ngFor="let group of menus; let in = index">
       <ion-list style="width: 100%;">
           <ion-item
-            *ngFor="let menuItems of groupItems; let index = index"
+            *ngFor="let menuItems of group.items; let index = index"
             class="ion-activatable item-styles"
             lines="none"
             color="light"
@@ -70,7 +70,7 @@
             </h6>
           </ion-item>
 
-          <div class="address-bar" style="margin-bottom: 0;" *ngIf="isloading">
+          <div class="address-bar" style="margin-bottom: 0;">
             <div>
               <ion-icon name="business" class="icon"></ion-icon>
               <p>{{details.name}}</p>

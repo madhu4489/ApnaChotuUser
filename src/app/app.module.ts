@@ -24,7 +24,7 @@ import { FirebaseX } from '@ionic-native/firebase-x/ngx';
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,FormsModule,
     ReactiveFormsModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FirebaseX, HTTP, Network, StatusBar],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }, FirebaseX, HTTP, Network, StatusBar],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

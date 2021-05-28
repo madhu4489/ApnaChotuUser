@@ -100,14 +100,7 @@ export class VendorPage implements OnInit {
         this.orderServicesProvider.setVendorDetails(this.details);
        
 
-        data['menu'].forEach((element, index) => {
-          this.groups[index] = {
-            name: element.group,
-            is_active: element.is_active,
-            count: element.items.length,
-            
-          };
-        });
+        
 
         this.details.menu.forEach((element) => {
 
@@ -122,7 +115,15 @@ export class VendorPage implements OnInit {
           });
         });
         this.backUpMenus = data['menu'];
-        this.menus = this.backUpMenus;
+        
+
+console.log( this.backUpMenus, " this.backUpMenus")
+
+        this.menus = this.backUpMenus.filter(item => item.items.length > 0);
+
+        console.log( this.menus, " this.menus")
+
+
         this.selectedMenu = this.menus[0].group;
 
         this.groupItems = this.menus[0].items;
@@ -130,6 +131,17 @@ export class VendorPage implements OnInit {
         console.log( this.groupItems, " this.groupItems")
 
         let _cartData = this.orderServicesProvider.getCartData();
+
+        this.menus.forEach((element, index) => {
+          this.groups[index] = {
+            name: element.group,
+            is_active: element.is_active,
+            count: element.items.length,
+            
+          };
+        });
+
+
 
         if(_cartData && _cartData.length != 0){
           this.orderCountDetails = this.orderServicesProvider.getOrderDeatils();
@@ -339,6 +351,8 @@ selectTab(event, index) {
   this.pageSlider.slideTo(index);
   this.selectedMenu = this.menus[index].group;
   this.groupItems = this.menus[index].items;
+
+
   event.target.scrollIntoView({
     behavior: 'smooth', 
     inline: 'center'
