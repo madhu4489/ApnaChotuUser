@@ -200,13 +200,16 @@ export class VendorPage implements OnInit {
 
   orderDeatils: any = [];
   groupId:any;
-  recevieOrderFn(event, menuItem, groupId) {
+  recevieOrderFn(event, menuItem, groupId, index) {
+
+    
 
     console.log(menuItem, "menuItem")
 
     this.groupId = groupId;
     if(menuItem.price_quantity.length > 1){
-      this.openQuantites(menuItem);
+      // this.openQuantites(menuItem);
+      this.openQuantites(this.groupItems[index]);
     }else{
 
       const findItemIndex = this.orderDeatils.findIndex(
@@ -275,7 +278,7 @@ export class VendorPage implements OnInit {
 
   async openQuantites(items) {
 
-    console.log(items, "items::::::");
+   
     this.modalRef = await this.modalController.create({
       component: RemoveItemsComponent,
       cssClass: 'myLoginPopup',
@@ -290,6 +293,8 @@ export class VendorPage implements OnInit {
       console.log(res.data, "res.datares.datares.data")
       if(res.data){
         this.addOrder(res.data)
+      }else{
+        console.log( console.log(items, "items::::::"))
       }
       
     });
@@ -342,14 +347,16 @@ selectTab(event, index) {
 
 slideChanged() {
   this.pageSlider.getActiveIndex().then(index => {
-    //console.log(index);
+    console.log(index);
     this.selectedMenu = this.menus[index].group;
     this.groupItems = this.menus[index].items;
+    this.isloading = true;
     document.getElementById("segment-" + index).scrollIntoView({
       behavior: 'smooth',
       block: 'center',
       inline: 'center'
     });
+   
  });
 
 }

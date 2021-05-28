@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Network } from '@ionic-native/network/ngx';
 import { AlertController, NavController, Platform } from '@ionic/angular';
-
+import { Location } from '@angular/common';
 
 // import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
     private firebaseX: FirebaseX,
     public sharedService: SharedService,
     public alertController: AlertController,
+    private _location: Location,
    ) {
     // private fcm: FCM
       this.initializeApp();
@@ -35,6 +36,24 @@ export class AppComponent implements OnInit {
   }
 
   initializeApp() {
+
+    this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
+      console.log('Back press handler!', this._location);
+      if (this._location.isCurrentPathEqualTo('/dashboard')) {
+
+        // Show Exit Alert!
+        console.log('Show Exit Alert!');
+        this.showExitConfirm();
+        processNextHandler();
+      } else {
+
+        // Navigate to back page
+        console.log('Navigate to back page');
+        this._location.back();
+
+      }
+
+    });
 
     this.platform.backButton.subscribeWithPriority(5, () => {
       console.log('Handler called to force close!');
@@ -106,5 +125,28 @@ export class AppComponent implements OnInit {
 
 
     });
+  }
+
+  showExitConfirm() {
+    this.alertController.create({
+      header: 'App termination',
+      message: 'Do you want to close the app?',
+      backdropDismiss: false,
+      buttons: [{
+        text: 'Stay',
+        role: 'cancel',
+        handler: () => {
+          console.log('Application exit prevented!');
+        }
+      }, {
+        text: 'Exit',
+        handler: () => {
+          navigator['app'].exitApp();
+        }
+      }]
+    })
+      .then(alert => {
+        alert.present();
+      });
   }
 }

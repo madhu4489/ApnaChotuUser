@@ -10,10 +10,12 @@ export class ExploreTopServicesComponent implements OnInit {
   public subCategories: any = [
     { id:'18', name: 'Grocery', icon: '../../../assets/icon/grocry_small.svg', type:"order", label:'New'},
     { id:null, name: 'Medicine', icon: '../../../assets/icon/med_small.svg', type:"order", label:'' },
-    { id:null, name: 'Cabs', icon: '../../../assets/icon/cabs_small.svg', type:"call", label:'' },
-    { id:null, name: 'Appliance Repair', icon: '../../../assets/icon/reapir_small.svg', type:"call", label:'' },
-    { id:null, name: 'Online Services', icon: '../../../assets/icon/online_small.svg' , type:"call" , label:''},
-    { id:null, name: 'Apna Chotu Specials', icon: '../../../assets/icon/apna.png', type:"call", label:'' },
+
+
+    { id:8, name: 'Cabs', icon: '../../../assets/icon/cabs_small.svg', type:"call", label:'' },
+    { id:4, name: 'Appliance Repair', icon: '../../../assets/icon/reapir_small.svg', type:"call", label:'' },
+    { id:3, name: 'Online Services', icon: '../../../assets/icon/online_small.svg' , type:"call" , label:''},
+    { id:5, name: 'Apna Chotu Specials', icon: '../../../assets/icon/apna.png', type:"call", label:'' },
   ];
 
   // 5 apna chotu ser
@@ -28,10 +30,10 @@ export class ExploreTopServicesComponent implements OnInit {
 
   goToMiscOrder(name, type?:any, id?:any){
     console.log(name, type, id, "XEEEEE");
-    if(id != null) {
+    if(id == 18) {
       this.navController.navigateForward(['/vegetables', id]);
     }else{
-      if(type!= 'call'){
+      if(type != 'call'){
         this.navController.navigateForward(["/misc-order", name]);
       }else{
         this.navController.navigateForward(['/more-servicer', id, name]);
