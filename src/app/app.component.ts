@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Network } from '@ionic-native/network/ngx';
-import { AlertController, IonRouterOutlet, NavController, Platform } from '@ionic/angular';
+import { AlertController, NavController, Platform } from '@ionic/angular';
 import { Location } from '@angular/common';
 
 // import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -17,16 +17,12 @@ import { SharedService } from './providers/shared.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-
-  @ViewChild(IonRouterOutlet, { static : true }) routerOutlet: IonRouterOutlet;
-  
   constructor(private navController: NavController, private network: Network,
     private platform: Platform,
     private firebaseX: FirebaseX,
     public sharedService: SharedService,
     public alertController: AlertController,
     private _location: Location,
-    // private routerOutlet: IonRouterOutlet
    ) {
     // private fcm: FCM
       this.initializeApp();
@@ -41,42 +37,34 @@ export class AppComponent implements OnInit {
 
   initializeApp() {
 
-    this.platform.backButton.subscribeWithPriority(-1, () => {
-      console.log('Back press handler!', this.routerOutlet);
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      console.log('Back press handler!', this._location.path);
+      if (this._location.isCurrentPathEqualTo('/dashboard')) {
 
-      if (!this.routerOutlet.canGoBack()) {
+        // Show Exit Alert!
+        console.log('Show Exit Alert!');
         this.showExitConfirm();
-      }else{
+        // processNextHandler();
+      } else {
+
+        // Navigate to back page
+        console.log('Navigate to back page');
         this._location.back();
+
       }
-
-
-      // if (this._location.isCurrentPathEqualTo('/dashboard')) {
-
-      //   // Show Exit Alert!
-      //   console.log('Show Exit Alert!');
-      //   this.showExitConfirm();
-      //   // processNextHandler();
-      // } else {
-
-      //   // Navigate to back page
-      //   console.log('Navigate to back page');
-      //   this._location.back();
-
-      // }
 
     });
 
-    // this.platform.backButton.subscribeWithPriority(5, () => {
-    //   console.log('Handler called to force close!');
-    //   this.alertController.getTop().then(r => {
-    //     if (r) {
-    //       navigator['app'].exitApp();
-    //     }
-    //   }).catch(e => {
-    //     console.log(e);
-    //   })
-    // });
+    this.platform.backButton.subscribeWithPriority(5, () => {
+      console.log('Handler called to force close!');
+      this.alertController.getTop().then(r => {
+        if (r) {
+          navigator['app'].exitApp();
+        }
+      }).catch(e => {
+        console.log(e);
+      })
+    });
 
 
     this.platform.ready().then(() => {
@@ -141,8 +129,8 @@ export class AppComponent implements OnInit {
 
   showExitConfirm() {
     this.alertController.create({
-      header: 'Alert!',
-      subHeader: 'Do you want to close the app?',
+      header: 'App termination',
+      message: 'Do you want to close the app?',
       backdropDismiss: false,
       buttons: [{
         text: 'Stay',

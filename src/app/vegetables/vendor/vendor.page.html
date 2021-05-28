@@ -33,7 +33,7 @@
 
 <ion-content>
 
-  <ion-slides #pageSlider  (ionSlideWillChange)="slideChanged()">
+  <ion-slides #pageSlider  (ionSlideWillChange)="slideChanged()" [options]="{autoHeight: true}">
     <ion-slide *ngFor="let group of menus; let in = index">
       <ion-list style="width: 100%;">
           <ion-item
