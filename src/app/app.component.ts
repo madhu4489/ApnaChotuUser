@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Network } from '@ionic-native/network/ngx';
-import { NavController, Platform } from '@ionic/angular';
+import { AlertController, NavController, Platform } from '@ionic/angular';
 
 
 // import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private firebaseX: FirebaseX,
     public sharedService: SharedService,
+    public alertController: AlertController,
    ) {
     // private fcm: FCM
       this.initializeApp();
@@ -34,7 +35,21 @@ export class AppComponent implements OnInit {
   }
 
   initializeApp() {
+
+    this.platform.backButton.subscribeWithPriority(5, () => {
+      console.log('Handler called to force close!');
+      this.alertController.getTop().then(r => {
+        if (r) {
+          navigator['app'].exitApp();
+        }
+      }).catch(e => {
+        console.log(e);
+      })
+    });
+
+
     this.platform.ready().then(() => {
+
       localStorage.setItem("deviceId", "2qwaskjbdf67t67d")
 
       this.firebaseX.getToken()

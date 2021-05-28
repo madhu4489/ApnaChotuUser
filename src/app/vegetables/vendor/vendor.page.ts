@@ -7,6 +7,7 @@ import {
   LoadingController,
   ModalController,
   NavController,
+  Platform,
 } from '@ionic/angular';
 import { OrderServicesProvider } from 'src/app/providers/order-services/order-services';
 import { SharedService } from 'src/app/providers/shared.service';
@@ -52,11 +53,18 @@ export class VendorPage implements OnInit {
     private route: ActivatedRoute,
     public sharedService: SharedService,
     public orderServicesProvider: OrderServicesProvider,
-    
+    private platform: Platform,
     public loader: LoadingController,
     private modalController: ModalController,
     public actionSheetController: ActionSheetController
-  ) {}
+  ) {
+
+    this.platform.backButton.subscribeWithPriority(5, () => {
+      console.log('Handler called to force close!');
+      this.modalRef.onDidDismiss();
+    });
+    
+  }
 
   ngOnInit() {
     if (this.route.snapshot.params.id) {
@@ -194,7 +202,7 @@ export class VendorPage implements OnInit {
   groupId:any;
   recevieOrderFn(event, menuItem, groupId) {
 
-    //console.log(event, "event")
+    console.log(menuItem, "menuItem")
 
     this.groupId = groupId;
     if(menuItem.price_quantity.length > 1){
@@ -263,30 +271,36 @@ export class VendorPage implements OnInit {
     await  actionSheet1.present();
   }
 
+  modalRef:any;
 
   async openQuantites(items) {
-    const modalRef = await this.modalController.create({
+
+    console.log(items, "items::::::");
+    this.modalRef = await this.modalController.create({
       component: RemoveItemsComponent,
       cssClass: 'myLoginPopup',
-      backdropDismiss: false,
+      backdropDismiss: true,
       componentProps: {
         isEditMode: true,
         selectedItems: items,
       },
     });
-    modalRef.onDidDismiss().then((res: any) => {
+    this.modalRef.onDidDismiss().then((res: any) => {
     
+      console.log(res.data, "res.datares.datares.data")
       if(res.data){
         this.addOrder(res.data)
       }
       
     });
 
-    await modalRef.present();
+    await this.modalRef.present();
   }
 
 
   addOrder(menuItem){
+console.log(menuItem, "menuItem")
+
     menuItem.groupId = this.groupId;
     menuItem.vendorId =  this.route.snapshot.params.id;
     menuItem.selectedVariants =  menuItem.items.filter(item =>item.quantity > 0).length;
@@ -330,6 +344,7 @@ slideChanged() {
   this.pageSlider.getActiveIndex().then(index => {
     //console.log(index);
     this.selectedMenu = this.menus[index].group;
+    this.groupItems = this.menus[index].items;
     document.getElementById("segment-" + index).scrollIntoView({
       behavior: 'smooth',
       block: 'center',

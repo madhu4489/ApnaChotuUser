@@ -26,7 +26,6 @@ export class RemoveItemsComponent implements OnInit {
   constructor(
     public navController: NavController,
     private _modalCtrl: ModalController,
-    private formBuilder: FormBuilder,
     public sharedService: SharedService,
     public loader: LoadingController
   ) {}
@@ -50,27 +49,29 @@ export class RemoveItemsComponent implements OnInit {
   }
 
   recevieOrderFn(event, menuItem) {
-    let findItemIndex = menuItem.items.findIndex(
+    const menu = menuItem;
+    let findItemIndex = menu.items.findIndex(
       (item) => item.type == event.type
     );
     if (findItemIndex != -1) {
-      menuItem.items[findItemIndex] = event;
+      menu.items[findItemIndex] = event;
     } else {
-      menuItem.items.push(event);
+      menu.items.push(event);
     }
-    this.selectedItems = menuItem;
+    this.selectedItems = menu;
   }
 
   removeOrderFn(event, menuItem) {
-    let findItemIndex = menuItem.items.findIndex(
+    const menu = menuItem;
+    let findItemIndex = menu.items.findIndex(
       (item) => item.type == event.type
     );
     if (findItemIndex != -1) {
-      menuItem.items[findItemIndex] = event;
+      menu.items[findItemIndex] = event;
     } else {
-      menuItem.items.push(event);
+      menu.items.push(event);
     }
-    this.selectedItems = menuItem;
+    this.selectedItems = menu;
   }
 
   // this._modalCtrl.dismiss();
