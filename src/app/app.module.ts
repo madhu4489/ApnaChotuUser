@@ -13,19 +13,18 @@ import { Network } from '@ionic-native/network/ngx';
 
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-// import FCM
-// import { FCM } from '@ionic-native/fcm/ngx';
+// import { AppUpdate } from '@ionic-native/app-update/ngx';
 
 
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
-import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,FormsModule,
     ReactiveFormsModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FirebaseX, HTTP, Network, StatusBar, UniqueDeviceID],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FirebaseX, HTTP, Network, StatusBar],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -217,6 +217,10 @@ export class SignupUserComponent implements OnInit {
       this.otpGroupErrors = false;
       localStorage.setItem('jwt', this.userResponceToken);
 
+      // localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
+      // this._modalCtrl.dismiss();
+
+
       let tokanData ={
         "deviceToken":JSON.parse(localStorage.getItem('deviceToken')),
         "deviceId":localStorage.getItem('deviceId'),

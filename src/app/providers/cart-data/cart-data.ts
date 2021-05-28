@@ -16,12 +16,12 @@ export class CartDataProvider {
 
   addCartData(_data) {
 
-    console.log(_data, "_data_data_data_data_data")
     this.cartData.forEach((element, index) => {
       if (element.name == _data.name) {
         this.cartData.splice(index, 1);
       }
     });
+    
     this.cartData.push(_data);
     this.setCartData(this.cartData);
     console.log("Add Cart Data");

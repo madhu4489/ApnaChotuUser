@@ -105,7 +105,7 @@ export class DashboardPage implements OnInit {
     const modalRef = await this.modalController.create({
       component: SignupUserComponent,
       cssClass: 'myLoginPopup',
-      backdropDismiss: false,
+      backdropDismiss: true,
       componentProps: { isFromPage: isFromPage },
     });
     await modalRef.present();

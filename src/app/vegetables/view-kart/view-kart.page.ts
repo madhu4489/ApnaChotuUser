@@ -257,22 +257,31 @@ export class ViewKartPage implements OnInit {
     let Items: any = [];
 
 
-    console.log( this.orderDetails, " this.orderDetails")
+    console.log( this.orderDetails, " this.orderDetails");
 
 
     this.orderDetails.forEach((order) => {
       vendorId = order.vendorId;
 
       order.items.forEach(element => {
-        Items.push({
-          itemId: element.itemId,
-          quantity: `(${element.type}) X ${element.quantity}`,
-          price: element.price*element.quantity,
-        });
+
+        console.log(element, "element Itemssss");
+
+        if(element.quantity != 0){
+          Items.push({
+            itemId: element.itemId,
+            quantity: `(${element.type}) X ${element.quantity}`,
+            price: element.price*element.quantity,
+          });
+        }
+        
       });
 
      
     });
+
+
+
 
     let userDetails = JSON.parse(localStorage.getItem('userDetails'));
 

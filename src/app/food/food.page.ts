@@ -92,6 +92,7 @@ export class FoodPage implements OnInit {
     };
     this.sharedService.getRestaurants(vendorData).then((data) => {
       let serverData = data.data;
+      
       if (serverData.length > 0) {
         this.closedVendorCount = true;
         this.offset =  this.offset + serverData.length;
@@ -128,6 +129,8 @@ export class FoodPage implements OnInit {
   }
 
   showVendor(id) {
+    this.cartDataProvider.clearCartData();
+    console.log(this.cartDataProvider.getCartData(), "order itemssssssssss")
     this.navController.navigateForward(["vendor", id]);
   }
 

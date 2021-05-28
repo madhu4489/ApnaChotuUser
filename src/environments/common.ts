@@ -1,4 +1,4 @@
- //const BASE_URL = 'http://139.59.45.85/api/v1/';
+//const BASE_URL = 'http://139.59.45.85/api/v1/';
 const BASE_URL = 'http://159.89.171.183/api/v1/';
 
 

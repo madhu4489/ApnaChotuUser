@@ -9,7 +9,7 @@ import { NavController, Platform } from '@ionic/angular';
 
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { SharedService } from './providers/shared.service';
-import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+
 
 @Component({
   selector: 'app-root',
@@ -19,10 +19,8 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 export class AppComponent implements OnInit {
   constructor(private navController: NavController, private network: Network,
     private platform: Platform,
-    // private statusBar: StatusBar,
     private firebaseX: FirebaseX,
     public sharedService: SharedService,
-    // private uniqueDeviceID: UniqueDeviceID
    ) {
     // private fcm: FCM
 
@@ -39,17 +37,6 @@ export class AppComponent implements OnInit {
   initializeApp() {
     this.platform.ready().then(() => {
       localStorage.setItem("deviceId", "2qwaskjbdf67t67d")
-
-      // this.uniqueDeviceID.get()
-      // .then((uuid: any) => {
-      //   console.log(uuid, "device ID");
-      //   if(uuid){
-      //     localStorage.setItem("deviceId", JSON.stringify(uuid))
-      //   }
-      // })
-      // .catch((error: any) => console.log(error));
-
-      console.log('platform ready Madhuuuuuuuuuuuuuuu');
 
       this.firebaseX.getToken()
         .then(token =>{
@@ -103,29 +90,6 @@ export class AppComponent implements OnInit {
       })
 
 
-
-    
-      // this.statusBar.styleDefault();
-    
-      // this.fcm.getToken().then(token => {
-      //   console.log(token, "token");
-      // });
-
-      // this.fcm.onNotification().subscribe(data => {
-      //   console.log(data, "onNotification");
-      //   if (data.wasTapped) {
-      //     console.log('Received in background');
-      //   } else {
-      //     console.log('Received in foreground');
-      //   }
-      // });      
-
-      // this.fcm.onTokenRefresh().subscribe(token => {
-      //   console.log(token);
-      // });
-
-      // unsubscribe from a topic
-      // this.fcm.unsubscribeFromTopic('offers');
 
     });
   }

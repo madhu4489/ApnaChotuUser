@@ -28,6 +28,8 @@ export class VegetablesPage implements OnInit {
 
   noActiveRestarents:boolean;
 
+  title_header: string;
+
   constructor(
     private navController: NavController,
     public sharedService: SharedService,
@@ -39,6 +41,11 @@ export class VegetablesPage implements OnInit {
   ngOnInit() {
     if (this.route.snapshot.params.id) {
       this.catagorieId = this.route.snapshot.params.id;
+      if( this.catagorieId == '20'){
+        this.title_header = "Meat / Fish";
+      }else{
+        this.title_header = "Vegetables / Fruits";
+      }
       this.getvegVendors();
     }
     this.orderServicesProvider.clearCartData()

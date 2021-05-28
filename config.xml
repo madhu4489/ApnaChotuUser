@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.apna.chotu" version="0.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.apna.chotu" version="0.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>APNA CHOTU</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -43,11 +43,6 @@
         <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
-        <resource-file src="resources/android/notification/drawable-mdpi.png" target="app/src/main/res/drawable-mdpi/notification.png" />
-        <resource-file src="resources/android/notification/drawable-hdpi.png" target="app/src/main/res/drawable-hdpi/notification.png" />
-        <resource-file src="resources/android/notification/drawable-xhdpi.png" target="app/src/main/res/drawable-xhdpi/notification.png" />
-        <resource-file src="resources/android/notification/drawable-xxhdpi.png" target="app/src/main/res/drawable-xxhdpi/notification.png" />
-        <resource-file src="resources/android/notification/drawable-xxxhdpi.png" target="app/src/main/res/drawable-xxxhdpi/notification.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
