@@ -43,8 +43,10 @@ export class VegetablesPage implements OnInit {
       this.catagorieId = this.route.snapshot.params.id;
       if( this.catagorieId == '20'){
         this.title_header = "Meat / Fish";
-      }else{
+      }else if(this.catagorieId == '21'){
         this.title_header = "Vegetables / Fruits";
+      }else if(this.catagorieId == '18'){
+        this.title_header = "Groceries";
       }
       this.getvegVendors();
     }

@@ -27,7 +27,8 @@
         lines="none"
         color="light"
         [ngClass]="{'closed' : !restaurant.is_open, 'closed-res' : restaurant.id =='closed', 'display-none': !closedVendorCount && restaurant.id =='closed'}"
-        (click)="restaurant.is_open && showVendor(restaurant.id)"
+        (click)="restaurant.is_open && showVendor(restaurant.id); orderServicesProvider.setVendorDetails(restaurant);"
+       
       >
       <div *ngIf="restaurant.id =='closed'">{{restaurant.name}}</div>
       
@@ -40,7 +41,7 @@
           <ion-img [src]="restaurant.media" width="80" height="80"></ion-img>
         </ion-thumbnail>
 
-        <ion-label *ngIf="restaurant.id !='closed'">
+        <ion-label *ngIf="restaurant.id !='closed'"  text-wrap>
           <h2>{{restaurant.name}}</h2>
           <h3 *ngIf="restaurant.tags">
             <span *ngFor="let tags of restaurant.tags; let last = last"
@@ -66,8 +67,14 @@
               Free Delivery</span
             >
           </p>
+
+
+          <div class="offer-text" *ngIf="restaurant.offer?.length > 0" >
+            <p >{{restaurant.offer[0].offerPercentage}}% Off up to Rs.{{restaurant.offer[0].maxOfferAmount}}, Min Order Rs.{{restaurant.offer[0].minOrder}} </p>
+          </div>
         </ion-label>
 
+   
       
         <ion-ripple-effect></ion-ripple-effect>
       </ion-item>

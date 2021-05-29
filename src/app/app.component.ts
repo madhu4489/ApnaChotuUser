@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { SharedService } from './providers/shared.service';
 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,8 @@ export class AppComponent implements OnInit {
     public sharedService: SharedService,
     public alertController: AlertController,
     private _location: Location,
+    private router: Router
+    
    ) {
     // private fcm: FCM
       this.initializeApp();
@@ -38,8 +41,12 @@ export class AppComponent implements OnInit {
   initializeApp() {
 
     this.platform.backButton.subscribeWithPriority(10, () => {
-      console.log('Back press handler!', this._location.path);
-      if (this._location.isCurrentPathEqualTo('/madhu')) {
+      console.log('Back press handler!',);
+      console.log('this.router.url', this.router.url);
+      
+      console.log(this.router['routerState'].snapshot.url);
+
+      if (this._location.isCurrentPathEqualTo('dashboard')) {
 
         // Show Exit Alert!
         console.log('Show Exit Alert!');
@@ -49,8 +56,8 @@ export class AppComponent implements OnInit {
 
         // Navigate to back page
         console.log('Navigate to back page');
-        // this._location.back();
-        this.navController.back();
+         this._location.back();
+       // this.navController.back();
 
       }
 
