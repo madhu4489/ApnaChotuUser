@@ -33,6 +33,22 @@
 
 <ion-content>
   <ion-list>
+
+    <!-- <ion-item 
+            *ngIf="selectedVendor.offer?.length > 0" 
+            lines="none"
+            color="light"
+            style="padding: 0 0 10px 0px;"
+          >
+         
+          <div class="offer-text offer-bar" >
+            <img src="https://ik.imagekit.io/dunzo/tr:r-$r$/offer1.png?tr=w-40,h-40,cm-pad_resize" alt="" title="" width="20" height="20" class="img">
+            <p >{{selectedVendor.offer[0].offerPercentage}}% Off up to Rs.{{selectedVendor.offer[0].maxOfferAmount}}, Min Order Rs.{{selectedVendor.offer[0].minOrder}} </p>
+          </div>
+
+          </ion-item> -->
+
+
     <ion-item-group *ngFor="let menu of menus" #scrollTo>
       <ion-item-divider sticky="true" class="item-header" *ngIf="terms?.length == 0">
         {{menu.group}}

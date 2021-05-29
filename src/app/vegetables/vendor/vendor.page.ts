@@ -38,6 +38,7 @@ export class VendorPage implements OnInit {
   orderCountDetails:any;
   selectedMenu:string;
   groupItems:any =[];
+  selectedVendor:any =[];
 
   slideOpts = {
     zoom: false
@@ -63,11 +64,15 @@ export class VendorPage implements OnInit {
       console.log('Handler called to force close!');
       this.modalRef.onDidDismiss();
     });
+
+    
     
   }
 
   ngOnInit() {
     if (this.route.snapshot.params.id) {
+      this.selectedVendor = this.orderServicesProvider.getVendorDetails();
+      console.log( this.selectedVendor, " this.selectedVendor")
       this.categoryId = this.route.snapshot.params.categoryId;
       this.getRestaurantVendor(this.route.snapshot.params.id);
     }

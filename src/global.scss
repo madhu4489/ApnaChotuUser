@@ -621,6 +621,7 @@ width: 70px;
   font-weight: 600;
     font-size: 16px;
     padding: 0 6px;
+    flex: 0;
 }
 .segment-button-checked{
   color: #ff7900;
@@ -644,4 +645,39 @@ width: 70px;
   color: #fff;
   border-radius: 0px 0 0 6px;
   font-size: 14px;
+}
+
+.offer-text {
+  box-sizing: border-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  border-top: 1px dashed #9e9e9e;
+    margin-top: 6px;
+    padding-top: 6px;
+    font-weight: 600;
+    font-size: 12px;
+
+  p {
+  color: #0F1938;
+  font-size: 14px !important;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+}
+.offer-bar{
+margin: 0;
+padding: 0;
+border: none;
+background: rgba(139, 195, 74, 0.22);
+    border-radius: 6px;
+    padding: 0 6px !important;
+    border: 1px dashed #8bc34a;
+    margin: 10px 0;
+    .img{
+      width: 30px;
+      margin-right: 6px;
+      filter: saturate(800%);
+    }
 }
