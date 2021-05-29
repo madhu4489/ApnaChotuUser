@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
 
       console.log(this.router['routerState'].snapshot.url);
 
-      if (this._location.isCurrentPathEqualTo('dashboard')) {
+      if (this.router.url == '/dashboard') {
 
         // Show Exit Alert!
         console.log('Show Exit Alert!');
@@ -128,8 +128,8 @@ export class AppComponent implements OnInit {
 
   showExitConfirm() {
     this.alertController.create({
-      header: 'App termination',
-      message: 'Do you want to close the app?',
+      header: 'Oops!!',
+      subHeader: 'Do you want to close the app?',
       backdropDismiss: false,
       buttons: [{
         text: 'Stay',

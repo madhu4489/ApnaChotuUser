@@ -17,9 +17,9 @@
       
       <ion-item>
         
-        <ion-icon name="call" slot="start" size="small"></ion-icon>
-        <ion-label position="stacked">Phone number*</ion-label>
-        <ion-input inputmode="tel"  formControlName="phone" maxlength="10" min="10"></ion-input>
+        <ion-icon name="call" slot="start" size="small" align-self-center></ion-icon>
+        <ion-label position="floating">Phone number*</ion-label>
+        <ion-input inputmode="tel"  formControlName="phone" maxlength="10" min="10" autofocus="on" clearInput="true"></ion-input>
       </ion-item>
     </ion-list>
   </form>
@@ -35,17 +35,17 @@
         </ion-title>
       </ion-item>
   
-      <ion-item >
-        <ion-icon name="eye" slot="start" size="small"></ion-icon>
-        <ion-label position="stacked">OTP*</ion-label>
-        <ion-input inputmode="tel" formControlName="otp" (ngModelChange)="verifyOTP()" autofocus maxlength="4"></ion-input>
+      <ion-item  lines="none">
+        <!-- <ion-icon name="eye" slot="start" size="small"></ion-icon>
+        <ion-label position="stacked">OTP*</ion-label> -->
+        <ion-input inputmode="tel" class="otp" formControlName="otp" (ngModelChange)="verifyOTP()" autofocus="on" maxlength="4"></ion-input>
       </ion-item>
-      <div *ngIf="otpGroupErrors" class="error-text">
+      <div *ngIf="otpGroupErrors" class="error-text" style="text-align: center;">
         Please enter valid OTP.
       </div>
       <ion-item lines="none">
         <!-- <ion-button slot="end" shape="round" color="warning" (click)="editScreen()">Edit</ion-button> -->
-        <ion-button slot="end" color="success" (click)="resendOTP()" style="margin-left: 18px;">Resend OTP</ion-button>
+        <ion-button slot="end" color="secondary" (click)="resendOTP()" style="margin-left: 18px;">Resend OTP</ion-button>
       </ion-item>
 
 
