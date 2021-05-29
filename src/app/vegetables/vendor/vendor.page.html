@@ -36,7 +36,7 @@
   <ion-slides #pageSlider  (ionSlideWillChange)="slideChanged()" [options]="{autoHeight: true}">
     <ion-slide *ngFor="let group of menus; let in = index" style="min-height: 76vh; align-items: baseline;">
       <ion-list style="width: 100%;">
-        <ion-item *ngIf="showNotFound((group.items | search : terms : name))">not search found</ion-item>
+        <ion-item   lines="none" color="light"  *ngIf="showNotFound((group.items | search : terms : name))">No Results Found!</ion-item>
 
         <ion-item 
             *ngIf="selectedVendor.offer?.length > 0" 
