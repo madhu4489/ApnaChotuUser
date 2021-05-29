@@ -5,4 +5,5 @@
   <span class="plus" *ngIf="count != 0"  (click)="clickFn(1)">+</span>
 
 </div>
-<div class="total-price"><span  *ngIf="someText">{{someText}}</span></div>
+<div class="total-price" *ngIf="priceQuantityTotal > 0">&#8377; {{priceQuantityTotal}}</div>
+<div class="total-price" style="font-size: 12px;padding: 0; color:green"><span  *ngIf="someText">({{someText}})</span></div>

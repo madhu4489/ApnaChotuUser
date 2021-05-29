@@ -29,10 +29,11 @@
             </div>
             <h6>
               <stepper
+              [priceQuantityTotal]="item.quantity*item.price"
                   [count]="item.quantity" 
                   [increment]="true" 
                   (countHandler)="recevieOrderFnNew($event, menuItem, item.type)"
-                  [someText]="item.price ? '₹ ' + item.price*item.quantity: 0" 
+                  [someText]="" 
                   > 
             </stepper>
             </h6>

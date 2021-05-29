@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Network } from '@ionic-native/network/ngx';
 import {
+  AlertController,
   LoadingController,
   ModalController,
   NavController,
+  Platform,
 } from '@ionic/angular';
 import { SharedService } from 'src/app/providers/shared.service';
 import { SignupUserComponent } from '../profile/signup-user/signup-user.component';
@@ -37,30 +40,63 @@ export class DashboardPage implements OnInit {
     public modalController: ModalController,
     private navController: NavController,
     private network: Network,
-    public loader: LoadingController
-  ) {}
+    public loader: LoadingController,
+    private router: Router,
+    private platform: Platform,
+    public alertController: AlertController,
+
+  ) {
+
+
+  }
 
   ngOnInit() {
     this.getlocationsFn();
     this.getOffers();
     this.getAllAnnouncements();
-    // if (localStorage.getItem('selectedLocation')) {
-    //   let address = JSON.parse(localStorage.getItem('selectedLocation'));
-    //   this.chooseLocation =
-    //     (address.address_name || address.address_type) +
-    //     ', ' +
-    //     address.locality;
-    // }
 
-    // if (localStorage.getItem('jwt')) {
-    //   this.isEnabled = true;
-    //   this.getOrders();
-    // } else {
-    //   this.isEnabled = false;
-    // }
+    
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      console.log('Back press handler!',);
+
+      console.log(this.router['routerState'].snapshot.url === '/dashboard', "dashboard -- dashboard");
+
+      console.log('Navigate to back page');
+
+      if(this.router['routerState'].snapshot.url === '/dashboard'){
+        this.showExitConfirm();
+      }
+
+
+    });
+
 
     console.log('ngOnInit');
   }
+
+  showExitConfirm() {
+    this.alertController.create({
+      header: 'Oops!!',
+      subHeader: 'Do you want to close the app?',
+      backdropDismiss: false,
+      buttons: [{
+        text: 'Stay',
+        role: 'cancel',
+        handler: () => {
+          console.log('Application exit prevented!');
+        }
+      }, {
+        text: 'Exit',
+        handler: () => {
+          navigator['app'].exitApp();
+        }
+      }]
+    })
+      .then(alert => {
+        alert.present();
+      });
+  }
+
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter');

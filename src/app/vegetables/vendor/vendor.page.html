@@ -77,11 +77,13 @@
                 <img [src]="menuItems.image" *ngIf="menuItems.image" />
               <div class="" [ngClass]="{'step-image' : menuItems.image}">
               <stepper
+                  [priceQuantityTotal]="menuItems.orderPrice"
                   [count]="menuItems.count" 
                   [increment]="true" 
                   [someText]="menuItems.selectedVariants > 1 ? menuItems.selectedVariants + ' variants':''" 
                   (countHandler)="recevieOrderFn($event, menuItems, group.id, index)"> 
                 </stepper>
+                
               </div>
              
                 

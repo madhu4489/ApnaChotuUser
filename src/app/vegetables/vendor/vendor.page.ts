@@ -160,8 +160,16 @@ export class VendorPage implements OnInit {
                         item.count =  (_cartItem.items.map(item => {
                           return item.quantity > 0 && item.quantity
                         })).reduce(function(acc, val) { return acc + val; }, 0);
-                        item.items = _cartItem.items
+                        item.items = _cartItem.items;
                         item.selectedVariants =  item.items.filter(item =>item.quantity > 0).length;
+                        console.log(item, "itemcarttttttt")
+
+                        let orderPrice =  item.items.map(element => {
+                          return element.quantity > 0 && (element.quantity*element.price)
+                        });
+                    
+                        item.orderPrice = orderPrice.reduce(function(acc, val) { return acc + val; }, 0);
+
 
                     }
                   });
@@ -221,7 +229,8 @@ export class VendorPage implements OnInit {
 
     
 
-    //console.log(menuItem, "menuItem")
+    console.log(menuItem, "::menuItem::");
+    console.log(event, ":::event:::")
 
     this.groupId = groupId;
     if(menuItem.price_quantity.length > 1){
@@ -234,24 +243,24 @@ export class VendorPage implements OnInit {
       );
 
       if(findItemIndex == -1){
-        menuItem.count = event == 1 ? menuItem.count+1 : menuItem.count-1; 
+        menuItem.count = event == 1 ? 1 : menuItem.count - 1; 
         menuItem.groupId = this.groupId;
         menuItem.vendorId =  this.route.snapshot.params.id;
-        menuItem.items[0].quantity = event+1; 
+        menuItem.items[0].quantity = event == 1 ? 1 : 0; 
         menuItem.orderPrice =  menuItem.items[0].quantity *  menuItem.items[0].price;
         this.orderDeatils.push(menuItem);
       }else{
         
-        menuItem.count = event == 1 ? menuItem.count+1 : menuItem.count-1; 
+        menuItem.count = event == 1 ? menuItem.count+1 : menuItem.count - 1; 
 
         this.orderDeatils[findItemIndex].vendorId = this.route.snapshot.params.id;
         this.orderDeatils[findItemIndex].groupId = this.groupId;
         
-        this.orderDeatils[findItemIndex].items[0].quantity =event == 1 ?  this.orderDeatils[findItemIndex].items[0].quantity+1 :  this.orderDeatils[findItemIndex].items[0].quantity-1;
+        this.orderDeatils[findItemIndex].items[0].quantity = event == 1 ?  this.orderDeatils[findItemIndex].items[0].quantity + 1 :  this.orderDeatils[findItemIndex].items[0].quantity - 1;
        this.orderDeatils[findItemIndex].count =  menuItem.count;
         this.orderDeatils[findItemIndex].orderPrice =  this.orderDeatils[findItemIndex].items[0].quantity * this.orderDeatils[findItemIndex].items[0].price;
 
-        ////console.log(this.orderDeatils[findItemIndex].count, "countttt");
+       console.log(this.orderDeatils, "countttt");
       }
 
       this.orderServicesProvider.addCartData(this.orderDeatils);

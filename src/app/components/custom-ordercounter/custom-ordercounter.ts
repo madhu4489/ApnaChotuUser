@@ -20,6 +20,7 @@ export class CustomOrdercounterComponent implements OnInit {
   public selectedOrder: any = [];
   // public menuOrderPrice: number = 0;
   public count: number = 0;
+  priceCalc:number;
 
   constructor() {
     console.log('Hello CustomOrdercounterComponent Component');
@@ -31,11 +32,14 @@ export class CustomOrdercounterComponent implements OnInit {
 
     if (!this.showVariant) {
       this.count = this.variantDetails.quantity;
+      this.priceCalc = this.count*this.variantDetails.price;
     }
   }
 
   clickFn(val: any) {
     this.count = val == 1 ? this.count + 1 : this.count - 1;
+
+    this.priceCalc = this.count*this.variantDetails.price;
 
     // let price = Number(this.foodItem.price);
     // if (val == 1) {
@@ -101,6 +105,7 @@ export class CustomOrdercounterComponent implements OnInit {
 
   removeOrderFn() {
     this.count = this.count - 1;
+    this.priceCalc = this.count*this.variantDetails.price;
     let Item = {
       itemId: this.foodItem.id,
       quantity: this.count,

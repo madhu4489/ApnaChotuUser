@@ -6,4 +6,5 @@
  
 </div>
 
+<div class="total-price" *ngIf="priceCalc > 0">&#8377; {{priceCalc}}</div>
 <div class="total-price" *ngIf="foodItem.selectedVariants>1 && showVariant">{{foodItem.selectedVariants}} variants</div>

@@ -9,6 +9,8 @@ export class StepperComponent implements OnInit{
   @Input() someText: any;
   @Input() priceQuantity: any;
 
+  @Input() priceQuantityTotal: any;
+
   @Input() increment: boolean;
   
   

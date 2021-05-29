@@ -37,6 +37,8 @@ export class OrderServicesProvider {
 
   clearCartData() {
     this.cartData = [];
+    this.orderItemsCount=0;
+    this.orderItemsPrice=0;
   }
 
   getCartData() {

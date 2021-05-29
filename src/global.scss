@@ -680,3 +680,12 @@ background: rgba(139, 195, 74, 0.22);
       filter: saturate(800%);
     }
 }
+
+*:focus {
+  outline: none;
+ }
+ 
+input{
+  outline:none;
+  :focus {outline:none;}
+}

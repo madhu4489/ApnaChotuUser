@@ -112,6 +112,7 @@ export class VegetablesPage implements OnInit {
     
   }
   showVendor(id) {
+    this.orderServicesProvider.clearCartData();
     this.navController.navigateForward(['vendor-details', id, this.catagorieId]);
   }
 

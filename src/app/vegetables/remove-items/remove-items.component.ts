@@ -16,7 +16,7 @@ export class RemoveItemsComponent implements OnInit {
   @Input() selectedItems = null;
 
   priceCount: any = [];
-
+  priceCalc:number;
   private counterItems:any =[];
 
   constructor(
@@ -28,7 +28,6 @@ export class RemoveItemsComponent implements OnInit {
 
   ngOnInit() {
    
-
     console.log(this.selectedItems, "selectedItemsselectedItems")
     // this.selectedItems.items.filter((item) => {
     //   console.log(item, this.selectedItems.defaultVariantDetails);
@@ -49,6 +48,9 @@ export class RemoveItemsComponent implements OnInit {
 
   recevieOrderFn(event) {
 
+
+    // this.priceCalc = event.quantity * event.price;
+
     let findItemIndex =  this.counterItems.findIndex(
       (item) => item.type == event.type
     );
@@ -60,7 +62,7 @@ export class RemoveItemsComponent implements OnInit {
   }
 
   removeOrderFn(event) {
-
+    // this.priceCalc = event.quantity * event.price;
     let findItemIndex = this.counterItems.findIndex(
       (item) => item.type == event.type
     );
@@ -103,6 +105,6 @@ export class RemoveItemsComponent implements OnInit {
   }
 
   isDisabled() {
-    return false;
+    return this.counterItems?.length == 0 ?true: false;
   }
 }
