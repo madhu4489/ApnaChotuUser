@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
 
     this.platform.backButton.subscribeWithPriority(10, () => {
       console.log('Back press handler!', this._location.path);
-      if (this._location.isCurrentPathEqualTo('/dashboard')) {
+      if (this._location.isCurrentPathEqualTo('/madhu')) {
 
         // Show Exit Alert!
         console.log('Show Exit Alert!');
@@ -49,21 +49,11 @@ export class AppComponent implements OnInit {
 
         // Navigate to back page
         console.log('Navigate to back page');
-        this._location.back();
+        // this._location.back();
+        this.navController.back();
 
       }
 
-    });
-
-    this.platform.backButton.subscribeWithPriority(5, () => {
-      console.log('Handler called to force close!');
-      this.alertController.getTop().then(r => {
-        if (r) {
-          navigator['app'].exitApp();
-        }
-      }).catch(e => {
-        console.log(e);
-      })
     });
 
 

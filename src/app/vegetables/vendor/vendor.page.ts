@@ -348,6 +348,7 @@ console.log(menuItem, "menuItem")
 
 
 selectTab(event, index) {
+  // this.terms="";
   this.pageSlider.slideTo(index);
   this.selectedMenu = this.menus[index].group;
   this.groupItems = this.menus[index].items;
@@ -360,6 +361,7 @@ selectTab(event, index) {
 }
 
 slideChanged() {
+  // this.terms="";
   this.pageSlider.getActiveIndex().then(index => {
     console.log(index);
     this.selectedMenu = this.menus[index].group;
@@ -375,5 +377,11 @@ slideChanged() {
 
 }
 
+
+showNotFound(items){
+
+  console.log(items, "iiiiiiiiii")
+return items.length > 0 ? false : true;
+}
 
 }
