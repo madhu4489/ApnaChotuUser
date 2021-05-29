@@ -42,6 +42,19 @@ export class AppComponent implements OnInit {
  
   initializeApp() {
 
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      console.log('Back press handler!',);
+
+      console.log(this.router['routerState'].snapshot.url === '/dashboard', "dashboard -- dashboard");
+
+      console.log('Navigate to back page');
+
+      if(this.router['routerState'].snapshot.url != '/dashboard'){
+        this._location.back();
+      }
+
+
+    });
 
 
     this.platform.ready().then(() => {
@@ -104,5 +117,26 @@ export class AppComponent implements OnInit {
     });
   }
 
-
+  showExitConfirm() {
+    this.alertController.create({
+      header: 'Oops!!',
+      subHeader: 'Do you want to close the app?',
+      backdropDismiss: false,
+      buttons: [{
+        text: 'Stay',
+        role: 'cancel',
+        handler: () => {
+          console.log('Application exit prevented!');
+        }
+      }, {
+        text: 'Exit',
+        handler: () => {
+          navigator['app'].exitApp();
+        }
+      }]
+    })
+      .then(alert => {
+        alert.present();
+      });
+  }
 }
