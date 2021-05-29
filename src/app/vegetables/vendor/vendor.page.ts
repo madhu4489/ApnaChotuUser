@@ -353,7 +353,7 @@ export class VendorPage implements OnInit {
 
 
 selectTab(event, index) {
-  // this.terms="";
+  this.terms="";
   this.pageSlider.slideTo(index);
   this.selectedMenu = this.menus[index].group;
   this.groupItems = this.menus[index].items;
@@ -366,7 +366,7 @@ selectTab(event, index) {
 }
 
 slideChanged() {
-  // this.terms="";
+  this.terms="";
   this.pageSlider.getActiveIndex().then(index => {
     //console.log(index);
     this.selectedMenu = this.menus[index].group;

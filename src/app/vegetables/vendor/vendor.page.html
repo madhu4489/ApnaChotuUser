@@ -17,7 +17,7 @@
         </ion-segment-button>
     </ion-segment>
 
-    <!-- <ion-item >
+    <ion-item >
       <ion-input
         class="seach-input"
         color="primary"
@@ -25,7 +25,7 @@
         placeholder="Search for an item"
         [(ngModel)]="terms"
       ></ion-input>
-    </ion-item> -->
+    </ion-item>
 
       <!-- </ion-toolbar> -->
       
@@ -36,7 +36,7 @@
   <ion-slides #pageSlider  (ionSlideWillChange)="slideChanged()" [options]="{autoHeight: true}">
     <ion-slide *ngFor="let group of menus; let in = index" style="min-height: 76vh; align-items: baseline;">
       <ion-list style="width: 100%;">
-        <!-- <ion-item *ngIf="showNotFound((group.items | search : terms : name))">not search found</ion-item> -->
+        <ion-item *ngIf="showNotFound((group.items | search : terms : name))">not search found</ion-item>
 
         <ion-item 
             *ngIf="selectedVendor.offer?.length > 0" 

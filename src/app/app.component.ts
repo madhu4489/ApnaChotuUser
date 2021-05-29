@@ -42,16 +42,21 @@ export class AppComponent implements OnInit {
  
   initializeApp() {
 
-    this.platform.backButton.subscribeWithPriority(1, () => {
+    this.platform.backButton.subscribeWithPriority(10, () => {
       console.log('Back press handler!',);
-      console.log('this.router.url', this.router.url);
 
-      console.log(this.router['routerState'].snapshot.url);
+      console.log(this.router['routerState'].snapshot.url === '/dashboard', "dashboard -- dashboard");
 
       console.log('Navigate to back page');
+
+      if(this.router['routerState'].snapshot.url === '/dashboard'){
+        this.showExitConfirm();
+      }else{
+        this._location.back();
+      }
       //this._location.back();
 
-      this.showExitConfirm();
+      
 
       // if (this.router.url == '/dashboard') {
 
