@@ -232,7 +232,7 @@
         color="secondary"
         expand="block"
         class="custom-btn"
-        [disabled]="this.serviceLocation.length == 0"
+        [disabled]="serviceLocation?.length == 0 || !serviceLocation "
         >Place your order</ion-button
       >
     </ion-item>

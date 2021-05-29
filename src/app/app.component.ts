@@ -3,6 +3,7 @@ import { Network } from '@ionic-native/network/ngx';
 import { AlertController, NavController, Platform } from '@ionic/angular';
 import { Location } from '@angular/common';
 
+
 // import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 // import { FCM } from '@ionic-native/fcm/ngx';
@@ -38,12 +39,13 @@ export class AppComponent implements OnInit {
     });
   }
 
+ 
   initializeApp() {
 
     this.platform.backButton.subscribeWithPriority(10, () => {
       console.log('Back press handler!',);
       console.log('this.router.url', this.router.url);
-      
+
       console.log(this.router['routerState'].snapshot.url);
 
       if (this._location.isCurrentPathEqualTo('dashboard')) {

@@ -224,7 +224,7 @@ export class CartDetailsPage implements OnInit {
         'Qty: ' +
         order.count +
         '\n' +
-        'Price: Rs.' +
+        'Price: ₹' +
         order.totalprice +
         '\n';
       this.orderMessage += '...................' + '\n';

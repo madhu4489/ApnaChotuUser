@@ -20,25 +20,22 @@
       >
         
         <div class="menu-item" style="padding: 0; margin: 0;">
-
           <div *ngFor="let item of filterItemsOfType(menuItem.items)" class="sub-item">
-
             <span class="veg current-veg" [ngClass]="{'non-veg' : menuItem.type==='nv'}"><span></span></span>
             <div class="menu-item-sub " style="margin: 0 0 0 6px;">
               <div class="title">{{menuItem.name}}</div>
               <div class="price">{{item.type}}</div>
               <div class="quantity">₹ {{item.price}}</div>
             </div>
-            
             <h6>
               <stepper
                   [count]="item.quantity" 
                   [increment]="true" 
-                  (countHandler)="recevieOrderFnNew($event, menuItem, item.type)"> 
+                  (countHandler)="recevieOrderFnNew($event, menuItem, item.type)"
+                  [someText]="item.price ? '₹ ' + item.price*item.quantity: 0" 
+                  > 
             </stepper>
-
             </h6>
-
           </div>
 
         </div>

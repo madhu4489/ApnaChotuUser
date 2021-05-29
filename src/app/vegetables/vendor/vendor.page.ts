@@ -61,7 +61,7 @@ export class VendorPage implements OnInit {
   ) {
 
     this.platform.backButton.subscribeWithPriority(5, () => {
-      console.log('Handler called to force close!');
+      //console.log('Handler called to force close!');
       this.modalRef.onDidDismiss();
     });
 
@@ -72,14 +72,14 @@ export class VendorPage implements OnInit {
   ngOnInit() {
     if (this.route.snapshot.params.id) {
       this.selectedVendor = this.orderServicesProvider.getVendorDetails();
-      console.log( this.selectedVendor, " this.selectedVendor")
+      //console.log( this.selectedVendor, " this.selectedVendor")
       this.categoryId = this.route.snapshot.params.categoryId;
       this.getRestaurantVendor(this.route.snapshot.params.id);
     }
   }
 
   ionViewWillEnter() {
-    //console.log('Ion View Will Enter ');
+    ////console.log('Ion View Will Enter ');
     this.groups = [];
     this.getRestaurantVendor(this.route.snapshot.params.id);
   }
@@ -97,7 +97,7 @@ export class VendorPage implements OnInit {
     await loading.present().then(() => {
       this.sharedService.getRestaurantVendor(id).then((resp) => {
 
-        //console.log(resp, "resp")
+        ////console.log(resp, "resp")
         this.isloading = true;
         const data = resp.data;
         this.details = data;
@@ -109,7 +109,7 @@ export class VendorPage implements OnInit {
 
         this.details.menu.forEach((element) => {
 
-          //console.log(element, "element");
+          ////console.log(element, "element");
           element.items.forEach((item) => {
 
             item.defaultVariantDetails = item.price_quantity[0];
@@ -122,18 +122,18 @@ export class VendorPage implements OnInit {
         this.backUpMenus = data['menu'];
         
 
-console.log( this.backUpMenus, " this.backUpMenus")
+//console.log( this.backUpMenus, " this.backUpMenus")
 
         this.menus = this.backUpMenus.filter(item => item.items.length > 0);
 
-        console.log( this.menus, " this.menus")
+        //console.log( this.menus, " this.menus")
 
 
         this.selectedMenu = this.menus[0].group;
 
         this.groupItems = this.menus[0].items;
 
-        console.log( this.groupItems, " this.groupItems")
+        //console.log( this.groupItems, " this.groupItems")
 
         let _cartData = this.orderServicesProvider.getCartData();
 
@@ -187,7 +187,7 @@ console.log( this.backUpMenus, " this.backUpMenus")
         handler: () => {
           this.setDefault = group.name;
           this.gotoMenu(index);
-          //console.log('Delete clicked', group);
+          ////console.log('Delete clicked', group);
         },
       };
       buttons.push(button);
@@ -206,7 +206,7 @@ console.log( this.backUpMenus, " this.backUpMenus")
   }
 
   async gotoMenu(value) {
-    //console.log(value);
+    ////console.log(value);
     let pos = value;
     await this.myContent.scrollToPoint(
       0,
@@ -221,7 +221,7 @@ console.log( this.backUpMenus, " this.backUpMenus")
 
     
 
-    console.log(menuItem, "menuItem")
+    //console.log(menuItem, "menuItem")
 
     this.groupId = groupId;
     if(menuItem.price_quantity.length > 1){
@@ -251,7 +251,7 @@ console.log( this.backUpMenus, " this.backUpMenus")
        this.orderDeatils[findItemIndex].count =  menuItem.count;
         this.orderDeatils[findItemIndex].orderPrice =  this.orderDeatils[findItemIndex].items[0].quantity * this.orderDeatils[findItemIndex].items[0].price;
 
-        //console.log(this.orderDeatils[findItemIndex].count, "countttt");
+        ////console.log(this.orderDeatils[findItemIndex].count, "countttt");
       }
 
       this.orderServicesProvider.addCartData(this.orderDeatils);
@@ -276,7 +276,7 @@ console.log( this.backUpMenus, " this.backUpMenus")
           // this.setDefault = group.name;
           // this.gotoMenu(index);
           data.defaultVariantDetails = group;
-          //console.log('Delete clicked', group, data);
+          ////console.log('Delete clicked', group, data);
         },
       };
       buttons.push(button);
@@ -307,11 +307,11 @@ console.log( this.backUpMenus, " this.backUpMenus")
     });
     this.modalRef.onDidDismiss().then((res: any) => {
     
-      console.log(res.data, "res.datares.datares.data")
+      //console.log(res.data, "res.datares.datares.data")
       if(res.data){
         this.addOrder(res.data)
       }else{
-        console.log( console.log(items, "items::::::"))
+        //console.log( //console.log(items, "items::::::"))
       }
       
     });
@@ -321,7 +321,7 @@ console.log( this.backUpMenus, " this.backUpMenus")
 
 
   addOrder(menuItem){
-console.log(menuItem, "menuItem")
+//console.log(menuItem, "menuItem")
 
     menuItem.groupId = this.groupId;
     menuItem.vendorId =  this.route.snapshot.params.id;
@@ -368,7 +368,7 @@ selectTab(event, index) {
 slideChanged() {
   // this.terms="";
   this.pageSlider.getActiveIndex().then(index => {
-    console.log(index);
+    //console.log(index);
     this.selectedMenu = this.menus[index].group;
     this.groupItems = this.menus[index].items;
     this.isloading = true;
@@ -385,7 +385,7 @@ slideChanged() {
 
 showNotFound(items){
 
-  console.log(items, "iiiiiiiiii")
+  //console.log(items, "iiiiiiiiii")
 return items.length > 0 ? false : true;
 }
 

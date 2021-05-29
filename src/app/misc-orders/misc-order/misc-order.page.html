@@ -157,7 +157,7 @@
         color="secondary"
         expand="block"
         class="custom-btn"
-        [disabled]="!items || deliveryLocation && deliveryLocation.length == 0 || this.serviceLocation && this.serviceLocation.is_active != 1"
+        [disabled]="!items || serviceLocation?.length == 0 || !serviceLocation "
         >Place your order</ion-button
       >
     </ion-item>

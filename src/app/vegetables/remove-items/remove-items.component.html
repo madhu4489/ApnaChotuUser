@@ -28,8 +28,8 @@
       <custom-ordercounter
           [foodItem]="selectedItems"
           [variantDetails]="menuItem"
-          (recevieOrder)="recevieOrderFn($event, selectedItems)"
-          (removeOrder)="removeOrderFn($event, selectedItems)"
+          (recevieOrder)="recevieOrderFn($event)"
+          (removeOrder)="removeOrderFn($event)"
           [showVariant] = 'false'
     ></custom-ordercounter>
     </h6>
