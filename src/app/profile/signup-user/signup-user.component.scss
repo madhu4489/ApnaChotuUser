@@ -3,18 +3,19 @@
 }
 
 .otp{
-    margin: 0 104px;
     text-align: center;
     line-height: 10px;
     font-size: 16px;
     border: solid 1px #ccc;
-    box-shadow: 0 0 5px #ccc inset;
     outline: none;
     width: 80px;
+    height: 44px;
     transition: all 0.2s ease-in-out;
     border-radius: 8px;
     background: #f1f1f1;
     font-weight: 600;
     letter-spacing: 2px;
+    background: #dedede;
+    margin: auto;
     
 }

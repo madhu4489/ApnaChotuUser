@@ -268,6 +268,11 @@ export class ViewKartPage implements OnInit {
   }
 
 
+  filterItems(orderDetails) {
+    
+    return orderDetails.filter((x) => x.count != 0);;
+  }
+
   async placeOrder() {
     let vendorId: any;
     let Items: any = [];

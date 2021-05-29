@@ -13,7 +13,7 @@
   <ion-list *ngIf="isLoading">
     <ion-item-group>
       <ion-item
-        *ngFor="let menuItem of orderDetails"
+        *ngFor="let menuItem of filterItems(orderDetails)"
         class="ion-activatable item-styles"
         lines="none"
         color="light"

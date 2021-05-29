@@ -38,7 +38,7 @@
       <ion-item  lines="none">
         <!-- <ion-icon name="eye" slot="start" size="small"></ion-icon>
         <ion-label position="stacked">OTP*</ion-label> -->
-        <ion-input inputmode="tel" class="otp" formControlName="otp" (ngModelChange)="verifyOTP()" autofocus="on" maxlength="4"></ion-input>
+        <input inputmode="tel" class="otp" formControlName="otp" (ngModelChange)="verifyOTP()" autofocus="on" maxlength="4" />
       </ion-item>
       <div *ngIf="otpGroupErrors" class="error-text" style="text-align: center;">
         Please enter valid OTP.

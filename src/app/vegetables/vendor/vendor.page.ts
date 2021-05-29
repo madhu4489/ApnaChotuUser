@@ -271,7 +271,7 @@ export class VendorPage implements OnInit {
     data.price_quantity.forEach((group, index) => {
       let button = {
         cssClass: 'action-button',
-        text: group.quantity,
+        text: `${group.quantity} (₹ ${group.price}) ` ,
         handler: () => {
           // this.setDefault = group.name;
           // this.gotoMenu(index);

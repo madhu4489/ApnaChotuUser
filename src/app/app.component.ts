@@ -48,20 +48,25 @@ export class AppComponent implements OnInit {
 
       console.log(this.router['routerState'].snapshot.url);
 
-      if (this.router.url == '/dashboard') {
+      console.log('Navigate to back page');
+      this._location.back();
 
-        // Show Exit Alert!
-        console.log('Show Exit Alert!');
-        this.showExitConfirm();
-        // processNextHandler();
-      } else {
 
-        // Navigate to back page
-        console.log('Navigate to back page');
-         this._location.back();
-       // this.navController.back();
 
-      }
+      // if (this.router.url == '/dashboard') {
+
+      //   // Show Exit Alert!
+      //   console.log('Show Exit Alert!');
+      //   this.showExitConfirm();
+      //   // processNextHandler();
+      // } else {
+
+      //   // Navigate to back page
+      //   console.log('Navigate to back page');
+      //    this._location.back();
+      //  // this.navController.back();
+
+      // }
 
     });
 

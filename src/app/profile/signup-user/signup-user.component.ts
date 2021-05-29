@@ -103,7 +103,7 @@ export class SignupUserComponent implements OnInit {
       this.f.email.setValue(this.storedUserDetails.email);
     }else{
       console.log('loginininnnnn')
-      this.initializeApp();
+      // this.initializeApp();
     }
     // this.sharedService.presentLoading();
   }
@@ -243,7 +243,15 @@ export class SignupUserComponent implements OnInit {
       }
       
     } else {
-      this.otpGroupErrors = true;
+
+      if(this.otpGroup.value.otp.length == 4){
+
+        this.otpGroupErrors = true;
+      }else{
+        this.otpGroupErrors = false;
+      }
+
+      
     }
   }
 
