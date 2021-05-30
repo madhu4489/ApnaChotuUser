@@ -37,7 +37,7 @@ export class MiscOrderPage implements OnInit {
 
   ngOnInit() {
     this.getlocationsFn();
-    console.log('dfdfdf', )
+    //console.log('dfdfdf', )
     
   }
 
@@ -50,7 +50,7 @@ export class MiscOrderPage implements OnInit {
       this.pickup =   JSON.parse(localStorage.getItem("pickup"))
     }
     
-    console.log('ionViewWillEnter');
+    //console.log('ionViewWillEnter');
   }
   
 
@@ -91,7 +91,7 @@ export class MiscOrderPage implements OnInit {
         this.pickup =   JSON.parse(localStorage.getItem("pickup"))
       }
 
-        console.log('local',  this.items)
+        //console.log('local',  this.items)
     })
   }
 
@@ -139,7 +139,7 @@ export class MiscOrderPage implements OnInit {
         {
           text: 'Okey',
           handler: () => {
-            console.log('Confirm Okay');
+            //console.log('Confirm Okay');
           },
         },
       ],
@@ -158,7 +158,7 @@ export class MiscOrderPage implements OnInit {
           role: 'cancel',
 
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+            //console.log('Confirm Cancel: blah');
           },
         },
         {
@@ -203,7 +203,7 @@ export class MiscOrderPage implements OnInit {
     });
     await loading.present().then(() => {
       this.sharedService.createMiscOrder(orderData).then((data) => {
-        console.log(data, 'dataaaaaaaa');
+        //console.log(data, 'dataaaaaaaa');
         this.isOrderPlaced = true;
         loading.dismiss();
         localStorage.removeItem("misc-order");

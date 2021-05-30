@@ -75,7 +75,7 @@ export class OrdersPage implements OnInit {
       
       this.isFirstTime = true;
       event && event.target.complete();
-      console.log(this.allOrders);
+      //console.log(this.allOrders);
     });
   }
 
@@ -117,7 +117,7 @@ export class OrdersPage implements OnInit {
             text: 'Close',
             role: 'cancel',
             handler: (blah) => {
-              console.log('Confirm Cancel: blah');
+              //console.log('Confirm Cancel: blah');
             },
           },
           {
@@ -129,7 +129,7 @@ export class OrdersPage implements OnInit {
                 alert.message = "Please enter cancellation reason";
                 return false;
             } else {
-              console.log(data.cancelReason, "cancelReason")
+              //console.log(data.cancelReason, "cancelReason")
                 this.cancelOrder(order, data.cancelReason);
             }
 
@@ -150,7 +150,7 @@ export class OrdersPage implements OnInit {
             text: 'Close',
             role: 'cancel',
             handler: (blah) => {
-              console.log('Confirm Cancel: blah');
+              //console.log('Confirm Cancel: blah');
             },
           },
         ],
@@ -162,13 +162,13 @@ export class OrdersPage implements OnInit {
 
 
   cancelOrder(order?: any, cancelReason?:any) {
-    console.log(order, cancelReason);
+    //console.log(order, cancelReason);
     this.getCancelledOrder(order, cancelReason)
     
   }
 
   loadData(event) {
-    console.log(event)
+    //console.log(event)
     this.limit = 10;
     this.offset = this.allOrders.length;
     this.getOrders(event);
@@ -177,7 +177,7 @@ export class OrdersPage implements OnInit {
   doRefresh(event) {
     this.offset = 0;
     this.limit = this.allOrders.length;
-    console.log('Begin async operation');
+    //console.log('Begin async operation');
     this.getOrders(event, 'refress');
   }
 

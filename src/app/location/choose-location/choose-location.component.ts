@@ -66,11 +66,11 @@ export class ChooseLocationComponent implements OnInit {
        }
 
 
-      console.log(this.addressListArr, "this.addressListArr")
+      //console.log(this.addressListArr, "this.addressListArr")
       
     }
     if (this.details) {
-      console.log('details', this.details);
+      //console.log('details', this.details);
       this.flat = this.details.h_no;
       this.street = this.details.street;
       this.landmark = this.details.landmark;
@@ -119,7 +119,7 @@ export class ChooseLocationComponent implements OnInit {
     let checkType = this.addressListArr.forEach(element =>  element == this.type);
 
 
-console.log(checkType, "checkTypecheckTypecheckType")
+//console.log(checkType, "checkTypecheckTypecheckType")
     
 
 let index = this.addressListArr.indexOf((this.type).toUpperCase());
@@ -142,7 +142,7 @@ if(index == -1){
   });
   await loading.present().then(() => {
     this.sharedService.addAddress(addAddress).then((resp) => {
-      console.log(resp);
+      //console.log(resp);
       loading.dismiss();
       this.modalController.dismiss({
         dismissed: true,
@@ -223,7 +223,7 @@ if(index == -1){
           text: 'Okay',
           handler: () => {
             this.deleteHandler();
-            console.log('Confirm Okay');
+            //console.log('Confirm Okay');
           },
         },
         {
@@ -231,7 +231,7 @@ if(index == -1){
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+            //console.log('Confirm Cancel: blah');
           },
         },
       ],
@@ -253,7 +253,7 @@ if(index == -1){
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+            //console.log('Confirm Cancel: blah');
           },
         },
       ],

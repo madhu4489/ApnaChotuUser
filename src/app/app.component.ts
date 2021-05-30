@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.network.onDisconnect().subscribe(() => {
-      console.log('network was disconnected :-(');
+      //console.log('network was disconnected :-(');
       this.navController.navigateRoot(['./no-connection']);
     });
   }
@@ -42,19 +42,19 @@ export class AppComponent implements OnInit {
  
   initializeApp() {
 
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      console.log('Back press handler!',);
+    // this.platform.backButton.subscribeWithPriority(10, () => {
+    //   //console.log('Back press handler!',);
 
-      console.log(this.router['routerState'].snapshot.url === '/dashboard', "dashboard -- dashboard");
+    //   //console.log(this.router['routerState'].snapshot.url === '/dashboard', "dashboard -- dashboard");
 
-      console.log('Navigate to back page');
+    //   //console.log('Navigate to back page');
 
-      if(this.router['routerState'].snapshot.url != '/dashboard'){
-        this._location.back();
-      }
+    //   // if(this.router['routerState'].snapshot.url != '/dashboard'){
+    //   //   this._location.back();
+    //   // }
 
 
-    });
+    // });
 
 
     this.platform.ready().then(() => {
@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
 
       this.firebaseX.getToken()
         .then(token =>{
-          console.log(token, "token ID getToken");
+          //console.log(token, "token ID getToken");
           if(token){
             localStorage.setItem("deviceToken", JSON.stringify(token))
           }
@@ -74,14 +74,14 @@ export class AppComponent implements OnInit {
       .subscribe(data => {
         
         if(data.tap == "background"){
-          console.log(`User Tapped a notification ${JSON.stringify(data)}`);
+          //console.log(`User Tapped a notification ${JSON.stringify(data)}`);
           
           this.navController.navigateForward(['/orders', '']);
           
         }else{
 
           if (localStorage.getItem('userDetails')) {
-            console.log(`Open APP notification ${JSON.stringify(data)}`)
+            //console.log(`Open APP notification ${JSON.stringify(data)}`)
             this.sharedService.presentToastWithOptionsNotificarion(
               `Order #${data.orderId} Status!`,
               `${data.body}.`,
@@ -107,7 +107,7 @@ export class AppComponent implements OnInit {
     this.firebaseX.onTokenRefresh()
       .subscribe((token: string) => {
         if(token){
-          console.log(`onTokenRefresh ${JSON.stringify(token)}`)
+          //console.log(`onTokenRefresh ${JSON.stringify(token)}`)
           localStorage.setItem("deviceToken", JSON.stringify(token))
         }
       })
@@ -126,7 +126,7 @@ export class AppComponent implements OnInit {
         text: 'Stay',
         role: 'cancel',
         handler: () => {
-          console.log('Application exit prevented!');
+          //console.log('Application exit prevented!');
         }
       }, {
         text: 'Exit',

@@ -47,7 +47,7 @@ export class LocationPage implements OnInit {
     });
     await modalRef.present();
     modalRef.onDidDismiss().then((res: any) => {
-      console.log(res)
+      //console.log(res)
       if (res.data) {
         this.savedLocations = [];
         this.isloading = false;
@@ -71,7 +71,7 @@ export class LocationPage implements OnInit {
     this.sharedService.getAllAddress().then((data) => {
       this.isloading = true;
       let serverData =  data['data'];
-      console.log(serverData, "serverData")
+      //console.log(serverData, "serverData")
       if(serverData){
           this.savedLocations = serverData;
       }
@@ -90,14 +90,14 @@ export class LocationPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+            //console.log('Confirm Cancel: blah');
           },
         },
         {
           text: 'Okay',
           handler: () => {
             this.deleteHandler(id);
-            console.log('Confirm Okay');
+            //console.log('Confirm Okay');
           },
         },
         

@@ -28,9 +28,9 @@ export class RemoveItemsComponent implements OnInit {
 
   ngOnInit() {
    
-    console.log(this.selectedItems, "selectedItemsselectedItems")
+    //console.log(this.selectedItems, "selectedItemsselectedItems")
     // this.selectedItems.items.filter((item) => {
-    //   console.log(item, this.selectedItems.defaultVariantDetails);
+    //   //console.log(item, this.selectedItems.defaultVariantDetails);
 
     //   if (
     //     this.selectedItems.defaultVariantDetails.quantity == item.type &&
@@ -76,7 +76,7 @@ export class RemoveItemsComponent implements OnInit {
   // this._modalCtrl.dismiss();
 
   submitForm() {
-    console.log(this.counterItems, "this.counterItemsthis.counterItems");
+    //console.log(this.counterItems, "this.counterItemsthis.counterItems");
 
     if(this.counterItems){
      

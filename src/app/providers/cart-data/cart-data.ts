@@ -11,7 +11,7 @@ export class CartDataProvider {
   isDeliveryFee:any;
 
   constructor(public http: HttpClient) {
-    console.log("Hello CartDataProvider Provider");
+    //console.log("Hello CartDataProvider Provider");
   }
 
   addCartData(_data) {
@@ -24,30 +24,30 @@ export class CartDataProvider {
     
     this.cartData.push(_data);
     this.setCartData(this.cartData);
-    console.log("Add Cart Data");
+    //console.log("Add Cart Data");
   }
 
   setCartData(_data) {
     this.cartData = [];
     this.cartData = _data;
-    console.log("Set Cart Data");
+    //console.log("Set Cart Data");
   }
 
   removeCartItems() {
     let _data = _.filter(this.cartData, function(o) {
       return o.count > 0;
     });
-    console.log("remove Cart Data");
+    //console.log("remove Cart Data");
     this.setCartData(_data);
   }
 
   clearCartData() {
     this.cartData = [];
-    console.log("Clear Cart Data");
+    //console.log("Clear Cart Data");
   }
 
   getCartData() {
-    console.log("Get Cart Data");
+    //console.log("Get Cart Data");
     return this.cartData;
   }
 

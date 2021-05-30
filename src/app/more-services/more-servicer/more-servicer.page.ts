@@ -26,7 +26,7 @@ export class MoreServicerPage implements OnInit {
 
   getEnabledCategories(id) {
     this.sharedService.getSubCategories(id).then((data) => {
-      console.log(data, 'data:::');
+      //console.log(data, 'data:::');
       this.categories = data['data'];
     });
   }

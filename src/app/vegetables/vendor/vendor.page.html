@@ -189,9 +189,7 @@
       <ion-label class="view-cart-label">
         <span>{{orderCountDetails?.count}} item</span
         ><span *ngIf="orderCountDetails?.count > 1">s</span>
-        <span class="price2">&#8377; {{orderCountDetails?.price}}</span></ion-label
-      >
-
+        <span class="price2">&#8377; {{orderCountDetails?.price}}</span></ion-label>
       <ion-button color="secondary" class="custom-btn-small" (click)="viewCart()"> View cart</ion-button>
     </ion-item>
   </ion-list>

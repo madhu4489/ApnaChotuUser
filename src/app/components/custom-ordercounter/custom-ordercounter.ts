@@ -23,7 +23,7 @@ export class CustomOrdercounterComponent implements OnInit {
   priceCalc:number;
 
   constructor() {
-    console.log('Hello CustomOrdercounterComponent Component');
+    //console.log('Hello CustomOrdercounterComponent Component');
   }
 
   // ? this.foodItem.defaultVariantDetails.quantity
@@ -67,7 +67,7 @@ export class CustomOrdercounterComponent implements OnInit {
       type: this.variantDetails.type,
     };
 
-    // console.log(Item, 'Item');
+    // //console.log(Item, 'Item');
 
     this.recevieOrder.emit(Item);
   }

@@ -29,7 +29,7 @@ export class ExploreTopServicesComponent implements OnInit {
   }
 
   goToMiscOrder(name, type?:any, id?:any){
-    console.log(name, type, id, "XEEEEE");
+    //console.log(name, type, id, "XEEEEE");
     if(id == 18) {
       this.navController.navigateForward(['/vegetables', id]);
     }else{

@@ -29,7 +29,7 @@ export class OrderDetailsPage implements OnInit {
     }
 
 
-    console.log(typeof this.route.snapshot.params.past, "past")
+    //console.log(typeof this.route.snapshot.params.past, "past")
     if(this.route.snapshot.params.past === 'true'){
       this.isnotpast = true;
     }
@@ -57,20 +57,20 @@ export class OrderDetailsPage implements OnInit {
         this.status = this.details.status;
       }
       event && event.target.complete();
-      console.log(this.details);
+      //console.log(this.details);
     });
   }
 
 
   doRefresh(event) {
 
-    console.log('Begin async operation');
+    //console.log('Begin async operation');
     this.getOrders(event);
   }
 
   // reOrder(details){
 
-  //   console.log(details, "details")
+  //   //console.log(details, "details")
 
   // }
 
@@ -87,7 +87,7 @@ export class OrderDetailsPage implements OnInit {
           role: 'cancel',
          
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+            //console.log('Confirm Cancel: blah');
           },
         },
         {
@@ -105,7 +105,7 @@ export class OrderDetailsPage implements OnInit {
 
   async placeOrder() {
 
-    console.log(this.details, "this.details")
+    //console.log(this.details, "this.details")
     // let vendorId: any;
     // let Items: any = [];
 
@@ -144,7 +144,7 @@ export class OrderDetailsPage implements OnInit {
     // });
     // await loading.present().then(() => {
     //   this.sharedService.createOrder(orderData).then((data) => {
-    //     console.log(data, 'dataaaaaaaa');
+    //     //console.log(data, 'dataaaaaaaa');
     //     loading.dismiss();
     //   });
     // });

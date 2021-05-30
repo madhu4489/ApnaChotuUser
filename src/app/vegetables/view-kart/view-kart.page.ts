@@ -57,7 +57,7 @@ export class ViewKartPage implements OnInit {
   ngOnInit() {
     this.getlocationsFn();
     this.selectedVendor = this.cartDataProvider.getVendorDetails();
-    console.log("this.selectedVendor:::---------", this.selectedVendor)
+    //console.log("this.selectedVendor:::---------", this.selectedVendor)
   }
 
   backHandler() {
@@ -68,7 +68,7 @@ export class ViewKartPage implements OnInit {
     this.orderDetails = this.cartDataProvider.getCartData();
     this.orderCountDetails = this.cartDataProvider.getOrderDeatils();
     
-    console.log(this.orderDetails, ' orderDetails');
+    //console.log(this.orderDetails, ' orderDetails');
   }
 
 
@@ -108,8 +108,8 @@ export class ViewKartPage implements OnInit {
           localStorage.getItem('selectedLocation')
         );
 
-        console.log(serverData, "serverDataserverData")
-        console.log( this.deliveryLocation, " this.deliveryLocation");
+        //console.log(serverData, "serverDataserverData")
+        //console.log( this.deliveryLocation, " this.deliveryLocation");
 
 
 
@@ -141,7 +141,7 @@ export class ViewKartPage implements OnInit {
           
           this.serviceLocation = this.serviceLocation[0];
 
-          console.log( this.serviceLocation, " this.serviceLocation");
+          //console.log( this.serviceLocation, " this.serviceLocation");
 
           
           this.serviceLocation.charge = this.restaurantDetails.is_free_delivery
@@ -170,7 +170,7 @@ export class ViewKartPage implements OnInit {
         {
           text: 'Okey',
           handler: () => {
-            console.log('Confirm Okay');
+            //console.log('Confirm Okay');
           },
         },
       ],
@@ -191,7 +191,7 @@ export class ViewKartPage implements OnInit {
           role: 'cancel',
 
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+            //console.log('Confirm Cancel: blah');
           },
         },
         {
@@ -321,11 +321,11 @@ export class ViewKartPage implements OnInit {
       message: 'Please wait...',
     });
 
-    console.log(orderData, "orderData")
+    //console.log(orderData, "orderData")
 
     await loading.present().then(() => {
       this.sharedService.createOrder(orderData).then((data) => {
-        console.log(data, 'dataaaaaaaa');
+        //console.log(data, 'dataaaaaaaa');
         this.isOrderPlaced = true;
         loading.dismiss();
       });
@@ -334,7 +334,7 @@ export class ViewKartPage implements OnInit {
 
 
   totalToPayPrice(a,b,c,d){
-    console.log(a,b,c,d)
+    //console.log(a,b,c,d)
       return Number(a)+Number(b)+Number(c)-Number(d)
   }
 
@@ -351,9 +351,9 @@ export class ViewKartPage implements OnInit {
         ? this.vendorOffer.maxOfferAmount
         : this.discountPrice;
     this.discountPrice = Math.round(this.discountPrice) > 0 ? Math.round(this.discountPrice) : 0;
-    console.log(pric, "pricpricpricpric", this.vendorOffer)
+    //console.log(pric, "pricpricpricpric", this.vendorOffer)
 
-    console.log(this.discountPrice, "this.discountPrice");
+    //console.log(this.discountPrice, "this.discountPrice");
   }
 
 }

@@ -19,7 +19,7 @@ export class CheckConnectivity {
   // ---- if there isn't any connection
   noConnection(){
 
-    console.log('type"::::', this.network.type);
+    //console.log('type"::::', this.network.type);
 
     return( this.network.type === 'none');
   }

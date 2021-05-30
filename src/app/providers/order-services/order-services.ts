@@ -16,7 +16,7 @@ export class OrderServicesProvider {
   vendorDetails:any =[];
 
   constructor(public http: HttpClient) {
-    console.log("Hello CartDataProvider Provider");
+    //console.log("Hello CartDataProvider Provider");
   }
 
   addCartData(_data) {
@@ -37,8 +37,9 @@ export class OrderServicesProvider {
 
   clearCartData() {
     this.cartData = [];
-    this.orderItemsCount=0;
-    this.orderItemsPrice=0;
+    console.log("Clear Cart Data");
+    this.orderItemsCount = 0;
+    this.orderItemsPrice = 0;
   }
 
   getCartData() {
@@ -46,6 +47,9 @@ export class OrderServicesProvider {
   }
 
   getOrderDeatils(){
+    console.log(this.cartData, "this.cartData");
+
+    console.log('XXXXX', {'count': this.orderItemsCount, 'price' :this.orderItemsPrice})
     return {'count': this.orderItemsCount, 'price' :this.orderItemsPrice}
   }
 

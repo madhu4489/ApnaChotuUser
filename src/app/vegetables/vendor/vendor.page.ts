@@ -61,7 +61,6 @@ export class VendorPage implements OnInit {
   ) {
 
     this.platform.backButton.subscribeWithPriority(5, () => {
-      //console.log('Handler called to force close!');
       this.modalRef.onDidDismiss();
     });
 
@@ -72,21 +71,18 @@ export class VendorPage implements OnInit {
   ngOnInit() {
     if (this.route.snapshot.params.id) {
       this.selectedVendor = this.orderServicesProvider.getVendorDetails();
-      //console.log( this.selectedVendor, " this.selectedVendor")
       this.categoryId = this.route.snapshot.params.categoryId;
       this.getRestaurantVendor(this.route.snapshot.params.id);
     }
   }
 
   ionViewWillEnter() {
-    ////console.log('Ion View Will Enter ');
     this.groups = [];
     this.getRestaurantVendor(this.route.snapshot.params.id);
   }
 
   backHandler() {
-    this.orderServicesProvider.clearCartData()
-    this.navController.navigateForward(['vegetables', this.categoryId]);
+    this.navController.navigateBack(['vegetables', this.categoryId]);
   }
 
   async getRestaurantVendor(id?: any) {
@@ -97,19 +93,13 @@ export class VendorPage implements OnInit {
     await loading.present().then(() => {
       this.sharedService.getRestaurantVendor(id).then((resp) => {
 
-        ////console.log(resp, "resp")
         this.isloading = true;
         const data = resp.data;
         this.details = data;
-
         this.orderServicesProvider.setVendorDetails(this.details);
-       
-
-        
 
         this.details.menu.forEach((element) => {
 
-          ////console.log(element, "element");
           element.items.forEach((item) => {
 
             item.defaultVariantDetails = item.price_quantity[0];
@@ -120,24 +110,16 @@ export class VendorPage implements OnInit {
           });
         });
         this.backUpMenus = data['menu'];
-        
-
-//console.log( this.backUpMenus, " this.backUpMenus")
-
         this.menus = this.backUpMenus.filter(item => item.items.length > 0);
 
-        //console.log( this.menus, " this.menus")
+        this.selectedMenu = this.menus[0]?.group;
 
-
-        this.selectedMenu = this.menus[0].group;
-
-        this.groupItems = this.menus[0].items;
-
-        //console.log( this.groupItems, " this.groupItems")
+        this.groupItems = this.menus[0]?.items;
 
         let _cartData = this.orderServicesProvider.getCartData();
+        this.orderCountDetails = this.orderServicesProvider.getOrderDeatils();
 
-        this.menus.forEach((element, index) => {
+        this.menus?.forEach((element, index) => {
           this.groups[index] = {
             name: element.group,
             is_active: element.is_active,
@@ -146,10 +128,7 @@ export class VendorPage implements OnInit {
           };
         });
 
-
-
         if(_cartData && _cartData.length != 0){
-          this.orderCountDetails = this.orderServicesProvider.getOrderDeatils();
 
             _cartData.forEach((_cartItem) => {
               this.details.menu.forEach((element) => {
@@ -162,22 +141,17 @@ export class VendorPage implements OnInit {
                         })).reduce(function(acc, val) { return acc + val; }, 0);
                         item.items = _cartItem.items;
                         item.selectedVariants =  item.items.filter(item =>item.quantity > 0).length;
-                        console.log(item, "itemcarttttttt")
-
                         let orderPrice =  item.items.map(element => {
                           return element.quantity > 0 && (element.quantity*element.price)
                         });
-                    
                         item.orderPrice = orderPrice.reduce(function(acc, val) { return acc + val; }, 0);
-
-
                     }
                   });
                 }
               });
             });
 
-          
+
         }
 
         loading.dismiss();
@@ -195,7 +169,6 @@ export class VendorPage implements OnInit {
         handler: () => {
           this.setDefault = group.name;
           this.gotoMenu(index);
-          ////console.log('Delete clicked', group);
         },
       };
       buttons.push(button);
@@ -214,7 +187,6 @@ export class VendorPage implements OnInit {
   }
 
   async gotoMenu(value) {
-    ////console.log(value);
     let pos = value;
     await this.myContent.scrollToPoint(
       0,
@@ -227,10 +199,6 @@ export class VendorPage implements OnInit {
   groupId:any;
   recevieOrderFn(event, menuItem, groupId, index) {
 
-    
-
-    console.log(menuItem, "::menuItem::");
-    console.log(event, ":::event:::")
 
     this.groupId = groupId;
     if(menuItem.price_quantity.length > 1){
@@ -257,10 +225,8 @@ export class VendorPage implements OnInit {
         this.orderDeatils[findItemIndex].groupId = this.groupId;
         
         this.orderDeatils[findItemIndex].items[0].quantity = event == 1 ?  this.orderDeatils[findItemIndex].items[0].quantity + 1 :  this.orderDeatils[findItemIndex].items[0].quantity - 1;
-       this.orderDeatils[findItemIndex].count =  menuItem.count;
+        this.orderDeatils[findItemIndex].count =  menuItem.count;
         this.orderDeatils[findItemIndex].orderPrice =  this.orderDeatils[findItemIndex].items[0].quantity * this.orderDeatils[findItemIndex].items[0].price;
-
-       console.log(this.orderDeatils, "countttt");
       }
 
       this.orderServicesProvider.addCartData(this.orderDeatils);
@@ -285,7 +251,6 @@ export class VendorPage implements OnInit {
           // this.setDefault = group.name;
           // this.gotoMenu(index);
           data.defaultVariantDetails = group;
-          ////console.log('Delete clicked', group, data);
         },
       };
       buttons.push(button);
@@ -315,12 +280,8 @@ export class VendorPage implements OnInit {
       },
     });
     this.modalRef.onDidDismiss().then((res: any) => {
-    
-      //console.log(res.data, "res.datares.datares.data")
       if(res.data){
         this.addOrder(res.data)
-      }else{
-        //console.log( //console.log(items, "items::::::"))
       }
       
     });
@@ -330,8 +291,6 @@ export class VendorPage implements OnInit {
 
 
   addOrder(menuItem){
-//console.log(menuItem, "menuItem")
-
     menuItem.groupId = this.groupId;
     menuItem.vendorId =  this.route.snapshot.params.id;
     menuItem.selectedVariants =  menuItem.items.filter(item =>item.quantity > 0).length;
@@ -377,7 +336,6 @@ selectTab(event, index) {
 slideChanged() {
   this.terms="";
   this.pageSlider.getActiveIndex().then(index => {
-    //console.log(index);
     this.selectedMenu = this.menus[index].group;
     this.groupItems = this.menus[index].items;
     this.isloading = true;
@@ -392,10 +350,8 @@ slideChanged() {
 }
 
 
-showNotFound(items){
-
-  //console.log(items, "iiiiiiiiii")
-return items.length > 0 ? false : true;
-}
+  showNotFound(items){
+    return items.length > 0 ? false : true;
+  }
 
 }

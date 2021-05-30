@@ -85,7 +85,7 @@ export class ProfilePage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+            //console.log('Confirm Cancel: blah');
           },
         },
         {
@@ -97,7 +97,7 @@ export class ProfilePage implements OnInit {
             // localStorage.removeItem('deliveryLocations');
             // localStorage.removeItem('jwt');
             this.backHandler();
-            console.log('Confirm Okay');
+            //console.log('Confirm Okay');
           },
         },
       ],

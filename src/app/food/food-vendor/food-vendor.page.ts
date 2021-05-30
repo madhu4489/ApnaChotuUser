@@ -47,7 +47,7 @@ export class FoodVendorPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log('Ion View Will Enter ');
+    //console.log('Ion View Will Enter ');
 
     this.cartDataProvider.setRestName(this.details);
 
@@ -60,7 +60,6 @@ export class FoodVendorPage implements OnInit {
 
   backHandler() {
     this.cartDataProvider.setRestName(null);
-    this.cartDataProvider.clearCartData();
     this.navController.back();
   }
 
@@ -73,7 +72,7 @@ export class FoodVendorPage implements OnInit {
       this.sharedService.getRestaurantVendor(id).then((resp) => {
         this.isloading = true;
 
-        console.log(resp, "data")
+        //console.log(resp, "data")
 
         const data = resp.data || resp[0];
         this.details = data;
@@ -101,8 +100,8 @@ export class FoodVendorPage implements OnInit {
               if (element.id === _cartItem.groupId) {
                 element.items.forEach((items, itemIndex) => {
                   if (items.id === _cartItem.itemId) {
-                    console.log(_cartItem, '_cartItem');
-                    console.log(items);
+                    //console.log(_cartItem, '_cartItem');
+                    //console.log(items);
                     this.details.menu[index].items[itemIndex].count =
                       _cartItem.count;
                     this.details.menu[index].items[itemIndex].orderPrice =
@@ -137,7 +136,7 @@ export class FoodVendorPage implements OnInit {
             is_active: item.is_active,
             items: item.items.filter((item) => {
               if (item.type == 'v') {
-                console.log(item);
+                //console.log(item);
                 return item;
               }
             }),
@@ -145,7 +144,7 @@ export class FoodVendorPage implements OnInit {
         })
       : this.backUpMenus;
 
-    console.log(this.menus);
+    //console.log(this.menus);
   }
 
   async presentActionSheet() {
@@ -158,7 +157,7 @@ export class FoodVendorPage implements OnInit {
         handler: () => {
           this.setDefault = group.name;
           this.gotoMenu(index);
-          console.log('Delete clicked', group);
+          //console.log('Delete clicked', group);
         },
       };
       buttons.push(button);
@@ -177,7 +176,7 @@ export class FoodVendorPage implements OnInit {
   }
 
   async gotoMenu(value) {
-    console.log(value);
+    //console.log(value);
     let pos = value;
     await this.myContent.scrollToPoint(
       0,

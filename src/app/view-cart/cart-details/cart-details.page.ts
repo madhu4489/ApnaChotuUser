@@ -60,7 +60,7 @@ export class CartDetailsPage implements OnInit {
 
   getOrderDetails() {
     this.orderDetails = this.cartDataProvider.getCartData();
-    console.log(this.orderDetails, ' orderDetails');
+    //console.log(this.orderDetails, ' orderDetails');
   }
 
   recevieOrderFn(items: any) {
@@ -199,7 +199,7 @@ export class CartDetailsPage implements OnInit {
         {
           text: 'Okey',
           handler: () => {
-            console.log('Confirm Okay');
+            //console.log('Confirm Okay');
           },
         },
       ],
@@ -266,7 +266,7 @@ export class CartDetailsPage implements OnInit {
           role: 'cancel',
          
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+            //console.log('Confirm Cancel: blah');
           },
         },
         {
@@ -325,7 +325,7 @@ export class CartDetailsPage implements OnInit {
     });
     await loading.present().then(() => {
       this.sharedService.createOrder(orderData).then((data) => {
-        console.log(data, 'dataaaaaaaa');
+        //console.log(data, 'dataaaaaaaa');
         this.isOrderPlaced = true;
         loading.dismiss();
       });

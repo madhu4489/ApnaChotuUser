@@ -57,21 +57,23 @@ export class DashboardPage implements OnInit {
 
     
     this.platform.backButton.subscribeWithPriority(10, () => {
-      console.log('Back press handler!',);
+      //console.log('Back press handler!',);
 
-      console.log(this.router['routerState'].snapshot.url === '/dashboard', "dashboard -- dashboard");
+      //console.log(this.router['routerState'].snapshot.url === '/dashboard', "dashboard -- dashboard");
 
-      console.log('Navigate to back page');
+      //console.log('Navigate to back page');
 
       if(this.router['routerState'].snapshot.url === '/dashboard'){
         this.showExitConfirm();
+      }else{
+        this.navController.back();
       }
 
 
     });
 
 
-    console.log('ngOnInit');
+    //console.log('ngOnInit');
   }
 
   showExitConfirm() {
@@ -83,7 +85,7 @@ export class DashboardPage implements OnInit {
         text: 'Stay',
         role: 'cancel',
         handler: () => {
-          console.log('Application exit prevented!');
+          //console.log('Application exit prevented!');
         }
       }, {
         text: 'Exit',
@@ -99,7 +101,7 @@ export class DashboardPage implements OnInit {
 
 
   ionViewWillEnter() {
-    console.log('ionViewWillEnter');
+    //console.log('ionViewWillEnter');
 
     if (localStorage.getItem('selectedLocation')) {
       let address = JSON.parse(localStorage.getItem('selectedLocation'));
@@ -146,7 +148,7 @@ export class DashboardPage implements OnInit {
     });
     await modalRef.present();
     modalRef.onDidDismiss().then((res: any) => {
-      console.log('closedddd', res);
+      //console.log('closedddd', res);
       if (localStorage.getItem('jwt')) {
         this.isEnabled = true;
         this.getOrders();

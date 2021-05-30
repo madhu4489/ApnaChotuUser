@@ -93,7 +93,7 @@ export class SignupUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.isEditMode);
+    //console.log(this.isEditMode);
 
     if (this.isEditMode) {
       this.isSignUpScreen = true;
@@ -102,7 +102,7 @@ export class SignupUserComponent implements OnInit {
       this.f.name.setValue(this.storedUserDetails.first_name);
       this.f.email.setValue(this.storedUserDetails.email);
     }else{
-      console.log('loginininnnnn')
+      //console.log('loginininnnnn')
       // this.initializeApp();
     }
     // this.sharedService.presentLoading();
@@ -146,7 +146,7 @@ export class SignupUserComponent implements OnInit {
           serverHeader = resp.headers;
           serverData = JSON.parse(serverData).data;
           this.userResponceToken = 'Bearer ' + serverHeader.token;
-          console.log(this.userResponceToken, 'this.userResponceToken');
+          //console.log(this.userResponceToken, 'this.userResponceToken');
   
           if (serverData) {
             this.userDetails = serverData;
@@ -188,14 +188,14 @@ export class SignupUserComponent implements OnInit {
         this.switchOTPScreen = true;
         this.saveOTP = serverData.otp;
         // this.otpGroup.value.otp = serverData.otp;
-        console.log(this.saveOTP, 'this.saveOTP');
+        //console.log(this.saveOTP, 'this.saveOTP');
       }
     });
   }
 
   signUp(details, isFrom?: any) {
     this.sharedService.signup(details).then((data) => {
-      console.log(data, 'signUp');
+      //console.log(data, 'signUp');
       let serverData = data.data;
       if (!this.sharedService.isBrowser) {
         serverData = JSON.parse(serverData).data;
@@ -226,7 +226,7 @@ export class SignupUserComponent implements OnInit {
         "deviceId":localStorage.getItem('deviceId'),
         "mobile":this.userPhone
       }
-      console.log(tokanData, "tokanData::::");
+      //console.log(tokanData, "tokanData::::");
       this.sharedService.addToken(tokanData).then((data) => {
         this.sharedService.presentToastWithOptions(
           'You have successfully logged in...',
@@ -305,7 +305,7 @@ export class SignupUserComponent implements OnInit {
     await loading.present().then(() => {
       this.sharedService.updateProfile(details).then((data) => {
         loading.dismiss();
-        console.log(data, "datadatadatadatadatadatadatadatadatadatadatadata signup update");
+        //console.log(data, "datadatadatadatadatadatadatadatadatadatadatadata signup update");
         let serverData = data;
         let msg = data.message;
 
@@ -350,7 +350,7 @@ export class SignupUserComponent implements OnInit {
         serverHeader = resp.headers;
         serverData = JSON.parse(serverData).data;
         this.userResponceToken = 'Bearer ' + serverHeader.token;
-        console.log(this.userResponceToken, 'this.userResponceToken');
+        //console.log(this.userResponceToken, 'this.userResponceToken');
 
         if (serverData) {
           this.userDetails = serverData;
@@ -382,7 +382,7 @@ export class SignupUserComponent implements OnInit {
     await loading.present().then(() => {
       this.firebaseX.setAutoInitEnabled(true)
       .then((token) =>{
-        console.log("Auto init has been disabled ", token);
+        //console.log("Auto init has been disabled ", token);
         this.firebaseX.unregister();
       }).catch(error => console.error('Error getting token', error));
 
@@ -393,7 +393,7 @@ export class SignupUserComponent implements OnInit {
           loading.dismiss();
           if(token){
             localStorage.setItem("deviceId", "2qwaskjbdf67t67d");
-            console.log(`onTokenRefresh ${JSON.stringify(token)}`)
+            //console.log(`onTokenRefresh ${JSON.stringify(token)}`)
             localStorage.setItem("deviceToken", JSON.stringify(token))
           }
         });
@@ -408,7 +408,7 @@ export class SignupUserComponent implements OnInit {
 
     // this.firebaseX.getToken()
     // .then(token =>{
-    //   console.log(token, "token ID getToken");
+    //   //console.log(token, "token ID getToken");
     //   if(token){
     //     localStorage.setItem("deviceToken", JSON.stringify(token));
     //   }

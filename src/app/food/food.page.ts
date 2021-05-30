@@ -35,15 +35,14 @@ export class FoodPage implements OnInit {
 
   ngOnInit() {
     this.getRestaurants();
-    this.cartDataProvider.clearCartData();
   }
 
   backHandler() {
-    this.navController.back();
+    this.navController.navigateBack(['../dashboard']);
   }
 
   segmentChanged(ev: any) {
-    console.log('Segment changed', ev);
+    //console.log('Segment changed', ev);
   }
 
   getRestaurants(event?: any) {
@@ -55,7 +54,7 @@ export class FoodPage implements OnInit {
     };
     this.sharedService.getRestaurants(vendorData).then((data) => {
       let serverData = data.data;
-      console.log(serverData, 'getRestaurants');
+      //console.log(serverData, 'getRestaurants');
       if (serverData) {
         this.restaurants.push(...serverData);
         // event && event.target.complete();
@@ -68,7 +67,7 @@ export class FoodPage implements OnInit {
         this.offset = 0;
         this.restaurants.push({id:'closed', name:'Closed ', address:'null'});
         this.inActiveGetRestaurants();
-        console.log(serverData, 'no rest');
+        //console.log(serverData, 'no rest');
 
 
       } else {
@@ -78,7 +77,7 @@ export class FoodPage implements OnInit {
         this.offset = 0;
         this.restaurants.push({id:'closed', name:'Closed ', address:'null'});
         this.inActiveGetRestaurants();
-        console.log(serverData, 'no rest');
+        //console.log(serverData, 'no rest');
       }
     });
   }
@@ -105,7 +104,7 @@ export class FoodPage implements OnInit {
       
       } else {
         event && event.target.complete();
-        console.log(serverData, 'no rest');
+        //console.log(serverData, 'no rest');
         this.dontDo = true;
       }
 
@@ -130,7 +129,6 @@ export class FoodPage implements OnInit {
 
   showVendor(id) {
     this.cartDataProvider.clearCartData();
-    console.log(this.cartDataProvider.getCartData(), "order itemssssssssss")
     this.navController.navigateForward(["vendor", id]);
   }
 

@@ -50,7 +50,6 @@ export class VegetablesPage implements OnInit {
       }
       this.getvegVendors();
     }
-    this.orderServicesProvider.clearCartData()
   }
 
   backHandler() {
@@ -58,11 +57,11 @@ export class VegetablesPage implements OnInit {
   }
 
   segmentChanged(ev: any) {
-    console.log('Segment changed', ev);
+    //console.log('Segment changed', ev);
   }
 
   getvegVendors(event?: any) {
-    console.log(this.offset, 'this.offset');
+    //console.log(this.offset, 'this.offset');
     let vendorData: any = {
       offset: this.offset,
       limit: 10,
@@ -92,7 +91,7 @@ export class VegetablesPage implements OnInit {
         this.offset = 0;
         this.vegVendors.push({id:'closed', name:'Closed', address:'null'});
         this.inActiveGetRestaurants();
-        console.log(serverData, 'no rest');
+        //console.log(serverData, 'no rest');
       }
     });
   }
@@ -136,7 +135,7 @@ export class VegetablesPage implements OnInit {
         }
       } else {
         event && event.target.complete();
-        console.log(serverData, 'no rest');
+        //console.log(serverData, 'no rest');
         this.dontDo = true;
       }
 
