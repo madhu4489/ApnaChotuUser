@@ -74,6 +74,13 @@ export class VendorPage implements OnInit {
       this.categoryId = this.route.snapshot.params.categoryId;
       this.getRestaurantVendor(this.route.snapshot.params.id);
     }
+
+    this.platform.backButton.subscribeWithPriority(5, () => {
+      this.backHandler();
+      // private platform: Platform,
+    });
+
+    
   }
 
   ionViewWillEnter() {

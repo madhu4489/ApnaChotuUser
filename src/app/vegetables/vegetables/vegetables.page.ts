@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 
 import { IonInfiniteScroll } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -36,6 +36,7 @@ export class VegetablesPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public orderServicesProvider: OrderServicesProvider,
+    private platform: Platform,
   ) {}
 
   ngOnInit() {
@@ -50,6 +51,12 @@ export class VegetablesPage implements OnInit {
       }
       this.getvegVendors();
     }
+
+    this.platform.backButton.subscribeWithPriority(5, () => {
+      this.backHandler();
+      // private platform: Platform,
+    });
+
   }
 
   backHandler() {

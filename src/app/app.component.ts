@@ -42,21 +42,6 @@ export class AppComponent implements OnInit {
  
   initializeApp() {
 
-    // this.platform.backButton.subscribeWithPriority(10, () => {
-    //   //console.log('Back press handler!',);
-
-    //   //console.log(this.router['routerState'].snapshot.url === '/dashboard', "dashboard -- dashboard");
-
-    //   //console.log('Navigate to back page');
-
-    //   // if(this.router['routerState'].snapshot.url != '/dashboard'){
-    //   //   this._location.back();
-    //   // }
-
-
-    // });
-
-
     this.platform.ready().then(() => {
 
       localStorage.setItem("deviceId", "2qwaskjbdf67t67d")

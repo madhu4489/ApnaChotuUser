@@ -56,24 +56,10 @@ export class DashboardPage implements OnInit {
     this.getAllAnnouncements();
 
     
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      //console.log('Back press handler!',);
-
-      //console.log(this.router['routerState'].snapshot.url === '/dashboard', "dashboard -- dashboard");
-
-      //console.log('Navigate to back page');
-
-      if(this.router['routerState'].snapshot.url === '/dashboard'){
-        this.showExitConfirm();
-      }else{
-        this.navController.back();
-      }
-
-
+    this.platform.backButton.subscribeWithPriority(5, () => {
+      this.showExitConfirm();
     });
 
-
-    //console.log('ngOnInit');
   }
 
   showExitConfirm() {

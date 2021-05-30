@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { SharedService } from '../providers/shared.service';
 
 import { IonInfiniteScroll } from '@ionic/angular';
@@ -30,11 +30,19 @@ export class FoodPage implements OnInit {
     private navController: NavController,
     public sharedService: SharedService,
     private router: Router,
+    private platform: Platform,
     private cartDataProvider: CartDataProvider
   ) {}
 
   ngOnInit() {
+
     this.getRestaurants();
+
+    this.platform.backButton.subscribeWithPriority(5, () => {
+      this.backHandler();
+      // private platform: Platform,
+    });
+
   }
 
   backHandler() {

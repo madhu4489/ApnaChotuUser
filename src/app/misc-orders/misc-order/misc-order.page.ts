@@ -5,6 +5,7 @@ import {
   LoadingController,
   ModalController,
   NavController,
+  Platform,
 } from '@ionic/angular';
 import { SignupUserComponent } from 'src/app/profile/signup-user/signup-user.component';
 import { CartDataProvider } from 'src/app/providers/cart-data/cart-data';
@@ -32,13 +33,18 @@ export class MiscOrderPage implements OnInit {
     public sharedService: SharedService,
     public loader: LoadingController,
     public alertController: AlertController,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private platform: Platform,
   ) {}
 
   ngOnInit() {
     this.getlocationsFn();
     //console.log('dfdfdf', )
     
+    this.platform.backButton.subscribeWithPriority(5, () => {
+      this.backHandler();
+      // private platform: Platform,
+    });
   }
 
   ionViewWillEnter() {
