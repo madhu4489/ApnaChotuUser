@@ -28,10 +28,7 @@ export class AppComponent implements OnInit {
     private firebaseX: FirebaseX,
     public sharedService: SharedService,
     public alertController: AlertController,
-    private _location: Location,
-    private router: Router,
 
-    
    ) {
     // private fcm: FCM
       this.initializeApp();
@@ -54,11 +51,11 @@ export class AppComponent implements OnInit {
       // });
 
       this.platform.backButton.subscribeWithPriority(-1, () => {
-console.log(this.routerOutlet.canGoBack(), "this.routerOutlet.canGoBack()this.routerOutlet.canGoBack()this.routerOutlet.canGoBack()")
 
         if (!this.routerOutlet.canGoBack()) {
           this.showExitConfirm();
         }
+
       });
 
 

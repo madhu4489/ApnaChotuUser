@@ -79,7 +79,7 @@
       </div>
     </ion-col>
 
-    <ion-col (click)="goToMiscOrder( 'Anything from Anywhere')">
+    <ion-col (click)="goToMiscOrder('Anything from Anywhere', 19)">
       <div
         class="card  bg-gradient-custom-pink1 text-white mb-4 ion-activatable"
       >
@@ -142,7 +142,7 @@
       size="4"
       size-md
       *ngFor="let subCategorie of subCategories"
-      (click)="goToMiscOrder(subCategorie.name, subCategorie.type, subCategorie.id)"
+      (click)="goToMiscOrder(subCategorie.name, subCategorie.id, subCategorie.type )"
     >
 
       <div class="sub-categories ion-activatable ripple-parent">

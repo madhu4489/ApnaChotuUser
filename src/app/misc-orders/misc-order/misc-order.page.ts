@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
   AlertController,
   LoadingController,
@@ -30,10 +31,11 @@ export class MiscOrderPage implements OnInit {
     public sharedService: SharedService,
     public loader: LoadingController,
     public alertController: AlertController,
-
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
+    console.log(this.route.snapshot.params.name)
     this.getlocationsFn();
     //console.log('dfdfdf', )
    
