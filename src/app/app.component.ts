@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Network } from '@ionic-native/network/ngx';
-import { AlertController, NavController, Platform } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, NavController, Platform } from '@ionic/angular';
 import { Location } from '@angular/common';
 
 
@@ -19,13 +19,18 @@ import { Router } from '@angular/router';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
+
+  @ViewChild(IonRouterOutlet, { static : true }) routerOutlet: IonRouterOutlet;
+
+
   constructor(private navController: NavController, private network: Network,
     private platform: Platform,
     private firebaseX: FirebaseX,
     public sharedService: SharedService,
     public alertController: AlertController,
     private _location: Location,
-    private router: Router
+    private router: Router,
+
     
    ) {
     // private fcm: FCM
@@ -43,6 +48,19 @@ export class AppComponent implements OnInit {
   initializeApp() {
 
     this.platform.ready().then(() => {
+
+      // this.platform.backButton.subscribeWithPriority(0, () => {
+      //   this.showExitConfirm();
+      // });
+
+      this.platform.backButton.subscribeWithPriority(-1, () => {
+console.log(this.routerOutlet.canGoBack(), "this.routerOutlet.canGoBack()this.routerOutlet.canGoBack()this.routerOutlet.canGoBack()")
+
+        if (!this.routerOutlet.canGoBack()) {
+          this.showExitConfirm();
+        }
+      });
+
 
       localStorage.setItem("deviceId", "2qwaskjbdf67t67d")
 

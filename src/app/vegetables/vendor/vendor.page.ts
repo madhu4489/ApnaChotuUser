@@ -60,12 +60,7 @@ export class VendorPage implements OnInit {
     public actionSheetController: ActionSheetController
   ) {
 
-    this.platform.backButton.subscribeWithPriority(5, () => {
-      this.modalRef.onDidDismiss();
-    });
 
-    
-    
   }
 
   ngOnInit() {
@@ -75,12 +70,8 @@ export class VendorPage implements OnInit {
       this.getRestaurantVendor(this.route.snapshot.params.id);
     }
 
-    this.platform.backButton.subscribeWithPriority(5, () => {
-      this.backHandler();
-      // private platform: Platform,
-    });
 
-    
+
   }
 
   ionViewWillEnter() {
@@ -332,7 +323,6 @@ selectTab(event, index) {
   this.pageSlider.slideTo(index);
   this.selectedMenu = this.menus[index].group;
   this.groupItems = this.menus[index].items;
-
 
   event.target.scrollIntoView({
     behavior: 'smooth', 

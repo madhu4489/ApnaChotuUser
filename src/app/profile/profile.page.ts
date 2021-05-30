@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController, NavController, Platform } from '@ionic/angular';
+import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { LocationPage } from '../location/location.page';
 import { SignupUserComponent } from './signup-user/signup-user.component';
 
@@ -26,7 +26,7 @@ export class ProfilePage implements OnInit {
     private navController: NavController,
     private modalController: ModalController,
     public alertController: AlertController,
-    private platform: Platform
+
   ) {
    
   }
@@ -35,10 +35,7 @@ export class ProfilePage implements OnInit {
     if (localStorage.getItem('userDetails')) {
       this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
     }
-    // this.platform.backButton.subscribeWithPriority(5, () => {
-    //   // this.backHandler();
-    //   // private platform: Platform,
-    // });
+
   }
 
   

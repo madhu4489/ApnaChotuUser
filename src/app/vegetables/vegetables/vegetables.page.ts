@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavController, Platform } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 import { IonInfiniteScroll } from '@ionic/angular';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SharedService } from 'src/app/providers/shared.service';
 import { OrderServicesProvider } from 'src/app/providers/order-services/order-services';
 @Component({
@@ -33,10 +33,8 @@ export class VegetablesPage implements OnInit {
   constructor(
     private navController: NavController,
     public sharedService: SharedService,
-    private router: Router,
     private route: ActivatedRoute,
     public orderServicesProvider: OrderServicesProvider,
-    private platform: Platform,
   ) {}
 
   ngOnInit() {
@@ -51,11 +49,6 @@ export class VegetablesPage implements OnInit {
       }
       this.getvegVendors();
     }
-
-    this.platform.backButton.subscribeWithPriority(5, () => {
-      this.backHandler();
-      // private platform: Platform,
-    });
 
   }
 

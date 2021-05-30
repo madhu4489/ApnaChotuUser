@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AlertController, LoadingController, NavController, Platform } from '@ionic/angular';
+import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { SharedService } from '../providers/shared.service';
 import { ChooseLocationComponent } from './choose-location/choose-location.component';
@@ -21,17 +21,14 @@ export class LocationPage implements OnInit {
     public sharedService: SharedService,
     public alertController: AlertController,
     public loader: LoadingController,
-    private platform: Platform,
+
   ) {}
 
   ngOnInit() {
     this.isloading = false;
     this.getAllAddress();
 
-    this.platform.backButton.subscribeWithPriority(5, () => {
-      this.backHandler();
-      // private platform: Platform,
-    });
+  
 
   }
 

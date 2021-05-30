@@ -22,7 +22,7 @@
         class="seach-input"
         color="primary"
         clearInput
-        placeholder="Search for an item"
+        [placeholder]="'Search for an '+ selectedMenu + ' item'"
         [(ngModel)]="terms"
       ></ion-input>
     </ion-item>

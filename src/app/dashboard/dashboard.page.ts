@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Network } from '@ionic-native/network/ngx';
 import {
   AlertController,
   LoadingController,
   ModalController,
   NavController,
-  Platform,
 } from '@ionic/angular';
 import { SharedService } from 'src/app/providers/shared.service';
 import { SignupUserComponent } from '../profile/signup-user/signup-user.component';
@@ -39,10 +36,7 @@ export class DashboardPage implements OnInit {
     public sharedService: SharedService,
     public modalController: ModalController,
     private navController: NavController,
-    private network: Network,
     public loader: LoadingController,
-    private router: Router,
-    private platform: Platform,
     public alertController: AlertController,
 
   ) {
@@ -54,12 +48,6 @@ export class DashboardPage implements OnInit {
     this.getlocationsFn();
     this.getOffers();
     this.getAllAnnouncements();
-
-    
-    this.platform.backButton.subscribeWithPriority(5, () => {
-      this.showExitConfirm();
-    });
-
   }
 
   showExitConfirm() {

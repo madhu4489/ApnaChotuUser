@@ -4,7 +4,6 @@ import {
   LoadingController,
   ModalController,
   NavController,
-  Platform,
 } from '@ionic/angular';
 import { SignupUserComponent } from 'src/app/profile/signup-user/signup-user.component';
 import { OrderServicesProvider } from 'src/app/providers/order-services/order-services';
@@ -53,18 +52,13 @@ export class ViewKartPage implements OnInit {
     public sharedService: SharedService,
     public loader: LoadingController,
     public alertController: AlertController,
-    private platform: Platform,
     
   ) {}
 
   ngOnInit() {
     this.getlocationsFn();
     this.selectedVendor = this.cartDataProvider.getVendorDetails();
-    
-    this.platform.backButton.subscribeWithPriority(5, () => {
-      this.backHandler();
-      // private platform: Platform,
-    });
+  
 
   }
 
