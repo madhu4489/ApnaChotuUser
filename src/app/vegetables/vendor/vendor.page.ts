@@ -152,6 +152,17 @@ export class VendorPage implements OnInit {
 
         }
 
+        console.log(this.orderServicesProvider.getActiveMenu(), "this.orderServicesProvider.getActiveMenu()")
+
+        this.selectedMenu = this.menus[this.orderServicesProvider.getActiveMenu().menu]?.group;
+        this.pageSlider.slideTo(this.orderServicesProvider.getActiveMenu().menu);
+
+        this.orderServicesProvider.getActiveMenu().event?.scrollIntoView({
+          behavior: 'smooth', 
+          inline: 'center'
+        });
+
+
         loading.dismiss();
       });
     });
@@ -197,11 +208,10 @@ export class VendorPage implements OnInit {
   groupId:any;
   recevieOrderFn(event, menuItem, groupId, index) {
 
-
     this.groupId = groupId;
     if(menuItem.price_quantity.length > 1){
-      // this.openQuantites(menuItem);
-      this.openQuantites(this.groupItems[index]);
+      this.openQuantites(menuItem);
+      //this.openQuantites(this.groupItems[index]);
     }else{
 
       const findItemIndex = this.orderDeatils.findIndex(
@@ -336,6 +346,7 @@ slideChanged() {
     this.selectedMenu = this.menus[index].group;
     this.groupItems = this.menus[index].items;
     this.isloading = true;
+
     document.getElementById("segment-" + index).scrollIntoView({
       behavior: 'smooth',
       block: 'center',

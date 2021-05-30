@@ -43,7 +43,7 @@ export class VegetablesPage implements OnInit {
       if( this.catagorieId == '20'){
         this.title_header = "Meat / Fish";
       }else if(this.catagorieId == '21'){
-        this.title_header = "Vegetables / Fruits";
+        this.title_header = "Vegetables / Fruits/ Dairy";
       }else if(this.catagorieId == '18'){
         this.title_header = "Groceries";
       }

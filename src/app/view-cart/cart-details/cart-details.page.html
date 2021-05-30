@@ -79,7 +79,7 @@
         </tr>
         <tr>
           <td>Delivery charge</td>
-          <td>&#8377; {{serviceLocation && serviceLocation.charge}}</td>
+          <td>&#8377; {{userDetails?.prime_customer == 1 ? 0 : serviceLocation && serviceLocation.charge}}</td>
         </tr>
         <tr class="secondary" *ngIf="discountPrice>0">
           <td>Discount</td>

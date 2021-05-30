@@ -40,6 +40,7 @@ export class CartDetailsPage implements OnInit {
   ];
   tipAmount: number = 0;
 
+  userDetails:any = [];
   constructor(
     private navController: NavController,
     private cartDataProvider: CartDataProvider,
@@ -52,6 +53,7 @@ export class CartDetailsPage implements OnInit {
   ngOnInit() {
     this.getlocationsFn();
     this.vendorDetails = this.cartDataProvider.getRestName();
+    this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
   }
 
   backHandler() {
@@ -193,8 +195,8 @@ export class CartDetailsPage implements OnInit {
   async notAvailable() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Oops!',
-      subHeader: `Currently unable to deliver your ${this.deliveryLocation.address_type} location.`,
+      header: 'Sorry for the inconvenience!',
+      subHeader: `Currently, Our Service is unavailable to your ${this.deliveryLocation.address_type} location address.`,
       buttons: [
         {
           text: 'Okey',
@@ -244,10 +246,12 @@ export class CartDetailsPage implements OnInit {
         : this.discountPrice;
     this.discountPrice = Math.round(this.discountPrice);
 
+    let userDetails = this.userDetails;
+
     this.showCount.finalPrice = (
       this.showCount.totalPrice -
-      this.discountPrice + this.tipAmount+
-      (this.serviceLocation && !this.vendorDetails.is_free_delivery ? Number(this.serviceLocation.charge) : 0)
+      this.discountPrice + this.tipAmount +
+      (this.serviceLocation && !this.vendorDetails.is_free_delivery && userDetails?.prime_customer == 1 ? Number(this.serviceLocation.charge) : 0) 
     ).toFixed(0);
 
 
@@ -295,7 +299,7 @@ export class CartDetailsPage implements OnInit {
       });
     });
 
-    let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    let userDetails = this.userDetails;
 
 
 
@@ -310,7 +314,7 @@ export class CartDetailsPage implements OnInit {
       items: Items,
       finalPrice: this.showCount.finalPrice,
       itemsPrice: this.showCount.totalPrice,
-      deliveryFee: this.serviceLocation
+      deliveryFee: userDetails?.prime_customer == 1 ? 0 : this.serviceLocation
         ? Number(this.serviceLocation.charge)
         : 0,
       locationId: this.serviceLocationId,

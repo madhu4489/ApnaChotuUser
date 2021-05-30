@@ -42,8 +42,9 @@ export class MiscOrderPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if(localStorage.getItem("misc-order")){
-      this.items =   JSON.parse(localStorage.getItem("misc-order"))
+    if(localStorage.getItem("misc-order") != undefined){
+      console.log(localStorage.getItem("misc-order"))
+      this.items = JSON.parse(localStorage.getItem("misc-order"))
     }
     
     if(localStorage.getItem("pickup")){
@@ -114,14 +115,14 @@ export class MiscOrderPage implements OnInit {
               address.is_active === 1
             );
           });
-        this.serviceLocation = this.serviceLocation
-          ? this.serviceLocation[0]
-          : [];
+        // this.serviceLocation = this.serviceLocation
+        //   ? this.serviceLocation[0]
+        //   : [];
 
-        if (this.serviceLocation && this.serviceLocation.is_active != 1) {
+        if (this.serviceLocation.length == 0) {
           this.notAvailable();
         } else {
-          this.serviceLocationId = this.serviceLocation.id;
+          this.serviceLocationId = this.serviceLocation[0].id;
         }
       }
       localStorage.setItem('deliveryLocations', JSON.stringify(serverData));
@@ -131,10 +132,8 @@ export class MiscOrderPage implements OnInit {
   async notAvailable() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Oops!',
-      subHeader: `Currently unable to deliver your ${
-        this.serviceLocation && this.serviceLocation.name
-      } location.`,
+      header: 'Sorry for the inconvenience!',
+      subHeader: `Currently, Our Service is unavailable to your ${this.deliveryLocation.address_type} location address.`,
       buttons: [
         {
           text: 'Okey',
@@ -180,17 +179,16 @@ export class MiscOrderPage implements OnInit {
 
     let orderData = {
       discountPrice: '0',
-      deliveryFee: this.serviceLocation
-        ? Number(this.serviceLocation.charge)
+      deliveryFee: userDetails?.prime_customer == 1 ? 0 : this.serviceLocation[0]
+        ? Number(this.serviceLocation[0].charge)
         : 0,
       paymentMode: 'cashoronline',
       locationId: this.serviceLocationId,
       address: address,
       lat: null,
       lng: null,
-      items_data: `ITEMS: ${this.items}!! <PICKUP STORE>: ${
-        this.pickup ? this.pickup : 'Apna chotu'
-      }`,
+      items_data: this.items,
+      pickup_store:this.pickup ? this.pickup : 'Apna chotu',
       alt_mobile: this.deliveryLocation.contact_no
         ? this.deliveryLocation.contact_no
         : userDetails.mobile,

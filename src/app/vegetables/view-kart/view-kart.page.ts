@@ -43,6 +43,8 @@ export class ViewKartPage implements OnInit {
 
   selectedVendor: any = [];
 
+  userDetails:any = [];
+
   payProceed:boolean;
 
   constructor(
@@ -58,7 +60,7 @@ export class ViewKartPage implements OnInit {
   ngOnInit() {
     this.getlocationsFn();
     this.selectedVendor = this.cartDataProvider.getVendorDetails();
-  
+    this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
 
   }
 
@@ -164,10 +166,8 @@ export class ViewKartPage implements OnInit {
   async notAvailable() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Oops!',
-      subHeader: `Currently unable to deliver your ${
-        this.deliveryLocation.address_type
-      } location.`,
+      header: 'Sorry for the inconvenience!',
+      subHeader: `Currently, Our Service is unavailable to your ${this.deliveryLocation.address_type} location address.`,
       buttons: [
         {
           text: 'Okey',
@@ -295,7 +295,7 @@ export class ViewKartPage implements OnInit {
 
 
 
-    let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    let userDetails = this.userDetails;
 
     let address = `${userDetails.first_name}, ${this.deliveryLocation.h_no}, ${this.deliveryLocation.street},  ${this.deliveryLocation?.landmark && 'landmark: ' + this.deliveryLocation?.landmark }, ${this.deliveryLocation?.locality}, ${this.deliveryLocation?.contact_no}, ${userDetails?.mobile}`;
     let orderData = {
@@ -306,9 +306,9 @@ export class ViewKartPage implements OnInit {
       lat: null,
       lng: null,
       items: Items,
-      finalPrice: this.totalToPayPrice(this.orderCountDetails.price, this.serviceLocation?.charge, this.tipAmount, this.discountPrice),
+      finalPrice: this.totalToPayPrice(this.orderCountDetails.price, ( userDetails?.prime_customer == 1 ? 0 : this.serviceLocation?.charge), this.tipAmount, this.discountPrice),
       itemsPrice:  this.orderCountDetails.price,
-      deliveryFee: this.serviceLocation
+      deliveryFee: userDetails?.prime_customer ? 0 : this.serviceLocation
         ? Number(this.serviceLocation.charge)
         : 0,
       locationId: this.serviceLocationId,

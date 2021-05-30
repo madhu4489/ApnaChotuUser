@@ -87,7 +87,7 @@
         </tr>
         <tr>
           <td>Delivery charge</td>
-          <td>&#8377; {{serviceLocation?.charge || 0}}</td>
+          <td>&#8377; {{userDetails?.prime_customer == 1 ? 0 : serviceLocation?.charge || 0}}</td>
         </tr>
         <tr class="secondary" *ngIf="discountPrice>0">
           <td>Discount</td>
@@ -99,7 +99,7 @@
         </tr>
         <tr>
           <td>To Pay</td>
-          <td>&#8377; {{totalToPayPrice(orderCountDetails?.price, serviceLocation?.charge || 0, tipAmount, discountPrice)}}</td>
+          <td>&#8377; {{totalToPayPrice(orderCountDetails?.price, (userDetails?.prime_customer == 1 ? 0 : serviceLocation?.charge || 0), tipAmount, discountPrice)}}</td>
         </tr>
       </table>
     </ion-item>

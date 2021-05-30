@@ -8,7 +8,10 @@ import * as _ from "lodash";
 export class OrderServicesProvider {
   cartData: any = [];
   orderItemsCount:number = 0;
-  orderItemsPrice: number = 0
+  orderItemsPrice: number = 0;
+
+  activeMenu: number = 0;
+  activeEvent: any;
 
   restaurantName: any = [];
   isDeliveryFee:any;
@@ -40,6 +43,8 @@ export class OrderServicesProvider {
     console.log("Clear Cart Data");
     this.orderItemsCount = 0;
     this.orderItemsPrice = 0;
+    this.activeMenu = 0;
+    this.activeEvent = null;
   }
 
   getCartData() {
@@ -65,4 +70,12 @@ export class OrderServicesProvider {
     return this.vendorDetails;
   }
 
+  setActiveMenu(menu, event){
+    this.activeMenu = menu;
+    this.activeEvent = event;
+  }
+
+  getActiveMenu(){
+    return {menu:this.activeMenu, event:this.activeEvent};
+  }
 }

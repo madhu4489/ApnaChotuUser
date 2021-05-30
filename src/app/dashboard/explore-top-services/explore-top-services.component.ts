@@ -32,9 +32,8 @@ export class ExploreTopServicesComponent implements OnInit {
     
     if(id == 18) {
       this.navController.navigateForward(['/vegetables', id]);
-    }else if(id == 19 || id == 19) {
+    }else if(id == 19) {
 
-      console.log(id, '1999', name)
       this.navController.navigateForward(["/misc-order", name]);
     } else{
       console.log(id, 'other')
