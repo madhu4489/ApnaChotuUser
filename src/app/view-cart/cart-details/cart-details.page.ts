@@ -251,7 +251,7 @@ export class CartDetailsPage implements OnInit {
     this.showCount.finalPrice = (
       this.showCount.totalPrice -
       this.discountPrice + this.tipAmount +
-      (this.serviceLocation && !this.vendorDetails.is_free_delivery && userDetails?.prime_customer == 1 ? Number(this.serviceLocation.charge) : 0) 
+      (this.serviceLocation && !this.vendorDetails.is_free_delivery && userDetails?.prime_customer == 0 ? Number(this.serviceLocation.charge) : 0) 
     ).toFixed(0);
 
 

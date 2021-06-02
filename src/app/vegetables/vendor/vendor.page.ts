@@ -96,12 +96,15 @@ export class VendorPage implements OnInit {
         this.details = data;
         this.orderServicesProvider.setVendorDetails(this.details);
 
+       
+
         this.details.menu.forEach((element) => {
 
           element.items.forEach((item) => {
 
-            item.defaultVariantDetails = item.price_quantity[0];
-            item.items = item.price_quantity.map(priceQuantity => {
+
+            item.defaultVariantDetails = item.price_quantity&& item.price_quantity[0];
+            item.items = item.price_quantity?.map(priceQuantity => {
               return { itemId: item.id, quantity: 0, price: priceQuantity.price, type: priceQuantity.quantity }
             });;
             item.selectedVariants = 0;
@@ -206,6 +209,8 @@ export class VendorPage implements OnInit {
 
   orderDeatils: any = [];
   groupId:any;
+
+
   recevieOrderFn(event, menuItem, groupId, index) {
 
     this.groupId = groupId;
@@ -235,8 +240,10 @@ export class VendorPage implements OnInit {
         this.orderDeatils[findItemIndex].items[0].quantity = event == 1 ?  this.orderDeatils[findItemIndex].items[0].quantity + 1 :  this.orderDeatils[findItemIndex].items[0].quantity - 1;
         this.orderDeatils[findItemIndex].count =  menuItem.count;
         this.orderDeatils[findItemIndex].orderPrice =  this.orderDeatils[findItemIndex].items[0].quantity * this.orderDeatils[findItemIndex].items[0].price;
+        menuItem.orderPrice = this.orderDeatils[findItemIndex].orderPrice;
       }
 
+      
       this.orderServicesProvider.addCartData(this.orderDeatils);
       this.orderCountDetails = this.orderServicesProvider.getOrderDeatils();
       this.groupId = null;

@@ -23,9 +23,8 @@
       <ion-label color="primary" style="font-weight:600">Veg only</ion-label>
       <ion-toggle
         color="success"
-        checked="{{isVeg}}"
         mode="md"
-        (ionChange)="vegFilter()"
+        [(ngModel)]="isVeg" (ngModelChange)="vegFilter($event)"
       ></ion-toggle>
     </div>
   </ion-item-divider>

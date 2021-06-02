@@ -103,7 +103,7 @@ export class SignupUserComponent implements OnInit {
       this.f.email.setValue(this.storedUserDetails.email);
     }else{
       //console.log('loginininnnnn')
-      this.initializeApp();
+     this.initializeApp();
     }
     // this.sharedService.presentLoading();
   }

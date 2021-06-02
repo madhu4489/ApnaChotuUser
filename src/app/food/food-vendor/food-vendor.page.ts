@@ -20,7 +20,7 @@ export class FoodVendorPage implements OnInit {
   menus: any = [];
   setDefault: any;
   showMenuItems: any = [];
-  isVeg: boolean = false;
+  isVeg: boolean;
   isloading: boolean;
   backUpMenus: any = [];
   terms: string = '';
@@ -92,6 +92,7 @@ export class FoodVendorPage implements OnInit {
 
         let _cartData = this.cartDataProvider.getCartData();
         if (_cartData && _cartData?.length != 0) {
+          this.isVeg = false;
           this.storeOrderPrice = 0;
           _cartData.forEach((_cartItem) => {
             this.storeOrderCount = this.storeOrderCount + _cartItem.count;
@@ -126,8 +127,8 @@ export class FoodVendorPage implements OnInit {
     this.showMenuItems = this.menus.items;
   }
 
-  vegFilter() {
-    this.isVeg = !this.isVeg;
+  vegFilter(event) {
+    this.isVeg = event;
     this.menus = this.isVeg
       ? this.backUpMenus.map((item) => {
           return {
@@ -200,6 +201,7 @@ export class FoodVendorPage implements OnInit {
   }
 
   viewCart() {
-    this.navController.navigateForward(['/cart-details']);
+    //this.vegFilter();
+   this.navController.navigateForward(['/cart-details']);
   }
 }
