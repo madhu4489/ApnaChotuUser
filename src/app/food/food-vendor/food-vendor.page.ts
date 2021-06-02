@@ -24,9 +24,12 @@ export class FoodVendorPage implements OnInit {
   isloading: boolean;
   backUpMenus: any = [];
   terms: string = '';
-
+  noResults:boolean;
   @ViewChild(IonContent, { read: IonContent }) myContent: IonContent;
   @ViewChildren('scrollTo') scrollComponent: any;
+
+
+  @ViewChild(IonContent, {static: true}) content: IonContent;
 
   public storeOrderCount: number = 0;
   public storeOrderPrice: number = 0;
@@ -92,6 +95,7 @@ export class FoodVendorPage implements OnInit {
 
         let _cartData = this.cartDataProvider.getCartData();
         if (_cartData && _cartData?.length != 0) {
+          this.scrollToTop();
           this.isVeg = false;
           this.storeOrderPrice = 0;
           _cartData.forEach((_cartItem) => {
@@ -203,5 +207,13 @@ export class FoodVendorPage implements OnInit {
   viewCart() {
     //this.vegFilter();
    this.navController.navigateForward(['/cart-details']);
+  }
+
+  showNotFound(items){
+    return items.length > 0 ? false : true;
+  }
+
+  scrollToTop() {
+    this.content.scrollToTop(0);
   }
 }

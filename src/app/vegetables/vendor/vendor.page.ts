@@ -49,6 +49,8 @@ export class VendorPage implements OnInit {
   @ViewChild(IonContent, { read: IonContent }) myContent: IonContent;
   @ViewChildren('scrollTo') scrollComponent: any;
 
+  @ViewChild(IonContent, {static: true}) content: IonContent;
+
   constructor(
     private navController: NavController,
     private route: ActivatedRoute,
@@ -336,6 +338,7 @@ export class VendorPage implements OnInit {
 
 
 selectTab(event, index) {
+  this.scrollToTop()
   this.terms="";
   this.pageSlider.slideTo(index);
   this.selectedMenu = this.menus[index].group;
@@ -348,6 +351,7 @@ selectTab(event, index) {
 }
 
 slideChanged() {
+  this.scrollToTop()
   this.terms="";
   this.pageSlider.getActiveIndex().then(index => {
     this.selectedMenu = this.menus[index].group;
@@ -367,6 +371,10 @@ slideChanged() {
 
   showNotFound(items){
     return items.length > 0 ? false : true;
+  }
+
+  scrollToTop() {
+    this.content.scrollToTop(0);
   }
 
 }

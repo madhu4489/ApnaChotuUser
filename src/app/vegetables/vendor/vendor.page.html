@@ -13,7 +13,7 @@
 
       <ion-segment scrollable color="secondary" [value]="selectedMenu" mode="ios"  mode="ios" class="segment-button">
         <ion-segment-button [id]="'segment-'+i" [value]="group.name" *ngFor="let group of groups; let i = index" (click)="selectTab($event, i)">
-          <ion-label>{{group.name}}</ion-label>
+          <ion-label>{{group.name}} ({{group.count}})</ion-label>
         </ion-segment-button>
     </ion-segment>
 
@@ -24,6 +24,7 @@
         clearInput
         [placeholder]="'Search for an '+ selectedMenu + ' item'"
         [(ngModel)]="terms"
+        (ngModelChange)="scrollToTop()"
       ></ion-input>
     </ion-item>
 
