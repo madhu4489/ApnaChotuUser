@@ -5,6 +5,7 @@ import {
   ModalController,
   NavController,
 } from '@ionic/angular';
+import { LocationPage } from 'src/app/location/location.page';
 import { SignupUserComponent } from 'src/app/profile/signup-user/signup-user.component';
 import { OrderServicesProvider } from 'src/app/providers/order-services/order-services';
 import { SharedService } from 'src/app/providers/shared.service';
@@ -77,9 +78,27 @@ export class ViewKartPage implements OnInit {
 
 
 
-  addAddress() {
+  async addAddress() {
     if (localStorage.getItem('userDetails')) {
-      this.navController.navigateForward(['/location']);
+   //   this.navController.navigateBack(['/location']);
+   const modalRef = await this.modalController.create({
+    component: LocationPage,
+    backdropDismiss: false,
+  });
+
+  modalRef.onDidDismiss().then((res: any) => {
+    console.log(res.data,"resssss");
+
+    if(res.data){
+      this.getlocationsFn();
+    }
+    
+  });
+
+
+  await modalRef.present();
+
+
     } else {
       this.openAddLocation('location');
     }

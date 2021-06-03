@@ -32,11 +32,12 @@ export class LocationPage implements OnInit {
 
   }
 
-  backHandler() {
-    if (!this.isEditMode) {
+  backHandler(location?:any) {
+    console.log(this.isEditMode)
+    if (this.isEditMode == false) {
       this.navController.back();
     } else {
-      this.modalController.dismiss();
+      this.modalController.dismiss(location);
     }
   }
 
@@ -44,7 +45,6 @@ export class LocationPage implements OnInit {
     const modalRef = await this.modalController.create({
       component: ChooseLocationComponent,
       cssClass: 'my-custom-model',
-      backdropDismiss: false,
       componentProps: {
         details: details,
         addressList: this.savedLocations
@@ -67,7 +67,7 @@ export class LocationPage implements OnInit {
       this.openAddLocation(location);
     } else {
       localStorage.setItem('selectedLocation', JSON.stringify(location));
-      this.backHandler();
+      this.backHandler(location);
     }
   }
 
