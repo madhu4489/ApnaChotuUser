@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { LocationPage } from '../location/location.page';
 import { SignupUserComponent } from './signup-user/signup-user.component';
@@ -118,4 +118,18 @@ export class ProfilePage implements OnInit {
     });
     await modalRef.present();
   }
+
+  ngOnDestroy() {
+    if (window.history.state.modal) {
+      history.back();
+    }
+  }
+
+  @HostListener('window:popstate', ['$event'])
+
+  dismissModal() {
+    this.modalController.dismiss();
+  }
+
+  
 }

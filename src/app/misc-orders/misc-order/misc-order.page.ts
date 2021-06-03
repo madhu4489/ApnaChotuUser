@@ -67,7 +67,7 @@ export class MiscOrderPage implements OnInit {
     localStorage.setItem("pickup", JSON.stringify(this.pickup));
     
     if (localStorage.getItem('userDetails')) {
-      this.navController.navigateBack(['/location']);
+      this.navController.navigateForward(['/location']);
     } else {
       this.openAddLocation('location');
     }
