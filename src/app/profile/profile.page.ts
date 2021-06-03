@@ -47,7 +47,7 @@ export class ProfilePage implements OnInit {
     const modalRef = await this.modalController.create({
       component: SignupUserComponent,
       cssClass: 'myLoginPopup',
-      backdropDismiss: true,
+      backdropDismiss: false,
       componentProps: {
         isEditMode: true,
         storedUserDetails: this.userDetails,

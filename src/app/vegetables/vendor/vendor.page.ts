@@ -44,6 +44,10 @@ export class VendorPage implements OnInit {
     zoom: false
 };
 
+orderDeatils: any = [];
+groupId:any;
+
+
 @ViewChild('pageSlider') pageSlider: IonSlides;
 
   @ViewChild(IonContent, { read: IonContent }) myContent: IonContent;
@@ -72,8 +76,6 @@ export class VendorPage implements OnInit {
       this.getRestaurantVendor(this.route.snapshot.params.id);
     }
 
-
-
   }
 
   ionViewWillEnter() {
@@ -97,14 +99,8 @@ export class VendorPage implements OnInit {
         const data = resp.data;
         this.details = data;
         this.orderServicesProvider.setVendorDetails(this.details);
-
-       
-
         this.details.menu.forEach((element) => {
-
           element.items.forEach((item) => {
-
-
             item.defaultVariantDetails = item.price_quantity&& item.price_quantity[0];
             item.items = item.price_quantity?.map(priceQuantity => {
               return { itemId: item.id, quantity: 0, price: priceQuantity.price, type: priceQuantity.quantity }
@@ -127,7 +123,6 @@ export class VendorPage implements OnInit {
             name: element.group,
             is_active: element.is_active,
             count: element.items.length,
-            
           };
         });
 
@@ -154,10 +149,10 @@ export class VendorPage implements OnInit {
               });
             });
 
-
+this.orderDeatils = _cartData;
         }
 
-        console.log(this.orderServicesProvider.getActiveMenu(), "this.orderServicesProvider.getActiveMenu()")
+        console.log(this.orderCountDetails, "this.orderCountDetails")
 
         this.selectedMenu = this.menus[this.orderServicesProvider.getActiveMenu().menu]?.group;
         this.pageSlider.slideTo(this.orderServicesProvider.getActiveMenu().menu);
@@ -209,13 +204,13 @@ export class VendorPage implements OnInit {
     );
   }
 
-  orderDeatils: any = [];
-  groupId:any;
 
 
   recevieOrderFn(event, menuItem, groupId, index) {
 
     this.groupId = groupId;
+
+    console.log( this.orderDeatils, " this.orderDeatils added");
     if(menuItem.price_quantity.length > 1){
       this.openQuantites(menuItem);
       //this.openQuantites(this.groupItems[index]);
@@ -245,7 +240,7 @@ export class VendorPage implements OnInit {
         menuItem.orderPrice = this.orderDeatils[findItemIndex].orderPrice;
       }
 
-      
+      console.log( this.orderDeatils, " this.orderDeatils afterrr");
       this.orderServicesProvider.addCartData(this.orderDeatils);
       this.orderCountDetails = this.orderServicesProvider.getOrderDeatils();
       this.groupId = null;
@@ -290,7 +285,7 @@ export class VendorPage implements OnInit {
     this.modalRef = await this.modalController.create({
       component: RemoveItemsComponent,
       cssClass: 'myLoginPopup',
-      backdropDismiss: true,
+      backdropDismiss: false,
       componentProps: {
         isEditMode: true,
         selectedItems: items,
@@ -298,6 +293,8 @@ export class VendorPage implements OnInit {
     });
     this.modalRef.onDidDismiss().then((res: any) => {
       if(res.data){
+
+
         this.addOrder(res.data)
       }
       
@@ -308,6 +305,7 @@ export class VendorPage implements OnInit {
 
 
   addOrder(menuItem){
+
     menuItem.groupId = this.groupId;
     menuItem.vendorId =  this.route.snapshot.params.id;
     menuItem.selectedVariants =  menuItem.items.filter(item =>item.quantity > 0).length;
