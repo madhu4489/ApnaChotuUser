@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Network } from '@ionic-native/network/ngx';
 import { AlertController, IonRouterOutlet, NavController, Platform } from '@ionic/angular';
 import { Location } from '@angular/common';
@@ -22,16 +22,22 @@ export class AppComponent implements OnInit {
 
   @ViewChild(IonRouterOutlet, { static : true }) routerOutlet: IonRouterOutlet;
 
+  @ViewChildren(IonRouterOutlet) routerOutlets: QueryList < IonRouterOutlet > ;
+
+  public subscription: any;
 
   constructor(private navController: NavController, private network: Network,
     private platform: Platform,
     private firebaseX: FirebaseX,
     public sharedService: SharedService,
     public alertController: AlertController,
+    private router: Router
 
    ) {
     // private fcm: FCM
       this.initializeApp();
+
+      this.backButtonEvent();
     }
 
   ngOnInit() {
@@ -41,20 +47,30 @@ export class AppComponent implements OnInit {
     });
   }
 
+  // ionViewDidEnter() {
+  //   this.backButtonEvent();
+  
+  // }
+
+
+  // ionViewWillLeave() {
+  //   this.subscription.unsubscribe();
+  // }
+
+
  
   initializeApp() {
 
     this.platform.ready().then(() => {
 
-      // this.platform.backButton.subscribeWithPriority(0, () => {
-      //   this.showExitConfirm();
-      // });
-
+  
       this.platform.backButton.subscribeWithPriority(-1, () => {
 
-        if (!this.routerOutlet.canGoBack()) {
-          this.showExitConfirm();
-        }
+
+        console.log('this.routerOutlet', this.routerOutlet)
+        // if (!this.routerOutlet.canGoBack()) {
+        //   this.showExitConfirm();
+        // }
 
       });
 
@@ -117,10 +133,32 @@ export class AppComponent implements OnInit {
     });
   }
 
+  backButtonEvent() {
+    this.platform.backButton.subscribe(async () => {
+
+
+      this.routerOutlets.forEach(async (outlet: IonRouterOutlet) => {
+
+        console.log(this.router.url, "this.router.urlthis.router.url");
+
+        console.log(outlet, "outlet:::::");
+        
+        if (outlet && outlet.canGoBack()) {
+          outlet.pop();
+
+        } else if (this.router.url === '/dashboard') {
+          this.showExitConfirm(); 
+        }
+      });
+    });
+  }
+
+
+
   showExitConfirm() {
     this.alertController.create({
-      header: 'Oops!!',
-      subHeader: 'Do you want to close the app?',
+      header: 'Confirm!!',
+      subHeader: 'Are you sure you want to exit the app?',
       backdropDismiss: false,
       buttons: [{
         text: 'Stay',
