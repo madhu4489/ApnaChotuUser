@@ -6,6 +6,7 @@ import {
   NavController,
 } from '@ionic/angular';
 import { SharedService } from 'src/app/providers/shared.service';
+import { LocationPage } from '../location/location.page';
 import { SignupUserComponent } from '../profile/signup-user/signup-user.component';
 
 @Component({
@@ -31,6 +32,8 @@ export class DashboardPage implements OnInit {
   orderStatusText: string;
 
   isEnabled: boolean;
+
+  key:boolean;
 
   constructor(
     public sharedService: SharedService,
@@ -125,7 +128,8 @@ export class DashboardPage implements OnInit {
       //console.log('closedddd', res);
       if (localStorage.getItem('jwt')) {
         this.isEnabled = true;
-        this.getOrders();
+        this.key = true;
+        this.gotoLocationFn();
       } else {
         this.isEnabled = false;
       }
@@ -134,7 +138,8 @@ export class DashboardPage implements OnInit {
 
   gotoLocation() {
     if (localStorage.getItem('userDetails')) {
-      this.navController.navigateForward(['/location']);
+      // this.navController.navigateForward(['/location']);
+      this.gotoLocationFn();
     } else {
       this.openAddLocation('location');
     }
@@ -221,6 +226,32 @@ export class DashboardPage implements OnInit {
       return true;
     }
     return "false";
+  }
+
+  async gotoLocationFn() {
+
+    const modalRef = await this.modalController.create({
+      component: LocationPage,
+      backdropDismiss: true,
+    });
+  
+    modalRef.onDidDismiss().then((res: any) => {
+      console.log(res.data,"resssss");
+        if(this.key){
+          this.getOrders();
+          this.key = false;
+        }
+      if(res.data){
+        let address = JSON.parse(localStorage.getItem('selectedLocation'));
+      this.chooseLocation =
+        (address.address_name || address.address_type) +
+        ', ' +
+        address.locality;
+      }
+      
+    });
+    await modalRef.present();
+
   }
 }
 
