@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AlertController,
   LoadingController,
@@ -359,18 +359,4 @@ export class ViewKartPage implements OnInit {
     //console.log(this.discountPrice, "this.discountPrice");
   }
 
-
-  ngOnDestroy() {
-    if (window.history.state.modal) {
-      history.back();
-    }
-  }
-
-  @HostListener('window:popstate', ['$event'])
-
-  dismissModal() {
-    this.modalController.dismiss();
-  }
-
-  
 }
