@@ -285,7 +285,7 @@ this.orderDeatils = _cartData;
     this.modalRef = await this.modalController.create({
       component: RemoveItemsComponent,
       cssClass: 'myLoginPopup',
-      backdropDismiss: false,
+      backdropDismiss: true,
       componentProps: {
         isEditMode: true,
         selectedItems: items,

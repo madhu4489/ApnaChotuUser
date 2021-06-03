@@ -79,7 +79,7 @@ export class MiscOrderPage implements OnInit {
     const modalRef = await this.modalController.create({
       component: SignupUserComponent,
       cssClass: 'myLoginPopup',
-      backdropDismiss: false,
+      backdropDismiss: true,
       componentProps: { isFromPage: isFromPage },
     });
     await modalRef.present();
@@ -228,7 +228,7 @@ export class MiscOrderPage implements OnInit {
 
     const modalRef = await this.modalController.create({
       component: LocationPage,
-      backdropDismiss: false,
+      backdropDismiss: true,
     });
   
     modalRef.onDidDismiss().then((res: any) => {

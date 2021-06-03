@@ -91,7 +91,7 @@ export class ViewKartPage implements OnInit {
     const modalRef = await this.modalController.create({
       component: SignupUserComponent,
       cssClass: 'myLoginPopup',
-      backdropDismiss: false,
+      backdropDismiss: true,
       componentProps: { isFromPage: isFromPage },
     });
 
@@ -112,13 +112,14 @@ export class ViewKartPage implements OnInit {
 
     const modalRef = await this.modalController.create({
       component: LocationPage,
-      backdropDismiss: false,
+      backdropDismiss: true,
     });
   
     modalRef.onDidDismiss().then((res: any) => {
       console.log(res.data,"resssss");
   
       if(res.data){
+        this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
         this.getlocationsFn(true);
       }
       
@@ -330,7 +331,7 @@ export class ViewKartPage implements OnInit {
 
 
 
-    let userDetails = JSON.parse(localStorage.getItem('userDetails'));;
+    let userDetails = JSON.parse(localStorage.getItem('userDetails'));
 
     let address = `${userDetails.first_name}, ${this.deliveryLocation.h_no}, ${this.deliveryLocation.street},  ${this.deliveryLocation?.landmark && 'landmark: ' + this.deliveryLocation?.landmark }, ${this.deliveryLocation?.locality}, ${this.deliveryLocation?.contact_no}, ${userDetails?.mobile}`;
     let orderData = {

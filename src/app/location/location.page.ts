@@ -45,6 +45,7 @@ export class LocationPage implements OnInit {
     const modalRef = await this.modalController.create({
       component: ChooseLocationComponent,
       cssClass: 'my-custom-model',
+      backdropDismiss: true,
       componentProps: {
         details: details,
         addressList: this.savedLocations
