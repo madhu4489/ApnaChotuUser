@@ -98,7 +98,7 @@
   *ngIf="isloading"
     color="primary"
     class="menu-button"
-    (click)="presentActionSheet(); terms=''; isVeg=false; scrollToTop();"
+    (click)="presentActionSheet(); terms=''; isVeg=false; vegFilter(false); scrollToTop();"
     [ngClass]="{'bottom-60' : storeOrderCount > 0}"
     >Choose Menu</ion-button
   >
