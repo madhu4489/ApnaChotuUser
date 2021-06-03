@@ -125,6 +125,17 @@ export class CartDetailsPage implements OnInit {
       backdropDismiss: false,
       componentProps: { isFromPage: isFromPage },
     });
+
+    modalRef.onDidDismiss().then((res: any) => {
+      console.log(res.data,"resssss");
+  
+      if(res.data){
+        this.gotoLocationPage()
+      }
+      
+    });
+
+
     await modalRef.present();
   }
 
@@ -251,14 +262,15 @@ export class CartDetailsPage implements OnInit {
         : this.discountPrice;
     this.discountPrice = Math.round(this.discountPrice);
 
-    let userDetails = this.userDetails;
+    this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
 
     this.showCount.finalPrice = (
       this.showCount.totalPrice -
       this.discountPrice + this.tipAmount +
-      (this.serviceLocation && !this.vendorDetails.is_free_delivery && userDetails?.prime_customer == 0 ? Number(this.serviceLocation.charge) : 0) 
+      (this.serviceLocation && !this.vendorDetails.is_free_delivery && this.userDetails?.prime_customer == 0 ? Number(this.serviceLocation.charge) : 0) 
     ).toFixed(0);
 
+    console.log(this.userDetails?.prime_customer, "this.userDetails?.prime_customer")
 
     this.encodedOrderMessage = encodeURI(this.orderMessage);
   }

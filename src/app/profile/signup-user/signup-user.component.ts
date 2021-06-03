@@ -217,7 +217,7 @@ export class SignupUserComponent implements OnInit {
       this.otpGroupErrors = false;
       localStorage.setItem('jwt', this.userResponceToken);
 
-      // localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
+      //localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
       // this._modalCtrl.dismiss();
 
 
@@ -234,7 +234,8 @@ export class SignupUserComponent implements OnInit {
         );
        
         localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
-        this._modalCtrl.dismiss();
+
+        console.log(this.isFromPage, "this.isFromPage");
 
         if (this.isFromPage) {
           this._modalCtrl.dismiss('sign');
@@ -242,9 +243,9 @@ export class SignupUserComponent implements OnInit {
           this._modalCtrl.dismiss();
         }
 
-
       });
 
+     
       
       
     } else {

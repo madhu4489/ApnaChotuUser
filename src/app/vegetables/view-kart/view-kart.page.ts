@@ -330,7 +330,7 @@ export class ViewKartPage implements OnInit {
 
 
 
-    let userDetails = this.userDetails;
+    let userDetails = JSON.parse(localStorage.getItem('userDetails'));;
 
     let address = `${userDetails.first_name}, ${this.deliveryLocation.h_no}, ${this.deliveryLocation.street},  ${this.deliveryLocation?.landmark && 'landmark: ' + this.deliveryLocation?.landmark }, ${this.deliveryLocation?.locality}, ${this.deliveryLocation?.contact_no}, ${userDetails?.mobile}`;
     let orderData = {
