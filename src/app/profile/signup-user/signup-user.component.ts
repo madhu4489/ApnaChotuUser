@@ -236,11 +236,16 @@ export class SignupUserComponent implements OnInit {
         localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
         this._modalCtrl.dismiss();
 
+        if (this.isFromPage) {
+          this._modalCtrl.dismiss('sign');
+        }else{
+          this._modalCtrl.dismiss();
+        }
+
+
       });
 
-      if (this.isFromPage) {
-        this.navController.navigateBack(['/' + this.isFromPage]);
-      }
+      
       
     } else {
 

@@ -5,6 +5,7 @@ import {
   ModalController,
   NavController,
 } from '@ionic/angular';
+import { LocationPage } from 'src/app/location/location.page';
 import { SignupUserComponent } from 'src/app/profile/signup-user/signup-user.component';
 import { CartDataProvider } from 'src/app/providers/cart-data/cart-data';
 import { SharedService } from 'src/app/providers/shared.service';
@@ -110,7 +111,8 @@ export class CartDetailsPage implements OnInit {
 
   addAddress() {
     if (localStorage.getItem('userDetails')) {
-      this.navController.navigateBack(['/location']);
+      // this.navController.navigateBack(['/location']);
+      this.gotoLocationPage()
     } else {
       this.openAddLocation('location');
     }
@@ -126,10 +128,13 @@ export class CartDetailsPage implements OnInit {
     await modalRef.present();
   }
 
-  gotoLocation() {}
 
-  async getlocationsFn() {
-    this.isLoading = false;
+
+  async getlocationsFn(key?:any) {
+    if(!key){
+      this.isLoading = false;
+    }
+    
 
     this.sharedService.getLocations().then((data) => {
       let serverData = data['data'];
@@ -352,9 +357,27 @@ export class CartDetailsPage implements OnInit {
       this.tipAmount = t;
 
     }
-   
-
-   
-   
   }
+
+
+  async gotoLocationPage() {
+
+    const modalRef = await this.modalController.create({
+      component: LocationPage,
+      backdropDismiss: false,
+    });
+  
+    modalRef.onDidDismiss().then((res: any) => {
+      console.log(res.data,"resssss");
+  
+      if(res.data){
+        this.getlocationsFn(true);
+      }
+      
+    });
+    await modalRef.present();
+
+  }
+
+  
 }

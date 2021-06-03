@@ -6,6 +6,7 @@ import {
   ModalController,
   NavController,
 } from '@ionic/angular';
+import { LocationPage } from 'src/app/location/location.page';
 import { SignupUserComponent } from 'src/app/profile/signup-user/signup-user.component';
 
 import { SharedService } from 'src/app/providers/shared.service';
@@ -67,7 +68,8 @@ export class MiscOrderPage implements OnInit {
     localStorage.setItem("pickup", JSON.stringify(this.pickup));
     
     if (localStorage.getItem('userDetails')) {
-      this.navController.navigateForward(['/location']);
+      // this.navController.navigateForward(['/location']);
+      this.gotoLocation();
     } else {
       this.openAddLocation('location');
     }
@@ -92,6 +94,9 @@ export class MiscOrderPage implements OnInit {
         this.pickup =   JSON.parse(localStorage.getItem("pickup"))
       }
 
+      if(res){
+        this.gotoLocation()
+      }
         //console.log('local',  this.items)
     })
   }
@@ -216,5 +221,25 @@ export class MiscOrderPage implements OnInit {
 
   gotoDashboard() {
     this.navController.navigateBack(['/dashboard']);
+  }
+
+
+  async gotoLocation() {
+
+    const modalRef = await this.modalController.create({
+      component: LocationPage,
+      backdropDismiss: false,
+    });
+  
+    modalRef.onDidDismiss().then((res: any) => {
+      console.log(res.data,"resssss");
+  
+      if(res.data){
+        this.getlocationsFn();
+      }
+      
+    });
+    await modalRef.present();
+
   }
 }

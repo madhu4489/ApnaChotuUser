@@ -134,13 +134,10 @@ export class AppComponent implements OnInit {
   }
 
   backButtonEvent() {
-    this.platform.backButton.subscribe(async () => {
-
-
+    this.platform.backButton.subscribeWithPriority(-1, () => {
+    // this.platform.backButton.subscribe(async () => {
       this.routerOutlets.forEach(async (outlet: IonRouterOutlet) => {
-
         console.log(this.router.url, "this.router.urlthis.router.url");
-
         console.log(outlet, "outlet:::::");
         
         if (outlet && outlet.canGoBack()) {

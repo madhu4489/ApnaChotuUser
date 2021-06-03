@@ -81,24 +81,7 @@ export class ViewKartPage implements OnInit {
   async addAddress() {
     if (localStorage.getItem('userDetails')) {
    //   this.navController.navigateBack(['/location']);
-   const modalRef = await this.modalController.create({
-    component: LocationPage,
-    backdropDismiss: false,
-  });
-
-  modalRef.onDidDismiss().then((res: any) => {
-    console.log(res.data,"resssss");
-
-    if(res.data){
-      this.getlocationsFn();
-    }
-    
-  });
-
-
-  await modalRef.present();
-
-
+      this.gotoLocation();
     } else {
       this.openAddLocation('location');
     }
@@ -111,13 +94,48 @@ export class ViewKartPage implements OnInit {
       backdropDismiss: false,
       componentProps: { isFromPage: isFromPage },
     });
+
+    modalRef.onDidDismiss().then((res: any) => {
+      console.log(res.data,"resssss");
+  
+      if(res.data){
+        this.gotoLocation();
+      }
+      
+    });
+
+
     await modalRef.present();
   }
 
-  gotoLocation() {}
+  async gotoLocation() {
 
-  async getlocationsFn() {
-    this.isLoading = false;
+    const modalRef = await this.modalController.create({
+      component: LocationPage,
+      backdropDismiss: false,
+    });
+  
+    modalRef.onDidDismiss().then((res: any) => {
+      console.log(res.data,"resssss");
+  
+      if(res.data){
+        this.getlocationsFn(true);
+      }
+      
+    });
+    await modalRef.present();
+
+  }
+
+
+
+
+  async getlocationsFn(set?:any) {
+
+    if(!set){
+      this.isLoading = false;
+    }
+  
 
     this.sharedService.getLocations().then((data) => {
       let serverData = data['data'];
@@ -133,8 +151,6 @@ export class ViewKartPage implements OnInit {
 
         //console.log(serverData, "serverDataserverData")
         //console.log( this.deliveryLocation, " this.deliveryLocation");
-
-
 
         this.serviceLocation =
           serverData &&
